@@ -1,5 +1,5 @@
 import { OTEL_EXPORTER_OTLP_LOGS_ENDPOINT, OTEL_EXPORTER_OTLP_ENDPOINT } from '$app/env/private';
-import { PUBLIC_OTEL_ENVIRONMENT, PUBLIC_OTEL_SERVICE_VERSION } from '$app/env/public';
+import { PUBLIC_LOGO_ORIGIN, PUBLIC_OTEL_ENVIRONMENT, PUBLIC_OTEL_SERVICE_VERSION } from '$app/env/public';
 import { createErrorTelemetry } from '#lib/errorTelemetry.js';
 import { sequence } from '@sveltejs/kit/hooks';
 import type { Handle, HandleServerError } from '@sveltejs/kit/hooks';
@@ -7,6 +7,10 @@ import { hasSessionCookie } from '#lib/authCookie.js';
 import { cachePolicy, variesOnCookie } from '#lib/httpCache.js';
 import { isTranslatedLocale, LOCALE_COOKIE } from '#lib/i18n/locale.js';
 import { CAPTURE_MAX_AGE_SECONDS, REF_COOKIE, captureRef, capturePromo } from '#lib/referral.js';
+import { setLogoOrigin } from '#lib/logo.js';
+
+// Logos are off unless this deployment names a proxy (lib/logo.ts).
+setLogoOrigin(PUBLIC_LOGO_ORIGIN);
 
 const otelEndpoint =
   OTEL_EXPORTER_OTLP_LOGS_ENDPOINT ||

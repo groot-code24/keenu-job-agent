@@ -1,9 +1,18 @@
-import { PUBLIC_OTEL_LOGS_ENDPOINT, PUBLIC_OTEL_ENVIRONMENT, PUBLIC_OTEL_SERVICE_VERSION } from '$app/env/public';
+import {
+  PUBLIC_LOGO_ORIGIN,
+  PUBLIC_OTEL_LOGS_ENDPOINT,
+  PUBLIC_OTEL_ENVIRONMENT,
+  PUBLIC_OTEL_SERVICE_VERSION,
+} from '$app/env/public';
 import { createErrorTelemetry, installErrorListeners } from '#lib/errorTelemetry.js';
 import { startTrackersIfAllowed } from '#lib/trackers.js';
 import { claimModuleReload } from '#lib/moduleReload.js';
 import { isModuleLoadFailure } from '#lib/transientNoise.js';
 import type { HandleClientError } from '@sveltejs/kit/hooks';
+import { setLogoOrigin } from '#lib/logo.js';
+
+// Logos are off unless this deployment names a proxy (lib/logo.ts).
+setLogoOrigin(PUBLIC_LOGO_ORIGIN);
 
 // Non-essential trackers (PostHog + Google Analytics) are gated on cookie consent:
 // this starts them at boot only for visitors who are not consent-required or who

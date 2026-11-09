@@ -1,9 +1,9 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { SOURCE_LABELS, sourceLabel } from './facets';
-import { SOURCE_LOGO_DOMAINS, sourceLogoUrl } from './logo';
+import { SOURCE_LOGO_DOMAINS, setLogoOrigin, sourceLogoUrl } from './logo';
 
 // Logos are off unless a proxy is configured; these tests are about the URLs it gets.
-vi.mock('$app/env/public', () => ({ PUBLIC_LOGO_ORIGIN: 'https://logo.example' }));
+setLogoOrigin('https://logo.example');
 
 // The logo proxy resolves a brand from a NAME and, when given one, from an explicit
 // ?domain= that wins over its name map. Measured against the live proxy 2026-09-17: of the

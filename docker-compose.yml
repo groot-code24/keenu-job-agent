@@ -113,6 +113,20 @@ services:
       # Every worker reads its pause switch from Redis first (internal/platform/worker).
       REDIS_URL: "redis://redis:6379/0"
 
+  # Applies the local edition's account grant (deploy/local/local-edition.sql: every account
+  # holds Ultra) after every migrate. It runs psql from the db image, so the app image needs
+  # no SQL client.
+  local-edition:
+    image: pgvector/pgvector:pg18
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    environment:
+      PGPASSWORD: hire
+    volumes:
+      - ./deploy/local/local-edition.sql:/local-edition.sql:ro
+    entrypoint: ["psql", "-h", "db", "-U", "hire", "-d", "hire", "-v", "ON_ERROR_STOP=1", "-q", "-f", "/local-edition.sql"]
+
   app:
     build: .
     # One image for app and the workers beside it (migrate, seed-boards, crawler, search-drain),
@@ -128,6 +142,8 @@ services:
       s3-init:
         condition: service_completed_successfully
       migrate:
+        condition: service_completed_successfully
+      local-edition:
         condition: service_completed_successfully
     environment:
       PORT: "8080"

@@ -45,7 +45,7 @@ The rest of this guide is the original project's and still applies to the shared
 
 ---
 
-# Contributing to freehire
+## The original freehire guide
 
 Contributions are welcome. This guide exists to save both sides time.
 

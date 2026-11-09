@@ -1,5 +1,3 @@
-import { PUBLIC_LOGO_ORIGIN } from '$app/env/public';
-
 // Company logos are served by a logo proxy named in PUBLIC_LOGO_ORIGIN (the public deployment
 // runs one at https://logo.freehire.me, fronting a free favicon service that resolves the real
 // brand mark for most company names). On a miss the proxy returns a clean 404 so each consumer
@@ -9,8 +7,19 @@ import { PUBLIC_LOGO_ORIGIN } from '$app/env/public';
 // Unset, there are no logo URLs at all: every consumer shows its placeholder, and no company
 // name a person looks at leaves their browser. That is the default for a self-hosted copy,
 // which must not tell somebody else's server what its user is browsing.
+//
+// The origin is handed in (setLogoOrigin) rather than read from $app/env here, so this module
+// stays importable outside the SvelteKit runtime — the docs and OG generators load it too.
+let logoOrigin = '';
+
+/** Points every logo URL at the proxy at `origin`; empty or absent turns logos off. Called
+ *  once by each runtime's hook (hooks.server.ts, hooks.client.ts) with PUBLIC_LOGO_ORIGIN. */
+export function setLogoOrigin(origin: string | undefined): void {
+  logoOrigin = (origin ?? '').trim().replace(/\/+$/, '');
+}
+
 function logoBase(): string {
-  return (PUBLIC_LOGO_ORIGIN ?? '').trim().replace(/\/+$/, '');
+  return logoOrigin;
 }
 
 /** The proxy logo URL for a company name, or null when there is no name. */

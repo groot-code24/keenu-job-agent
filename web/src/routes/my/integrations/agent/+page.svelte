@@ -3,6 +3,7 @@
   import { resolve } from '$app/paths';
   import { locale } from '#lib/i18n/currentLocale.svelte.js';
   import { t } from '#lib/i18n/t.js';
+  import { Button } from '#lib/ui/index.js';
   import { messages } from './messages';
 
   // Connecting the candidate's OWN agent (Claude Code, Codex) to this server's MCP endpoint,
@@ -46,13 +47,9 @@
   <div class="relative">
     <pre class="overflow-x-auto rounded-lg border bg-muted/40 p-3 pr-20 text-xs leading-relaxed"><code>{text}</code
       ></pre>
-    <button
-      type="button"
-      class="absolute top-2 right-2 rounded-md border bg-background px-2 py-1 text-xs hover:bg-muted"
-      onclick={() => copy(id, text)}
-    >
+    <Button variant="outline" size="sm" class="absolute top-2 right-2" onclick={() => copy(id, text)}>
       {copied === id ? s.copied : s.copy}
-    </button>
+    </Button>
   </div>
 {/snippet}
 

@@ -68,7 +68,7 @@ export interface InviteSummary {
  *  guard behind it rather than a ceiling — the same two field names, in the same meaning,
  *  that every allowance response uses, so a page never has to learn a second vocabulary for
  *  one idea. */
-export interface PlanTierAllowance {
+interface PlanTierAllowance {
   limit: number;
   unlimited: boolean;
 }

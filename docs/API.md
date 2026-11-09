@@ -161,8 +161,8 @@ Every facet below supports repeat-OR, `_mode=and`, and `_exclude` as described a
 | `experience_only_seniority_unspecified` | Experience only without a level | true — apply either experience bound only to the jobs that carry no seniority level; a job with a level passes the bound whatever it states. With seniority and seniority_include_unspecified this reads "one of these levels, or no level and within the bound". Has no effect without a bound |
 | `seniority_include_unspecified` | Include unstated seniority | true — with seniority, also keep the jobs that carry no seniority level (most of the catalogue). Has no effect without an included seniority |
 | `posted_within_days` | Posted within | integer — jobs whose SOURCE states a posting date in the last N days. Some boards restate that date on every crawl, so a job open for months can satisfy a narrow bound here; open_within_days is the one that cannot be rewritten from outside |
-| `open_within_days` | Open within | integer — jobs first recorded by freehire in the last N days, i.e. how long the posting has been in the catalogue regardless of the date its source states. Independent of posted_within_days; both may be set and they narrow together |
-| `apply_questions_max` | Application questions | integer ≥ 0 — jobs whose application form requires at most N questions beyond name, contact details and CV (3 = the "short form" filter). Jobs with no form freehire could read are excluded: unknown is not short |
+| `open_within_days` | Open within | integer — jobs first recorded by Keenu in the last N days, i.e. how long the posting has been in the catalogue regardless of the date its source states. Independent of posted_within_days; both may be set and they narrow together |
+| `apply_questions_max` | Application questions | integer ≥ 0 — jobs whose application form requires at most N questions beyond name, contact details and CV (3 = the "short form" filter). Jobs with no form Keenu could read are excluded: unknown is not short |
 
 ### Recipes
 
@@ -481,7 +481,7 @@ curl "https://freehire.me/api/v1/jobs/senior-go-engineer-acme-1a2b/apply-form"
 
 **Auth:** Public
 
-The application form of a vacancy that takes applications on freehire.
+The application form of a vacancy that takes applications on Keenu.
 
 Only for a posting whose `direct_apply` is true — its employer published it here and receives applications by email. Any other posting is a `404`. Signed in with the browser session, the response also carries `applied`, a `prefill` of your earlier answers to the same questions, and `cvs` — the CV you tailored for this vacancy and whether you uploaded one; an API key never sees those. `open` is false once the vacancy closed. `501` when this deployment cannot deliver applications.
 
@@ -2396,7 +2396,7 @@ curl "https://freehire.me/api/v1/me/autofill-profile" -H "Authorization: Bearer 
 
 ## Link intake & discovery
 
-Turning a URL in the wild into something freehire knows about. One intake sequence serves every surface — the website, the bot, the extension and the CLI — deliberately, so a pasted link gets the same answer everywhere.
+Turning a URL in the wild into something Keenu knows about. One intake sequence serves every surface — the website, the bot, the extension and the CLI — deliberately, so a pasted link gets the same answer everywhere.
 
 ### `GET /jobs/find`
 
@@ -2404,7 +2404,7 @@ Turning a URL in the wild into something freehire knows about. One intake sequen
 
 Resolve a posting URL to a catalogue slug.
 
-Answers `{"data": null}` when the posting cannot be identified, rather than 404 — "we do not carry this" is a normal answer here. Used by the extension to tell whether the page you are on is a job we already have. A miss also carries `meta.ats_board`: true when the URL sits on an ATS board freehire knows how to crawl, so a client can tell a posting worth adding from an arbitrary page.
+Answers `{"data": null}` when the posting cannot be identified, rather than 404 — "we do not carry this" is a normal answer here. Used by the extension to tell whether the page you are on is a job we already have. A miss also carries `meta.ats_board`: true when the URL sits on an ATS board Keenu knows how to crawl, so a client can tell a posting worth adding from an arbitrary page.
 
 **Query parameters**
 
@@ -2424,7 +2424,7 @@ curl "https://freehire.me/api/v1/jobs/find?url=https%3A%2F%2Fboards.greenhouse.i
 
 **Auth:** Session or API key
 
-Hand freehire a link: import the posting, and the board behind it.
+Hand Keenu a link: import the posting, and the board behind it.
 
 Five outcomes in one shape, distinguished by status: **200 found** — the catalogue already carries the vacancy. Either the URL itself is stored (nothing is fetched or written), or the page turned out to be a second copy of a posting we already carry under another source, in which case the answer names the one we had; **201 tracked** — we crawl that board already and the posting just had not landed, so it was imported now; **201 imported** — imported, and its board queued for onboarding; **201 review** — imported, but its careers site names no board we can crawl, so the link went to manual triage; **202 queued** — nothing could read the page, so the link went to manual triage. `company_slug` is returned whenever the catalogue already carries the employer, through any source — independent of what became of the board. A URL that is not http(s) is a 422.
 
@@ -3407,7 +3407,7 @@ curl -X POST "https://freehire.me/api/v1/me/experience/atoms" \
 
 ## Application mail
 
-Your job mail, and the link between a message and the application it belongs to. Mail arrives three ways: a connected Gmail account, the hosted freehire address, or a batch your own client pushed. Only the first two are classified by freehire — pushed mail is yours to triage, which is what makes that tier free. Everything here takes a full-scope API key, so a harness can drive the whole surface; the Gmail consent redirect is the one exception and stays browser-only.
+Your job mail, and the link between a message and the application it belongs to. Mail arrives three ways: a connected Gmail account, the hosted Keenu address, or a batch your own client pushed. Only the first two are classified by Keenu — pushed mail is yours to triage, which is what makes that tier free. Everything here takes a full-scope API key, so a harness can drive the whole surface; the Gmail consent redirect is the one exception and stays browser-only.
 
 ### `GET /me/tracking/{slug}/followup`
 
@@ -3587,7 +3587,7 @@ curl "https://freehire.me/api/v1/me/emails/4821" -H "Authorization: Bearer fhk_�
 
 Push a batch your own mail client fetched.
 
-Stored under source `external`. freehire provides no transport here and never classifies this mail — that is the point of the tier. `external_id` (the Message-ID in practice) is the dedup key: re-pushing the same id updates that message instead of storing a copy, so a nightly re-sync is safe. Content columns are refreshed; your read, deleted and triage state is not, so a re-sync cannot resurrect deleted mail or wipe a verdict. At most 100 messages per call, applied as one transaction — an oversized batch is refused, never truncated.
+Stored under source `external`. Keenu provides no transport here and never classifies this mail — that is the point of the tier. `external_id` (the Message-ID in practice) is the dedup key: re-pushing the same id updates that message instead of storing a copy, so a nightly re-sync is safe. Content columns are refreshed; your read, deleted and triage state is not, so a re-sync cannot resurrect deleted mail or wipe a verdict. At most 100 messages per call, applied as one transaction — an oversized batch is refused, never truncated.
 
 **Body**
 
@@ -3832,7 +3832,7 @@ curl -X POST "https://freehire.me/api/v1/me/emails/4821/restore" -H "Authorizati
 
 **Auth:** Session or API key
 
-Your hosted freehire address, and whether the feature is configured.
+Your hosted Keenu address, and whether the feature is configured.
 
 `address` is null until you claim one; `available` is false when the instance runs without a mailbox domain.
 

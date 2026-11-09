@@ -159,8 +159,8 @@ Every facet below supports repeat-OR, `_mode=and`, and `_exclude` as described a
 | `experience_only_seniority_unspecified` | Experience only without a level | true — apply either experience bound only to the jobs that carry no seniority level; a job with a level passes the bound whatever it states. With seniority and seniority_include_unspecified this reads "one of these levels, or no level and within the bound". Has no effect without a bound |
 | `seniority_include_unspecified` | Include unstated seniority | true — with seniority, also keep the jobs that carry no seniority level (most of the catalogue). Has no effect without an included seniority |
 | `posted_within_days` | Posted within | integer — jobs whose SOURCE states a posting date in the last N days. Some boards restate that date on every crawl, so a job open for months can satisfy a narrow bound here; open_within_days is the one that cannot be rewritten from outside |
-| `open_within_days` | Open within | integer — jobs first recorded by freehire in the last N days, i.e. how long the posting has been in the catalogue regardless of the date its source states. Independent of posted_within_days; both may be set and they narrow together |
-| `apply_questions_max` | Application questions | integer ≥ 0 — jobs whose application form requires at most N questions beyond name, contact details and CV (3 = the "short form" filter). Jobs with no form freehire could read are excluded: unknown is not short |
+| `open_within_days` | Open within | integer — jobs first recorded by Keenu in the last N days, i.e. how long the posting has been in the catalogue regardless of the date its source states. Independent of posted_within_days; both may be set and they narrow together |
+| `apply_questions_max` | Application questions | integer ≥ 0 — jobs whose application form requires at most N questions beyond name, contact details and CV (3 = the "short form" filter). Jobs with no form Keenu could read are excluded: unknown is not short |
 
 ### Recipes
 
@@ -182,7 +182,7 @@ Public, unauthenticated reads. Jobs are returned in one wire shape (addressed by
 
 **Auth:** Session only
 
-Apply on freehire: the employer receives your CV and answers by email.
+Apply on Keenu: the employer receives your CV and answers by email.
 
 Needs a verified email. The employer gets the chosen CV as a PDF, the answers, the note and your address as Reply-To. One application per vacancy: `409` once it was sent (or while it is being sent), `400` naming the first unanswered or invalid question, `403` unverified, `410` closed, `429` past the daily limit, `502` when delivery failed — applying again retries it.
 
@@ -441,7 +441,7 @@ curl -X POST "https://freehire.me/api/v1/auth/logout-all" -b cookies.txt
 
 **Auth:** Browser extension only
 
-Consent screen for "Sign in with freehire" from the browser extension.
+Consent screen for "Sign in with Keenu" from the browser extension.
 
 Opened by the extension via `chrome.identity.launchWebAuthFlow`, not called directly — renders an HTML consent page, not JSON. `redirect_uri` must be an allowlisted `https://<extension-id>.chromiumapp.org` origin, or this is a `400`. A signed-out visitor is bounced through sign-in first, then back to this same consent step.
 
@@ -1200,7 +1200,7 @@ curl "https://freehire.me/api/v1/me/subscriptions" -b cookies.txt
 
 Subscribe a saved search to a digest channel.
 
-Channels: `telegram`, `email`, `push`, `webhook`. `push` needs a device the freehire mobile app has registered (`GET /me/push-tokens`) — without one the request is refused with 409.
+Channels: `telegram`, `email`, `push`, `webhook`. `push` needs a device the Keenu mobile app has registered (`GET /me/push-tokens`) — without one the request is refused with 409.
 
 **Body**
 
@@ -1357,7 +1357,7 @@ curl "https://freehire.me/api/v1/me/webhook" -b cookies.txt
 
 Create your webhook destination, or update its URL if one already exists.
 
-There is exactly one destination per account. Deliveries are plain, unsigned HTTP POSTs — subscribe a saved search to the `webhook` channel (see `POST /me/subscriptions`) to receive its matches here. Before the URL is stored it receives a test delivery (`saved_search_name` "freehire webhook test", an empty `jobs` list); a URL that does not answer it with a 2xx is refused with 422, naming what it answered.
+There is exactly one destination per account. Deliveries are plain, unsigned HTTP POSTs — subscribe a saved search to the `webhook` channel (see `POST /me/subscriptions`) to receive its matches here. Before the URL is stored it receives a test delivery (`saved_search_name` "Keenu webhook test", an empty `jobs` list); a URL that does not answer it with a 2xx is refused with 422, naming what it answered.
 
 **Body**
 
@@ -1682,7 +1682,7 @@ curl -X PATCH "https://freehire.me/api/v1/me/language" \
 
 ## Link intake & discovery
 
-Turning a URL in the wild into something freehire knows about. One intake sequence serves every surface — the website, the bot, the extension and the CLI — deliberately, so a pasted link gets the same answer everywhere.
+Turning a URL in the wild into something Keenu knows about. One intake sequence serves every surface — the website, the bot, the extension and the CLI — deliberately, so a pasted link gets the same answer everywhere.
 
 ### `POST /me/jd/resolve`
 

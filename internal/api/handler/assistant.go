@@ -16,10 +16,10 @@ import (
 	"github.com/valyala/fasthttp"
 
 	"github.com/strelov1/freehire/internal/ai/assistant"
-	"github.com/strelov1/freehire/internal/api/candidateprofile"
 	"github.com/strelov1/freehire/internal/ai/browsertools"
 	"github.com/strelov1/freehire/internal/ai/llmkey"
 	"github.com/strelov1/freehire/internal/ai/plan"
+	"github.com/strelov1/freehire/internal/api/candidateprofile"
 	"github.com/strelov1/freehire/internal/candidate/answerbank"
 	"github.com/strelov1/freehire/internal/candidate/cv"
 	"github.com/strelov1/freehire/internal/candidate/fitanalysis"
