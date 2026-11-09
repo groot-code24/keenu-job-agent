@@ -61,8 +61,8 @@ importers:
         specifier: ^18.1.2
         version: 18.1.2
       posthog-js:
-        specifier: ^1.444.0
-        version: 1.444.0
+        specifier: ^1.444.1
+        version: 1.444.1
       satori:
         specifier: ^0.63.2
         version: 0.63.2
@@ -3137,8 +3137,8 @@ packages:
     resolution: {integrity: sha512-LJlKCCAUFKOuZxipUdYw1NzIITEsPcgyOG9LkvRJvuKj/bRzbuRY0ARXvL0pWGpsZvn8jku+LMep2eU0seHp8g==}
     engines: {node: ^10 || ^12 || >=14}
 
-  posthog-js@1.444.0:
-    resolution: {integrity: sha512-4m+QsAFi1h5Zt8eFq6ciJGD8bcLMt1P/O1cLlo26RrX5F4oMOIKZsNIlf1SIMZWlRNNCFemSpzn6HhwtkZMrnA==}
+  posthog-js@1.444.1:
+    resolution: {integrity: sha512-O8Bje+1x3hbbFgM/Me0f8GoJE1EnCG8RKpMysjT6cQZ5qnRgnst88Bviygn99yZzWD60QIFC7r196qdXOoEbaw==}
     peerDependencies:
       '@types/react': '>=16.8.0'
       react: '>=16.8.0'
@@ -7047,7 +7047,7 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.2
 
-  posthog-js@1.444.0:
+  posthog-js@1.444.1:
     dependencies:
       '@posthog/browser-common': 0.10.2
       '@posthog/core': 1.62.0
