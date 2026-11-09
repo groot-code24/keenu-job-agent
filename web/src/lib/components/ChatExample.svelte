@@ -10,13 +10,13 @@
 <figure class="overflow-hidden rounded-xl border border-border bg-secondary/60 text-sm shadow-sm">
   <figcaption class="flex items-center gap-2 border-b border-border px-4 py-2.5 text-xs text-muted-foreground">
     <span class="size-2.5 rounded-full bg-muted-foreground/30"></span>
-    Your assistant · freehire connector
+    Your assistant · Keenu connector
   </figcaption>
   <div class="flex flex-col gap-3 p-4 leading-relaxed">
     <div class="max-w-xs self-end rounded-2xl rounded-br-sm bg-foreground px-3.5 py-2 text-background">
       Remote senior Go jobs in Europe, posted this week
     </div>
-    <p class="text-xs text-muted-foreground">Used freehire · Search jobs</p>
+    <p class="text-xs text-muted-foreground">Used Keenu · Search jobs</p>
     <div class="max-w-md rounded-2xl rounded-bl-sm border border-border bg-background px-3.5 py-2.5">
       <p class="text-muted-foreground">Here are the strongest matches:</p>
       {#each jobs as job (job.title)}

@@ -2,7 +2,7 @@ import { defineMessages } from '#lib/i18n/t.js';
 
 export const messages = defineMessages(
   {
-    headTitle: 'Market pulse — freehire',
+    headTitle: 'Market pulse — Keenu',
     signedOut: 'Sign in to view your market pulse.',
     title: 'Market pulse',
     subtitle: 'How you compare to the live market — role coverage and your own skill-demand trend.',
@@ -22,7 +22,7 @@ export const messages = defineMessages(
   },
   {
     ru: {
-      headTitle: 'Пульс рынка — freehire',
+      headTitle: 'Пульс рынка — Keenu',
       signedOut: 'Войдите, чтобы увидеть свой пульс рынка.',
       title: 'Пульс рынка',
       subtitle: 'Как вы выглядите на фоне живого рынка — покрытие по роли и динамика спроса на ваши навыки.',

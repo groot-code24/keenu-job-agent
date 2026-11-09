@@ -112,7 +112,7 @@ describe('collectionHeading', () => {
 
 describe('companyMetaDescription', () => {
   it('falls back to the generic template when no facts are present', () => {
-    expect(companyMetaDescription(company())).toBe('Open jobs at Acme, aggregated by freehire.');
+    expect(companyMetaDescription(company())).toBe('Open jobs at Acme, aggregated by Keenu.');
   });
 
   it('leads with the tagline and appends industries, headcount and HQ', () => {
@@ -125,17 +125,17 @@ describe('companyMetaDescription', () => {
           hq_country: 'us',
         }),
       ),
-    ).toBe('Rockets, on demand — Aerospace & Robotics, 250+ employees, United States. Open roles on freehire.');
+    ).toBe('Rockets, on demand — Aerospace & Robotics, 250+ employees, United States. Open roles on Keenu.');
   });
 
   it('prefers company_info.description over the tagline when no tagline is set', () => {
     expect(companyMetaDescription(company({ company_info: { description: 'Acme builds rockets.' } }))).toBe(
-      'Acme builds rockets. Open roles at Acme on freehire.',
+      'Acme builds rockets. Open roles at Acme on Keenu.',
     );
   });
 
   it('uses only the facts when there is no tagline or description', () => {
-    expect(companyMetaDescription(company({ hq_country: 'de' }))).toBe('Acme: Germany. Open roles on freehire.');
+    expect(companyMetaDescription(company({ hq_country: 'de' }))).toBe('Acme: Germany. Open roles on Keenu.');
   });
 
   it('truncates to max length with an ellipsis', () => {
@@ -283,7 +283,7 @@ describe('foreignContentLang', () => {
 });
 
 describe('jobPostingJsonLd', () => {
-  it('declares directApply only for a vacancy that takes applications on freehire', () => {
+  it('declares directApply only for a vacancy that takes applications on Keenu', () => {
     expect(jobPostingJsonLd(postingJob({ direct_apply: true, url: '' }), ORIGIN)).toMatchObject({ directApply: true });
     expect(jobPostingJsonLd(postingJob(), ORIGIN)).not.toHaveProperty('directApply');
   });
@@ -528,18 +528,18 @@ describe('jobPostingJsonLd', () => {
 
 describe('companyPageTitle', () => {
   it('states the open-role count, comma-grouped', () => {
-    expect(companyPageTitle('Amazon', 6531)).toBe('Amazon — 6,531 open jobs · freehire');
+    expect(companyPageTitle('Amazon', 6531)).toBe('Amazon — 6,531 open jobs · Keenu');
   });
 
   it('uses the singular for a lone opening', () => {
-    expect(companyPageTitle('Agiliway', 1)).toBe('Agiliway — 1 open job · freehire');
+    expect(companyPageTitle('Agiliway', 1)).toBe('Agiliway — 1 open job · Keenu');
   });
 
   // A company with nothing open, or whose count never arrived (the search call
   // failed), gets the plain title rather than a "0 open jobs" boast.
   it('falls back to the bare name without a usable count', () => {
-    expect(companyPageTitle('Acme', 0)).toBe('Acme · freehire');
-    expect(companyPageTitle('Acme', undefined)).toBe('Acme · freehire');
+    expect(companyPageTitle('Acme', 0)).toBe('Acme · Keenu');
+    expect(companyPageTitle('Acme', undefined)).toBe('Acme · Keenu');
   });
 });
 
@@ -715,18 +715,18 @@ describe('companiesPageTitle', () => {
   // it would pass. Asserting the output rather than spying on the formatter is still
   // the right trade — the alternative tests the call, not the metadata.
   it('leads with the live count and the subject', () => {
-    expect(companiesPageTitle(294_021)).toBe('294,021 companies hiring in tech · freehire');
+    expect(companiesPageTitle(294_021)).toBe('294,021 companies hiring in tech · Keenu');
   });
 
   it('singularizes one company', () => {
-    expect(companiesPageTitle(1)).toBe('1 company hiring in tech · freehire');
+    expect(companiesPageTitle(1)).toBe('1 company hiring in tech · Keenu');
   });
 
   // A failed or empty search must not advertise "0 companies hiring in tech" — the
   // directory is still a real page, and the count is the decorative part.
   it('falls back to the plain subject with no usable count', () => {
-    expect(companiesPageTitle(undefined)).toBe('Companies hiring in tech · freehire');
-    expect(companiesPageTitle(0)).toBe('Companies hiring in tech · freehire');
+    expect(companiesPageTitle(undefined)).toBe('Companies hiring in tech · Keenu');
+    expect(companiesPageTitle(0)).toBe('Companies hiring in tech · Keenu');
   });
 });
 

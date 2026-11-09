@@ -6,6 +6,6 @@
 </script>
 
 <p class="text-xs text-muted-foreground">
-  No phone is set up for push, so push alerts reach nobody yet. Push will work after the next freehire app update: then
+  No phone is set up for push, so push alerts reach nobody yet. Push will work after the next Keenu app update: then
   open Profile in the app and turn on Push notifications.
 </p>

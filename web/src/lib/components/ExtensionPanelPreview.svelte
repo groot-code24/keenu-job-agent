@@ -29,7 +29,7 @@
     <div class="bg-background p-3">
       <div class="flex items-center gap-2 text-[11px]">
         <span class="size-4 rounded-full bg-brand"></span>
-        <span class="font-semibold">freehire</span>
+        <span class="font-semibold">Keenu</span>
         <span class="ml-auto rounded-full border border-border px-1.5 py-0.5 text-muted-foreground">ready</span>
       </div>
       <div class="mt-3 flex gap-2 text-[11px]">

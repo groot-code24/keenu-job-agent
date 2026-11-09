@@ -9,6 +9,7 @@
     "dev:firefox": "wxt -b firefox",
     "build": "wxt build",
     "build:firefox": "wxt build -b firefox",
+    "build:local": "wxt build --mode localedition",
     "zip": "WXT_RELEASE=1 wxt zip",
     "zip:firefox": "WXT_RELEASE=1 wxt zip -b firefox",
     "test": "vitest run",

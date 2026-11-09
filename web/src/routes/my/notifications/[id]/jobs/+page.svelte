@@ -32,7 +32,7 @@
 </script>
 
 <svelte:head>
-  <title>Matched jobs — freehire</title>
+  <title>Matched jobs — Keenu</title>
 </svelte:head>
 
 <div>

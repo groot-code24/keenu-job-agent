@@ -28,7 +28,7 @@
   // listingRobots for why the two counts disagree.
   const robots = $derived(listingRobots(data.initial?.total));
   const pageTitle = $derived(
-    data.pageNumber > 1 ? `${data.company.name} — page ${data.pageNumber} · freehire` : listingTitle,
+    data.pageNumber > 1 ? `${data.company.name} — page ${data.pageNumber} · Keenu` : listingTitle,
   );
   // The one breadcrumb trail feeding both the visible nav and the structured data below —
   // a single array so the two can never disagree about what the trail is.

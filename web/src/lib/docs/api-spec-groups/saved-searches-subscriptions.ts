@@ -74,7 +74,7 @@ export const savedSearchesSubscriptionsGroup: Group = {
       auth: 'cookie',
       summary: 'Subscribe a saved search to a digest channel.',
       description:
-        'Channels: `telegram`, `email`, `push`, `webhook`. `push` needs a device the freehire mobile app has ' +
+        'Channels: `telegram`, `email`, `push`, `webhook`. `push` needs a device the Keenu mobile app has ' +
         'registered (`GET /me/push-tokens`) — without one the request is refused with 409.',
       body: [
         {
@@ -179,7 +179,7 @@ export const savedSearchesSubscriptionsGroup: Group = {
       description:
         'There is exactly one destination per account. Deliveries are plain, unsigned HTTP POSTs — subscribe a ' +
         'saved search to the `webhook` channel (see `POST /me/subscriptions`) to receive its matches here. ' +
-        'Before the URL is stored it receives a test delivery (`saved_search_name` "freehire webhook test", an ' +
+        'Before the URL is stored it receives a test delivery (`saved_search_name` "Keenu webhook test", an ' +
         'empty `jobs` list); a URL that does not answer it with a 2xx is refused with 422, naming what it answered.',
       body: [
         {

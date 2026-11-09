@@ -14,19 +14,19 @@
 </script>
 
 <svelte:head>
-  <title>Return to the app · freehire</title>
+  <title>Return to the app · Keenu</title>
   <meta name="robots" content="noindex" />
 </svelte:head>
 
 <div class="mx-auto max-w-md py-16 text-center">
   {#if failed}
     <h1 class="text-lg font-semibold">Sign-in did not complete</h1>
-    <p class="mt-2 text-sm text-muted-foreground">Open the freehire app and try signing in again.</p>
+    <p class="mt-2 text-sm text-muted-foreground">Open the Keenu app and try signing in again.</p>
   {:else}
     <h1 class="text-lg font-semibold">Finishing sign-in…</h1>
     <p class="mt-2 text-sm text-muted-foreground">
-      If this page stays open, the freehire app is not installed on this device. Sign-in has to finish in the app — open
-      it and try again.
+      If this page stays open, the Keenu app is not installed on this device. Sign-in has to finish in the app — open it
+      and try again.
     </p>
   {/if}
 </div>

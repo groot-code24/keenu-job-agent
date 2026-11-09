@@ -685,7 +685,7 @@
 
 <svelte:head
   ><title
-    >{baseMode ? `Edit CV${title ? ` · ${title}` : ''}` : `Tailor CV${job ? ` · ${job.title}` : ''}`} — freehire</title
+    >{baseMode ? `Edit CV${title ? ` · ${title}` : ''}` : `Tailor CV${job ? ` · ${job.title}` : ''}`} — Keenu</title
   ></svelte:head
 >
 

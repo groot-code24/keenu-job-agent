@@ -5,8 +5,7 @@
 
 <h2 class="text-xl font-semibold tracking-tight text-balance">Search jobs from your AI assistant with MCP</h2>
 <p class="mt-1 text-sm text-muted-foreground text-pretty">
-  Connect freehire to Claude, ChatGPT or Cursor and ask for jobs in plain words. It searches the whole catalogue for
-  you.
+  Connect Keenu to Claude, ChatGPT or Cursor and ask for jobs in plain words. It searches the whole catalogue for you.
 </p>
 
 <div class="mt-5">

@@ -6,7 +6,7 @@
 // Takes the storage as a parameter so the guard is testable without a browser; the caller
 // passes sessionStorage, which is per tab and gone when the tab closes.
 
-const KEY = 'freehire:module-reload';
+const KEY = 'Keenu:module-reload';
 const WINDOW_MS = 5 * 60_000;
 
 type Store = Pick<Storage, 'getItem' | 'setItem'>;

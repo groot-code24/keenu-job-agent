@@ -15,8 +15,8 @@
 </script>
 
 <Seo
-  title="CV tailoring — your CV rewritten for each job, nothing made up | freehire"
-  description="freehire rewrites your CV for one vacancy at a time: it brings your relevant work forward in the job's own words, asks you about anything your history doesn't support, and shows the job match rising. ATS-readable PDF. Part of Pro."
+  title="CV tailoring — your CV rewritten for each job, nothing made up | Keenu"
+  description="Keenu rewrites your CV for one vacancy at a time: it brings your relevant work forward in the job's own words, asks you about anything your history doesn't support, and shows the job match rising. ATS-readable PDF. Part of Pro."
   {canonical}
 />
 

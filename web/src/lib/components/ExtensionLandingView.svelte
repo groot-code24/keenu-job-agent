@@ -20,7 +20,7 @@
     {
       n: '02',
       title: 'Answers from your profile',
-      body: 'The values come from what your freehire profile already says. Nothing is invented to fill a box, and a question your profile cannot answer stays unanswered and visible.',
+      body: 'The values come from what your Keenu profile already says. Nothing is invented to fill a box, and a question your profile cannot answer stays unanswered and visible.',
     },
     {
       n: '03',
@@ -53,7 +53,7 @@
     {
       key: 'account',
       title: 'Yours to read and delete',
-      body: 'A page the agent read stays in that conversation, on your freehire account. Read it on the web, delete it, and the panel quietly starts a fresh one.',
+      body: 'A page the agent read stays in that conversation, on your Keenu account. Read it on the web, delete it, and the panel quietly starts a fresh one.',
     },
   ];
 
@@ -65,8 +65,8 @@
     },
     {
       n: '02',
-      title: 'Sign in with freehire',
-      body: 'The panel hands you to freehire to sign in once, and works from your profile after that. Free account; no key to copy anywhere.',
+      title: 'Sign in with Keenu',
+      body: 'The panel hands you to Keenu to sign in once, and works from your profile after that. Free account; no key to copy anywhere.',
     },
     {
       n: '03',
@@ -87,7 +87,7 @@
       <p class="mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground">
         A job-application agent in your browser's side panel, sitting next to the posting you are reading. It reads that
         page itself, tells you where you fall short of it, and fills the application form from your profile — on any
-        site, not just the ones freehire tracks.
+        site, not just the ones Keenu tracks.
       </p>
       <div class="mt-8 flex flex-wrap gap-2">
         {#each EXTENSION_CLAIMS as claim (claim)}
@@ -122,12 +122,12 @@
           Know whether you fit, before you apply.
         </h2>
         <p class="mt-5 max-w-md leading-relaxed text-muted-foreground">
-          The panel scores the posting against your freehire profile and names both halves of the answer: the
-          requirements your history covers, and the ones it does not. Not a model's impression of your chances — a
-          coverage count you can read line by line and disagree with.
+          The panel scores the posting against your Keenu profile and names both halves of the answer: the requirements
+          your history covers, and the ones it does not. Not a model's impression of your chances — a coverage count you
+          can read line by line and disagree with.
         </p>
         <p class="mt-5 max-w-md leading-relaxed text-muted-foreground">
-          It works on a posting freehire has never seen, too. On a page outside the catalogue the card still scores; the
+          It works on a posting Keenu has never seen, too. On a page outside the catalogue the card still scores; the
           actions that need a catalogue entry — saving it, running the full match analysis — are simply not shown rather
           than offered and then failing.
         </p>
@@ -148,7 +148,7 @@
       <figure class="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
         <figcaption class="flex items-center gap-2 border-b border-border px-4 py-2.5 text-xs text-muted-foreground">
           <span class="size-2.5 rounded-full bg-muted-foreground/30"></span>
-          freehire · side panel
+          Keenu · side panel
         </figcaption>
         <div class="p-5">
           <div class="flex items-baseline gap-3">
@@ -259,7 +259,7 @@
       <figure class="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
         <figcaption class="flex items-center gap-2 border-b border-border px-4 py-2.5 text-xs text-muted-foreground">
           <span class="size-2.5 rounded-full bg-muted-foreground/30"></span>
-          freehire · Chat
+          Keenu · Chat
         </figcaption>
         <div class="flex flex-col gap-3 p-4 text-sm">
           <p class="ml-auto max-w-[85%] rounded-lg bg-secondary px-3 py-2 leading-relaxed">
@@ -330,8 +330,8 @@
       {/each}
     </div>
     <p class="mt-6 max-w-3xl text-sm leading-relaxed text-muted-foreground">
-      Everything the extension sends goes to freehire and nowhere else. There is no analytics endpoint on the side, and
-      no second host in the manifest.
+      Everything the extension sends goes to Keenu and nowhere else. There is no analytics endpoint on the side, and no
+      second host in the manifest.
     </p>
   </section>
 
@@ -364,7 +364,7 @@
     <div class="flex flex-col items-start gap-4 rounded-xl border border-border bg-secondary/40 p-6 sm:p-8">
       <h2 class="text-2xl font-semibold tracking-tight">Put it beside the next posting you open.</h2>
       <p class="max-w-xl leading-relaxed text-muted-foreground">
-        Free, and it works on whatever page you are already on — including the ones freehire does not track.
+        Free, and it works on whatever page you are already on — including the ones Keenu does not track.
       </p>
       <div class="flex flex-wrap gap-3">
         <Button href={EXTENSION_STORE_URL} target="_blank" variant="primary" size="lg">

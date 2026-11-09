@@ -22,7 +22,7 @@
   const canonical = $derived(
     data.pageNumber > 1 ? `${origin}/companies?page=${data.pageNumber}` : `${origin}/companies`,
   );
-  const description = 'Browse companies hiring in tech, with their current open roles — aggregated by freehire.';
+  const description = 'Browse companies hiring in tech, with their current open roles — aggregated by Keenu.';
   // A filter combination nothing matches is a real page that should not be indexed;
   // `pageExists` already 404s a page number past the end, so this only ever fires on
   // page 1 of an empty result set.
@@ -31,7 +31,7 @@
   // one. Mirrors the job feed. Page 1 leads with the live count and the subject —
   // see companiesPageTitle for why the bare "Companies · freehire" was a waste.
   const title = $derived(
-    data.pageNumber > 1 ? `Companies — page ${data.pageNumber} · freehire` : companiesPageTitle(data.initial.total),
+    data.pageNumber > 1 ? `Companies — page ${data.pageNumber} · Keenu` : companiesPageTitle(data.initial.total),
   );
   // Structured data for the directory: a CollectionPage wrapping the server-rendered
   // first page of companies as an ItemList, plus a breadcrumb (freehire → Companies),

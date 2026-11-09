@@ -27,7 +27,7 @@
   // Page 2 onward says so in the title: without it every page of a collection
   // competes for the same SERP entry under one identical title.
   const pageTitle = $derived(
-    data.pageNumber > 1 ? `${heading} — page ${data.pageNumber} · freehire` : `${heading} · freehire`,
+    data.pageNumber > 1 ? `${heading} — page ${data.pageNumber} · Keenu` : `${heading} · Keenu`,
   );
   // Request hiding the facets the collection pins via `scope`. Note: this only
   // hides standalone facets; the collection facets that live in composite panes

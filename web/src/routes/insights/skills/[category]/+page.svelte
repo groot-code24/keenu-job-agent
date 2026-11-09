@@ -14,7 +14,7 @@
   // browser tab and a SERP need. Kept apart deliberately — one variable serving both
   // is how "· freehire" ended up inside the <h1>.
   const heading = $derived(`Most In-Demand ${data.label} Skills`);
-  const title = $derived(`${heading} · freehire`);
+  const title = $derived(`${heading} · Keenu`);
   const updated = $derived(new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }));
   const jsonLd = $derived(
     jsonLdScript([

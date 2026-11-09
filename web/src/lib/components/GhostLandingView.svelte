@@ -51,10 +51,10 @@
     <div class="flex max-w-2xl flex-col gap-6">
       <SectionLabel text="ghost jobs" />
       <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">
-        Some postings are not being filled. freehire tells you which, and why it thinks so.
+        Some postings are not being filled. Keenu tells you which, and why it thinks so.
       </h1>
       <p class="text-base leading-relaxed text-muted-foreground">
-        You can't tell by looking at the page. An hour spent on one is work you'll never hear back about. So freehire
+        You can't tell by looking at the page. An hour spent on one is work you'll never hear back about. So Keenu
         checks two things it can actually see: how the posting behaves, and what happened to people who applied.
       </p>
 
@@ -167,7 +167,7 @@
         {
           n: '02',
           title: 'Or connect a mailbox',
-          body: 'Then it happens on its own: freehire sees the reply arrive, or sees that it never did. Without a connected mailbox nothing is counted — we could not tell silence from a gap in our own data.',
+          body: 'Then it happens on its own: Keenu sees the reply arrive, or sees that it never did. Without a connected mailbox nothing is counted — we could not tell silence from a gap in our own data.',
         },
       ]}
     />

@@ -120,7 +120,7 @@ describe('auto-intros', () => {
 
   it('rolesIntro states the all-seniority count it is given', () => {
     expect(rolesIntro('backend', 12345)).toContain('12,345 open Backend roles');
-    expect(rolesIntro('backend', 0)).toBe('Open Backend roles by seniority on freehire.');
+    expect(rolesIntro('backend', 0)).toBe('Open Backend roles by seniority on Keenu.');
   });
 });
 

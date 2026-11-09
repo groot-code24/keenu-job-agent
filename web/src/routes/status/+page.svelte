@@ -10,8 +10,8 @@
 </script>
 
 <Seo
-  title="Status — freehire"
-  description="Live status of freehire: whether the site and API are up, and the health of every source adapter crawling job boards."
+  title="Status — Keenu"
+  description="Live status of Keenu: whether the site and API are up, and the health of every source adapter crawling job boards."
   {canonical}
 />
 

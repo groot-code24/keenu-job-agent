@@ -15,7 +15,7 @@
 
 <!-- The account shell (my/+layout) owns the container, auth gate, and noindex.
      Full column width, like every other section, so card edges do not move between pages.
-     Connected devices (MCP OAuth grants, freehire#3114) sits below API keys:
+     Connected devices (MCP OAuth grants, Keenu#3114) sits below API keys:
      both are credentials an account owner manages from one place. -->
 <div class="flex flex-col gap-10">
   <ApiKeysView />

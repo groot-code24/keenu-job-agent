@@ -143,7 +143,7 @@
 </script>
 
 <Seo
-  title="Free CV Roast — freehire"
+  title="Free CV Roast — Keenu"
   description="Upload your CV for a free, instant ATS-readiness score and see how many open roles your skills actually reach. No account needed."
   {canonical}
 />

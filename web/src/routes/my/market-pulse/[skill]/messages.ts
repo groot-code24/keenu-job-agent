@@ -4,7 +4,7 @@ import { defineMessages, plurals } from '#lib/i18n/t.js';
 // the user's profile skills) — it is interpolated via `format()`, never translated.
 export const messages = defineMessages(
   {
-    headTitle: '{label} · Market pulse — freehire',
+    headTitle: '{label} · Market pulse — Keenu',
     signedOut: 'Sign in to view your market pulse.',
     backLink: 'Market pulse',
     loadError: "Couldn't load this skill's trend.",
@@ -21,7 +21,7 @@ export const messages = defineMessages(
   },
   {
     ru: {
-      headTitle: '{label} · Пульс рынка — freehire',
+      headTitle: '{label} · Пульс рынка — Keenu',
       signedOut: 'Войдите, чтобы увидеть свой пульс рынка.',
       backLink: 'Пульс рынка',
       loadError: 'Не удалось загрузить тренд по этому навыку.',

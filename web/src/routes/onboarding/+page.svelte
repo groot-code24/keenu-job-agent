@@ -301,7 +301,7 @@
       class="flex h-full w-full flex-col overflow-hidden"
       role="dialog"
       aria-modal="true"
-      aria-label="Get to know freehire"
+      aria-label="Get to know Keenu"
       {@attach focusTrap()}
     >
       <!-- header: progress + skip + close -->
@@ -331,7 +331,7 @@
 
       <!-- body -->
       <div class="no-scrollbar mx-auto min-h-0 w-full max-w-2xl flex-1 overflow-y-auto px-5 py-6">
-        <h1 class="sr-only">Get to know freehire</h1>
+        <h1 class="sr-only">Get to know Keenu</h1>
         {#if loadFailed}
           <div class="py-10 text-sm" role="alert">
             <p class="font-medium">We couldn't load your details.</p>

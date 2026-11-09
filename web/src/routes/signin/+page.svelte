@@ -125,7 +125,7 @@
       // on a foreign origin or a blocked privacy extension, so say where to sign in
       // from instead of apologizing for a fault.
       if (isCrossSiteRefusal(e))
-        return 'For safety, authentication requests from other sites are refused. Open freehire in its own tab and try again.';
+        return 'For safety, authentication requests from other sites are refused. Open Keenu in its own tab and try again.';
     }
     return credentialErrorMessage(e) ?? 'Something went wrong. Please try again.';
   }
@@ -217,7 +217,7 @@
      Written into the existing head rather than through <Seo>, which would also emit
      a canonical and an Open Graph card — the opposite of what this page wants. -->
 <svelte:head>
-  <title>{titles[mode]} · freehire</title>
+  <title>{titles[mode]} · Keenu</title>
   <meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 
@@ -246,7 +246,7 @@
       <div class="lg:hidden">
         <a href={resolve('/')} class="flex items-center gap-2 text-sm font-semibold tracking-tight">
           <BrandMark />
-          freehire
+          Keenu
         </a>
       </div>
 

@@ -22,8 +22,8 @@
 </script>
 
 <Seo
-  title="How freehire works — from a job board to your search results | freehire"
-  description="How a posting becomes searchable on freehire: crawled straight from the source, tagged, checked for duplicates across every board, and rebuilt into the live search index — five steps, no person touching a listing."
+  title="How Keenu works — from a job board to your search results | Keenu"
+  description="How a posting becomes searchable on Keenu: crawled straight from the source, tagged, checked for duplicates across every board, and rebuilt into the live search index — five steps, no person touching a listing."
   {canonical}
 />
 

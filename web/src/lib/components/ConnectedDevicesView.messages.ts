@@ -3,7 +3,7 @@ import { defineMessages } from '#lib/i18n/t.js';
 export const messages = defineMessages(
   {
     title: 'Connected devices',
-    intro: 'MCP clients — like Claude, Cursor, or ChatGPT — you have approved to act as your freehire account.',
+    intro: 'MCP clients — like Claude, Cursor, or ChatGPT — you have approved to act as your Keenu account.',
     agentsMayApply: {
       label: 'Let connected agents apply for me',
       detail:
@@ -36,7 +36,7 @@ export const messages = defineMessages(
     ru: {
       title: 'Подключённые устройства',
       intro:
-        'MCP-клиенты — например, Claude, Cursor или ChatGPT — которым вы разрешили действовать от имени вашего аккаунта freehire.',
+        'MCP-клиенты — например, Claude, Cursor или ChatGPT — которым вы разрешили действовать от имени вашего аккаунта Keenu.',
       agentsMayApply: {
         label: 'Разрешить подключённым агентам откликаться за меня',
         detail:

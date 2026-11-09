@@ -22,7 +22,7 @@
 </script>
 
 <Seo
-  title="Jobs API for commercial use — freehire"
+  title="Jobs API for commercial use — Keenu"
   description="Millions of open job postings read from employers’ own ATS, de-duplicated and structured, behind one API. Flat monthly price, no per-job metering, a plain licence to show them in your product."
   {canonical}
 />

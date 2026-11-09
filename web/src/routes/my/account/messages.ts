@@ -2,7 +2,7 @@ import { defineMessages } from '#lib/i18n/t.js';
 
 export const messages = defineMessages(
   {
-    headTitle: 'Account · freehire',
+    headTitle: 'Account · Keenu',
     title: 'Account',
     subtitle: 'Your email, password, language, and the devices signed in to this account.',
     cancel: 'Cancel',
@@ -26,7 +26,7 @@ export const messages = defineMessages(
       otherAddress: 'Use a different address',
       invalidEmail: 'That does not look like an email address.',
       sameEmail: 'That is already your email.',
-      emailTaken: 'Another freehire account already uses this email.',
+      emailTaken: 'Another Keenu account already uses this email.',
       tooSoon: 'A code was just sent. Wait a minute before asking for another.',
       invalidCode: 'That code is wrong or has expired. Check the mail, or send a new code.',
       unavailable: 'We cannot send email right now. Please try again later.',
@@ -66,7 +66,7 @@ export const messages = defineMessages(
   },
   {
     ru: {
-      headTitle: 'Аккаунт · freehire',
+      headTitle: 'Аккаунт · Keenu',
       title: 'Аккаунт',
       // "сессии", matching the `sessions.heading` below — the subtitle said
       // "сеансы" for the same thing.
@@ -93,7 +93,7 @@ export const messages = defineMessages(
         otherAddress: 'Указать другой адрес',
         invalidEmail: 'Это не похоже на адрес почты.',
         sameEmail: 'Это и так ваша почта.',
-        emailTaken: 'Эта почта уже используется другим аккаунтом freehire.',
+        emailTaken: 'Эта почта уже используется другим аккаунтом Keenu.',
         tooSoon: 'Код только что отправлен. Подождите минуту, прежде чем запросить новый.',
         invalidCode: 'Код неверный или устарел. Проверьте письмо или запросите новый код.',
         unavailable: 'Сейчас мы не можем отправить письмо. Попробуйте позже.',

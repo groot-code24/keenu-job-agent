@@ -17,8 +17,8 @@
 </script>
 
 <Seo
-  title="Privacy Policy — freehire"
-  description="How freehire, the open-source IT job aggregator, collects, uses, and stores your data: accounts, job tracking, CV analysis, cookies, and third-party services."
+  title="Privacy Policy — Keenu"
+  description="How Keenu, the open-source IT job aggregator, collects, uses, and stores your data: accounts, job tracking, CV analysis, cookies, and third-party services."
   {canonical}
 />
 
@@ -31,15 +31,15 @@
     </header>
 
     <p class="text-base leading-relaxed text-muted-foreground">
-      freehire (<a href="https://freehire.me" class="font-medium text-foreground underline-offset-4 hover:underline"
+      Keenu (<a href="https://freehire.me" class="font-medium text-foreground underline-offset-4 hover:underline"
         >freehire.me</a
       >) is a free, open-source IT job aggregator. This policy explains what data we collect, why, and who we share it
       with. We collect only what the product needs to work, and we never sell your data.
     </p>
 
     <p class="text-sm leading-relaxed text-muted-foreground">
-      freehire is operated by ILYA STRELOV TECNOLOGIA DA INFORMACAO LTDA (CNPJ 58.774.293/0001-44), Florianópolis,
-      Brazil, which is the controller of your personal data.
+      Keenu is operated by ILYA STRELOV TECNOLOGIA DA INFORMACAO LTDA (CNPJ 58.774.293/0001-44), Florianópolis, Brazil,
+      which is the controller of your personal data.
     </p>
 
     <section class="flex flex-col gap-3">
@@ -108,20 +108,20 @@
     </section>
 
     <section class="flex flex-col gap-3">
-      <h2 class="text-xl font-semibold tracking-tight">Applying on freehire</h2>
+      <h2 class="text-xl font-semibold tracking-tight">Applying on Keenu</h2>
       <p class="text-sm leading-relaxed text-muted-foreground">
-        Some vacancies are published by their employer directly on freehire and take applications here. When you apply
-        to one, we email that employer the CV you chose, your answers to their questions, your note and your email
-        address, so they can reply to you. Nothing reaches an employer until you press Send, and only the employer of
-        that vacancy receives it. We keep a record of the application so you cannot send it twice and so it shows in
-        your tracking; we also remember your answers to prefill your next application, and delete them on request (see
-        Your rights below).
+        Some vacancies are published by their employer directly on Keenu and take applications here. When you apply to
+        one, we email that employer the CV you chose, your answers to their questions, your note and your email address,
+        so they can reply to you. Nothing reaches an employer until you press Send, and only the employer of that
+        vacancy receives it. We keep a record of the application so you cannot send it twice and so it shows in your
+        tracking; we also remember your answers to prefill your next application, and delete them on request (see Your
+        rights below).
       </p>
     </section>
 
     <section class="flex flex-col gap-3">
       <h2 class="text-xl font-semibold tracking-tight">Third-party services</h2>
-      <p class="text-sm leading-relaxed text-muted-foreground">We rely on a small set of processors to run freehire:</p>
+      <p class="text-sm leading-relaxed text-muted-foreground">We rely on a small set of processors to run Keenu:</p>
       <ul class="flex flex-col gap-2 text-sm leading-relaxed text-muted-foreground">
         <li>
           <span class="font-medium text-foreground">A language-model provider</span> — processes CV and job text to produce
@@ -145,7 +145,7 @@
           — only if you choose to sign in with them, to verify your identity and email.
         </li>
         <li>
-          <span class="font-medium text-foreground">ChatGPT Actions</span> — if you connect freehire to a custom GPT, ChatGPT
+          <span class="font-medium text-foreground">ChatGPT Actions</span> — if you connect Keenu to a custom GPT, ChatGPT
           sends your search and tracking requests (authenticated with your API key) to our API. Your use of ChatGPT is also
           governed by OpenAI's own privacy policy.
         </li>
@@ -155,14 +155,14 @@
     <section class="flex flex-col gap-3">
       <h2 class="text-xl font-semibold tracking-tight">Browser extension</h2>
       <p class="text-sm leading-relaxed text-muted-foreground">
-        The freehire Chrome extension puts a job-application agent in a side panel next to whatever page you are on. It
+        The Keenu Chrome extension puts a job-application agent in a side panel next to whatever page you are on. It
         does nothing until you sign in from the panel.
       </p>
       <ul class="flex flex-col gap-3 text-sm leading-relaxed text-muted-foreground">
         <li>
-          <span class="font-medium text-foreground">Session token.</span> Signing in stores your freehire session token
-          in <code class="font-mono text-foreground">chrome.storage.local</code>, scoped to your browser profile,
-          alongside the random analytics id described below. Nothing else is stored there.
+          <span class="font-medium text-foreground">Session token.</span> Signing in stores your Keenu session token in
+          <code class="font-mono text-foreground">chrome.storage.local</code>, scoped to your browser profile, alongside
+          the random analytics id described below. Nothing else is stored there.
         </li>
         <li>
           <span class="font-medium text-foreground">Page content.</span> While the panel is open and only in service of what
@@ -173,12 +173,12 @@
         </li>
         <li>
           <span class="font-medium text-foreground">Profile data for Autofill.</span> Filling an application form sends the
-          relevant fields from your freehire profile (name, email, phone, CV fields) to the page; you review and submit yourself.
+          relevant fields from your Keenu profile (name, email, phone, CV fields) to the page; you review and submit yourself.
         </li>
         <li>
           <span class="font-medium text-foreground">Usage analytics.</span> The extension sends anonymous usage events to
           Google Analytics — that the panel was opened, that you signed in, sent a chat message, ran Autofill, or reached
-          a plan limit — under a random id minted for this browser profile, not your freehire account. No page address, page
+          a plan limit — under a random id minted for this browser profile, not your Keenu account. No page address, page
           content, message, or profile field is ever part of an event.
         </li>
       </ul>
@@ -219,8 +219,8 @@
           <span class="font-medium text-foreground">Automated processing.</span> To decide which application a message belongs
           to and what stage it signals, we first try a fixed keyword vocabulary that runs entirely on our own servers. Only
           when that cannot decide do we send the sender, the subject, and the first 4,000 characters of the body to TypeSafe,
-          and, if TypeSafe cannot answer, to our language-model provider (see “Third-party services”). No human at freehire
-          reads your mail, except where you explicitly ask us to look at a specific message for support, or where we are legally
+          and, if TypeSafe cannot answer, to our language-model provider (see “Third-party services”). No human at Keenu reads
+          your mail, except where you explicitly ask us to look at a specific message for support, or where we are legally
           required to.
         </li>
         <li>
@@ -230,7 +230,7 @@
         </li>
       </ul>
       <p class="text-sm leading-relaxed text-muted-foreground">
-        freehire's use and transfer to any other app of information received from Google APIs will adhere to the
+        Keenu's use and transfer to any other app of information received from Google APIs will adhere to the
         <a
           href="https://developers.google.com/terms/api-services-user-data-policy"
           class="font-medium text-foreground underline-offset-4 hover:underline">Google API Services User Data Policy</a
@@ -248,7 +248,7 @@
         on for one CV does not affect any other.
       </p>
       <p class="text-sm leading-relaxed text-muted-foreground">
-        When it is on, the links in that CV's PDF point at freehire and forward to the real destination. Following one
+        When it is on, the links in that CV's PDF point at Keenu and forward to the real destination. Following one
         records the time, the browser and operating system family, the device type, and the host — not the full address
         — of the page the visitor came from. It also records a keyed hash of the visitor's IP address and browser
         identity, so that repeat visits can be told from separate people. We do not store the IP address itself, and the

@@ -332,7 +332,7 @@
     <div class="flex flex-col gap-5 rounded-xl border border-border p-6 sm:p-8">
       <h3 class="text-2xl font-semibold tracking-tight">Search and track from your AI assistant.</h3>
       <p class="text-sm leading-relaxed text-muted-foreground">
-        Add freehire to your assistant and ask for jobs in plain words.
+        Add Keenu to your assistant and ask for jobs in plain words.
       </p>
       <div class="[zoom:0.8]"><ChatExample /></div>
       <McpSetup iconsOnly />
@@ -351,7 +351,7 @@
         <h3 class="text-2xl font-semibold tracking-tight">Apply where you already are.</h3>
         <p class="text-sm leading-relaxed text-muted-foreground">
           A job-application agent in Chrome's side panel, next to the posting you are reading — on any site, not just
-          the ones freehire tracks.
+          the ones Keenu tracks.
         </p>
       </div>
 

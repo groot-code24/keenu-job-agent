@@ -6,7 +6,7 @@ import { defineMessages } from '#lib/i18n/t.js';
 // no-CV prompt.
 export const messages = defineMessages(
   {
-    headTitle: 'CV readiness — freehire',
+    headTitle: 'CV readiness — Keenu',
     runReview: 'Run AI review',
     reRunReview: 'Re-run AI review',
     reviewing: 'Reviewing…',
@@ -23,7 +23,7 @@ export const messages = defineMessages(
   },
   {
     ru: {
-      headTitle: 'Готовность резюме для ATS — freehire',
+      headTitle: 'Готовность резюме для ATS — Keenu',
       runReview: 'Запустить AI-проверку',
       reRunReview: 'Запустить AI-проверку повторно',
       reviewing: 'Проверяем…',

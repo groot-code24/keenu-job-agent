@@ -25,7 +25,7 @@
   );
 </script>
 
-<Seo title="Jobs by Role and Country · freehire" {description} {canonical} />
+<Seo title="Jobs by Role and Country · Keenu" {description} {canonical} />
 <svelte:head>
   <!-- eslint-disable-next-line svelte/no-at-html-tags -- non-executable JSON-LD from jsonLdScript, which escapes `<` -->
   {@html jsonLd}

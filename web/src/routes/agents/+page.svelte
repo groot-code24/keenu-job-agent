@@ -19,7 +19,7 @@
 </script>
 
 <Seo
-  title="freehire for AI agents — MCP, CLI and Jobs API"
+  title="Keenu for AI agents — MCP, CLI and Jobs API"
   description="Every tech job, straight from company ATS boards, for your agent: connect Claude, ChatGPT, Cursor or Codex over MCP, script it from the CLI, or build on the Jobs API. Free search, open source."
   {canonical}
 />

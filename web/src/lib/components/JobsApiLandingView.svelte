@@ -167,7 +167,7 @@
         </p>
       </div>
       <div class="rounded-xl border-2 border-primary p-6">
-        <h3 class="font-semibold">Flat on freehire</h3>
+        <h3 class="font-semibold">Flat on Keenu</h3>
         <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
           One monthly price. A page returns up to 100 full postings, so how much of the catalogue you read never changes
           the bill.

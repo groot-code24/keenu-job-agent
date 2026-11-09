@@ -37,8 +37,8 @@
 </script>
 
 <Seo
-  title="{heading} — freehire Talent Network"
-  description="An anonymous candidate profile from freehire's Talent Network."
+  title="{heading} — Keenu Talent Network"
+  description="An anonymous candidate profile from Keenu's Talent Network."
 />
 <svelte:head>
   <!-- A card is a person, and a search engine's cache of one would outlive their decision

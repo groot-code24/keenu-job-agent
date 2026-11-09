@@ -45,7 +45,7 @@
   const benefits = [
     {
       title: 'Free & open-source',
-      body: 'freehire is a non-commercial aggregator. Listing your board costs nothing — no fees, no paywall, no upsell.',
+      body: 'Keenu is a non-commercial aggregator. Listing your board costs nothing — no fees, no paywall, no upsell.',
     },
     {
       title: 'A developer audience',
@@ -67,7 +67,7 @@
     </h1>
     <p class="max-w-xl text-lg leading-relaxed text-muted-foreground">
       Want your openings here? If you use a supported ATS, add your board with one line — or contribute an adapter for
-      your own. freehire crawls it regularly and folds the roles into one clean, searchable feed of tech jobs.
+      your own. Keenu crawls it regularly and folds the roles into one clean, searchable feed of tech jobs.
     </p>
     <div class="flex flex-wrap items-center gap-3">
       <Button href={repoUrl} variant="primary" size="lg">Add your board on GitHub</Button>
@@ -113,7 +113,7 @@
           <h3 class="text-base font-semibold tracking-tight">Your ATS isn't on the list yet</h3>
         </div>
         <p class="text-sm leading-relaxed text-muted-foreground">
-          freehire is open source, so a new platform is one adapter in
+          Keenu is open source, so a new platform is one adapter in
           <code class="font-mono text-foreground">internal/sources</code> — a small reader over your public job API. Send
           it as a pull request, or open an issue asking for the platform and point us at your careers page.
         </p>
@@ -136,9 +136,8 @@
             href={resolve('/my/integrations/api-keys')}
             class="font-medium text-foreground underline-offset-4 hover:underline">API key</a
           >
-          and post roles straight to freehire — one call per vacancy, from your own systems or the
-          <a href={resolve('/cli')} class="font-medium text-foreground underline-offset-4 hover:underline"
-            >freehire CLI</a
+          and post roles straight to Keenu — one call per vacancy, from your own systems or the
+          <a href={resolve('/cli')} class="font-medium text-foreground underline-offset-4 hover:underline">Keenu CLI</a
           >. Submissions go through the same moderator review as everything else, then join the catalogue.
         </p>
         <p class="text-sm leading-relaxed text-muted-foreground">

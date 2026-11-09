@@ -71,7 +71,7 @@ describe('account page — email change dialog', () => {
 
     await requestCode('taken@example.test');
 
-    await waitFor(() => expect(screen.getByText('Another freehire account already uses this email.')).toBeTruthy());
+    await waitFor(() => expect(screen.getByText('Another Keenu account already uses this email.')).toBeTruthy());
     expect(screen.queryByLabelText('Code')).toBeNull();
   });
 

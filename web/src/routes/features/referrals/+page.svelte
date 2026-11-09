@@ -12,8 +12,8 @@
 </script>
 
 <Seo
-  title="Get referred — warm intros over cold applies | freehire"
-  description="Ask an employee inside the company to put your name forward — anonymously, for free. freehire's referral marketplace connects job seekers with verified insiders who can refer them, and lets employees offer to refer good people in."
+  title="Get referred — warm intros over cold applies | Keenu"
+  description="Ask an employee inside the company to put your name forward — anonymously, for free. Keenu's referral marketplace connects job seekers with verified insiders who can refer them, and lets employees offer to refer good people in."
   {canonical}
 />
 

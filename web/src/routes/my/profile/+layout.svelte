@@ -162,7 +162,7 @@
 </script>
 
 <svelte:head>
-  <title>Profile — freehire</title>
+  <title>Profile — Keenu</title>
 </svelte:head>
 
 <!-- The account shell (my/+layout) owns the container, auth gate, and noindex. The

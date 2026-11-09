@@ -3,7 +3,7 @@ import { BASE_URL, type Group } from '../api-spec-types';
 export const linkIntakeDiscoveryGroup: Group = {
   title: 'Link intake & discovery',
   intro:
-    'Turning a URL in the wild into something freehire knows about. One intake ' +
+    'Turning a URL in the wild into something Keenu knows about. One intake ' +
     'sequence serves every surface — the website, the bot, the extension and the ' +
     'CLI — deliberately, so a pasted link gets the same answer everywhere.',
   endpoints: [
@@ -17,7 +17,7 @@ export const linkIntakeDiscoveryGroup: Group = {
         'than 404 — "we do not carry this" is a normal answer here. Used by the ' +
         'extension to tell whether the page you are on is a job we already have. ' +
         'A miss also carries `meta.ats_board`: true when the URL sits on an ATS board ' +
-        'freehire knows how to crawl, so a client can tell a posting worth adding ' +
+        'Keenu knows how to crawl, so a client can tell a posting worth adding ' +
         'from an arbitrary page.',
       query: [
         {
@@ -35,7 +35,7 @@ export const linkIntakeDiscoveryGroup: Group = {
       method: 'POST',
       path: '/jobs/resolve',
       auth: 'cookie-or-key',
-      summary: 'Hand freehire a link: import the posting, and the board behind it.',
+      summary: 'Hand Keenu a link: import the posting, and the board behind it.',
       description:
         'Five outcomes in one shape, distinguished by status: **200 found** — the ' +
         'catalogue already carries the vacancy. Either the URL itself is stored (nothing ' +

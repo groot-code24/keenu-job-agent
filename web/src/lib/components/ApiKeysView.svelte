@@ -43,7 +43,7 @@
   // search. The raw Bearer-header call still works (noted in the page intro),
   // but the CLI is the intended client — see /cli.
   const cliExample = $derived(
-    revealed ? `freehire auth login --token ${revealed.token}\nfreehire search "golang" --remote` : '',
+    revealed ? `Keenu auth login --token ${revealed.token}\nfreehire search "golang" --remote` : '',
   );
 
   // Load once the session is confirmed (the boot-time /me resolution may still be

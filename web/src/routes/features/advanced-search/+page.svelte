@@ -19,7 +19,7 @@
 </script>
 
 <Seo
-  title="Advanced job search — filters, exclusions and saved alerts | freehire"
+  title="Advanced job search — filters, exclusions and saved alerts | Keenu"
   description="Twenty filterable facets — role, skills, seniority, region, company, salary and more — each one includable or excludable, and saved to your profile as an alert. The same filters work from the API and the CLI."
   {canonical}
 />

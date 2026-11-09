@@ -23,7 +23,7 @@ export const NOTIFICATIONS_FAQ: FaqItem[] = [
   {
     question: 'Which channels are supported?',
     answer:
-      'Email, Telegram, and push to the freehire mobile app — pick any combination; a channel you never connect is simply skipped, not an error.',
+      'Email, Telegram, and push to the Keenu mobile app — pick any combination; a channel you never connect is simply skipped, not an error.',
   },
   {
     question: 'Where do I change any of this?',

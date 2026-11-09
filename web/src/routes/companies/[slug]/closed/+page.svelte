@@ -28,7 +28,7 @@
 <!-- noindex: one page per company per offset of postings nobody can apply to is not
      something to hand a crawler. The postings' own pages stay indexable. -->
 <Seo
-  title={`${name} — closed positions · freehire`}
+  title={`${name} — closed positions · Keenu`}
   description={`Positions ${name} posted that are no longer accepting applications.`}
   robots="noindex, follow"
 />
@@ -47,7 +47,7 @@
           <p class="py-16 text-center text-sm text-muted-foreground">Couldn't load closed positions.</p>
         {:else if data.closed.jobs.length === 0}
           <p class="py-16 text-center text-sm text-muted-foreground">
-            {name} has no closed positions on freehire.
+            {name} has no closed positions on Keenu.
           </p>
         {:else}
           <!-- Same width and rhythm as the Jobs tab's list; the closing date rides in the

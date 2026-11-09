@@ -14,8 +14,8 @@
 </script>
 
 <Seo
-  title="Terms of Service — freehire"
-  description="The terms for using freehire, the open-source IT job aggregator: your account, acceptable use, job listings, AI features, and liability."
+  title="Terms of Service — Keenu"
+  description="The terms for using Keenu, the open-source IT job aggregator: your account, acceptable use, job listings, AI features, and liability."
   {canonical}
 />
 
@@ -28,14 +28,13 @@
     </header>
 
     <p class="text-base leading-relaxed text-muted-foreground">
-      freehire (<a href="https://freehire.me" class="font-medium text-foreground underline-offset-4 hover:underline"
+      Keenu (<a href="https://freehire.me" class="font-medium text-foreground underline-offset-4 hover:underline"
         >freehire.me</a
       >), including our mobile app, is a free, open-source IT job aggregator. By using it, you agree to these terms.
     </p>
 
     <p class="text-sm leading-relaxed text-muted-foreground">
-      freehire is operated by ILYA STRELOV TECNOLOGIA DA INFORMACAO LTDA (CNPJ 58.774.293/0001-44), Florianópolis,
-      Brazil.
+      Keenu is operated by ILYA STRELOV TECNOLOGIA DA INFORMACAO LTDA (CNPJ 58.774.293/0001-44), Florianópolis, Brazil.
     </p>
 
     <section class="flex flex-col gap-3">

@@ -24,8 +24,8 @@
 </script>
 
 <Seo
-  title="freehire for Chrome and Firefox — a job-application agent in the side panel"
-  description="Open the freehire side panel on any job posting: it reads the page itself, scores it against your CV, and fills the application form from your profile. Greenhouse, Lever, Workday, Ashby — or a career page nobody has heard of. You press Submit."
+  title="Keenu for Chrome and Firefox — a job-application agent in the side panel"
+  description="Open the Keenu side panel on any job posting: it reads the page itself, scores it against your CV, and fills the application form from your profile. Greenhouse, Lever, Workday, Ashby — or a career page nobody has heard of. You press Submit."
   {canonical}
 />
 

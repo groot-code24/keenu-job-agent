@@ -9,7 +9,7 @@ describe('AgentsLandingView', () => {
   it('opens on the MCP track and lists the open tracks before the Pro assistant', () => {
     render(AgentsLandingView);
     const tabs = screen.getAllByRole('tab').map((t) => t.textContent?.trim());
-    expect(tabs).toEqual(['MCP', 'CLI', 'API', 'freehire Assistant · Pro']);
+    expect(tabs).toEqual(['MCP', 'CLI', 'API', 'Keenu Assistant · Pro']);
     expect(screen.getByRole('tab', { name: 'MCP' }).getAttribute('aria-selected')).toBe('true');
   });
 

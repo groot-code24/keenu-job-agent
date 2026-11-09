@@ -44,8 +44,8 @@
   const description = $derived(
     metaDescription(data.job.description) ||
       (data.job.company
-        ? `${data.job.title} at ${data.job.company} — apply on freehire.`
-        : `${data.job.title} — apply on freehire.`),
+        ? `${data.job.title} at ${data.job.company} — apply on Keenu.`
+        : `${data.job.title} — apply on Keenu.`),
   );
   // The one breadcrumb trail behind both the visible nav (via visibleBreadcrumbItems below)
   // and the structured data — a single array so the two can never disagree about what the

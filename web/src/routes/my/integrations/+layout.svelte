@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
-  import { Key, Plug, Webhook } from '@lucide/svelte';
+  import { Bot, Key, Plug, Webhook } from '@lucide/svelte';
   import { resolve } from '$app/paths';
   import { page } from '$app/state';
   import { locale } from '#lib/i18n/currentLocale.svelte.js';
@@ -19,6 +19,7 @@
 
   const TABS = [
     { id: 'connections', href: '/my/integrations', icon: Plug },
+    { id: 'agent', href: '/my/integrations/agent', icon: Bot },
     { id: 'api-keys', href: '/my/integrations/api-keys', icon: Key },
     { id: 'webhook', href: '/my/integrations/webhook', icon: Webhook },
   ] as const;

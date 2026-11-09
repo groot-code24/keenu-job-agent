@@ -15,7 +15,7 @@
     if (!open) onClose();
   });
 
-  const prompt = $derived(`Tailor my freehire CV (id ${cvId}) to this vacancy using the freehire CLI.`);
+  const prompt = $derived(`Tailor my Keenu CV (id ${cvId}) to this vacancy using the Keenu CLI.`);
 
   let copied = $state(false);
   let copyTimer: ReturnType<typeof setTimeout> | undefined;
@@ -35,8 +35,8 @@
 
 <Dialog bind:open title="Edit this CV from the CLI" class="sm:max-w-lg">
   <p class="text-sm leading-relaxed text-muted-foreground">
-    Give this to your own coding agent — with the freehire CLI installed and signed in, it reads and writes this exact
-    CV the same way the in-app assistant does.
+    Give this to your own coding agent — with the Keenu CLI installed and signed in, it reads and writes this exact CV
+    the same way the in-app assistant does.
   </p>
   <div
     class="mt-3 flex items-start gap-2 rounded-md border border-border bg-background/60 p-3 font-mono text-sm leading-relaxed"

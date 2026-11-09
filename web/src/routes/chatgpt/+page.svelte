@@ -8,7 +8,7 @@
 </script>
 
 <Seo
-  title="freehire for ChatGPT — search IT jobs inside ChatGPT"
+  title="Keenu for ChatGPT — search IT jobs inside ChatGPT"
   description={`${MCP_CATALOG_PITCH} Find roles with AI, then connect your account to save jobs, track applications and manage alerts.`}
   {canonical}
 />

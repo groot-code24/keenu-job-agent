@@ -12,8 +12,8 @@
   // browser (freehire-cli v0.24+), so a new user never handles an API key.
   const steps = [
     { n: 1, label: 'Install — no Go needed', cmd: CLI_INSTALL },
-    { n: 2, label: 'Sign in — opens your browser, no key to paste', cmd: 'freehire auth login' },
-    { n: 3, label: 'Search', cmd: 'freehire search "golang" --remote --region eu' },
+    { n: 2, label: 'Sign in — opens your browser, no key to paste', cmd: 'Keenu auth login' },
+    { n: 3, label: 'Search', cmd: 'Keenu search "golang" --remote --region eu' },
   ];
 
   // Agent skills, one per task rather than one per tool, so a host loads what the
@@ -101,7 +101,7 @@
       value: 'mail',
       label: 'Mail',
       intro:
-        'freehire fetches no mail on this tier: your own client does, and inbox push hands it over. Then an agent judges each message and links it to an application.',
+        'Keenu fetches no mail on this tier: your own client does, and inbox push hands it over. Then an agent judges each message and links it to an application.',
       commands: [
         {
           cmd: 'inbox push --file mail.json',
@@ -129,7 +129,7 @@
       commands: [
         {
           cmd: 'contribute <url>',
-          desc: "Hand freehire a job link; a board we don't track yet gets added and crawled.",
+          desc: "Hand Keenu a job link; a board we don't track yet gets added and crawled.",
         },
         { cmd: 'contributions', desc: "The boards you've contributed and their state." },
         { cmd: 'submissions', desc: 'Jobs you submitted, and the review queue for moderators.' },
@@ -187,7 +187,7 @@
   <section class="grid-bg relative -mx-4 px-4 pb-16 pt-12 sm:pt-16">
     <div class="grid items-center gap-12 lg:grid-cols-2">
       <div>
-        <SectionLabel text="freehire on the command line" class="reveal" style="--d:0ms" />
+        <SectionLabel text="Keenu on the command line" class="reveal" style="--d:0ms" />
 
         <h1
           class="reveal mt-6 max-w-2xl text-balance text-4xl font-semibold leading-[0.98] tracking-tighter sm:text-6xl"
@@ -260,8 +260,8 @@
         <p class="mt-4 max-w-md leading-relaxed text-muted-foreground">
           One request — <span class="text-foreground"
             >“find senior remote Golang backend jobs in Europe and pick the 3 best”</span
-          >. Claude Code searches with <code class="font-mono text-foreground">freehire search</code>, reads the
-          postings with <code class="font-mono text-foreground">freehire job</code>, and explains its picks.
+          >. Claude Code searches with <code class="font-mono text-foreground">Keenu search</code>, reads the postings
+          with <code class="font-mono text-foreground">Keenu job</code>, and explains its picks.
         </p>
         <p class="mt-4 max-w-md text-sm leading-relaxed text-muted-foreground">
           A real, unedited session against the live catalogue, sped up 1.5×.
@@ -270,7 +270,7 @@
       <figure class="overflow-hidden rounded-xl border border-border shadow-sm lg:col-span-3">
         <img
           src="/cli-demo-claude-code.gif"
-          alt="Claude Code running freehire search and freehire job, then listing three senior remote Go backend roles in Europe with reasons for each."
+          alt="Claude Code running Keenu search and Keenu job, then listing three senior remote Go backend roles in Europe with reasons for each."
           width="918"
           height="735"
           loading="lazy"
@@ -309,11 +309,11 @@
             {#each group.commands as row (row.cmd)}
               <div class="grid gap-x-6 gap-y-1 px-4 py-3 sm:grid-cols-5 sm:items-center">
                 <dt class="font-mono text-sm sm:col-span-2">
-                  <span class="text-muted-foreground">freehire</span>
+                  <span class="text-muted-foreground">Keenu</span>
                   {row.cmd}
                 </dt>
                 <dd class="text-sm leading-relaxed text-muted-foreground sm:col-span-2">{row.desc}</dd>
-                <dd class="hidden justify-self-end sm:block">{@render copyButton(`freehire ${row.cmd}`, row.cmd)}</dd>
+                <dd class="hidden justify-self-end sm:block">{@render copyButton(`Keenu ${row.cmd}`, row.cmd)}</dd>
               </div>
             {/each}
           </dl>
@@ -336,7 +336,7 @@
             target="_blank"
             rel="noopener noreferrer"
             class="text-foreground underline-offset-4 hover:underline">Model Context Protocol</a
-          >, so Claude Desktop, Claude Code or any MCP host can drive freehire. It runs via
+          >, so Claude Desktop, Claude Code or any MCP host can drive Keenu. It runs via
           <code class="font-mono text-foreground">npx</code> — no global install.
         </p>
         <p class="mt-4 max-w-md text-sm leading-relaxed text-muted-foreground">

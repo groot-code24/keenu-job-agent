@@ -14,12 +14,12 @@
   const canonical = $derived(`${origin}/contributors/${who.login}`);
 
   const description = $derived(
-    `${who.login} contributes to freehire, the open-source job search engine — ${contributionSummary(who)} since ${monthYear(who.firstContributionAt)}.`,
+    `${who.login} contributes to Keenu, the open-source job search engine — ${contributionSummary(who)} since ${monthYear(who.firstContributionAt)}.`,
   );
 
   // The share text is what someone posts about their own work, so it reads as their
   // sentence and not as ours.
-  const shareText = $derived(`I contribute to freehire, an open-source job search engine.`);
+  const shareText = $derived(`I contribute to Keenu, an open-source job search engine.`);
   const shareX = $derived(
     `https://x.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(canonical)}`,
   );
@@ -57,7 +57,7 @@
   );
 </script>
 
-<Seo title="{who.login} — freehire contributors" {description} {canonical} image={`${canonical}/og.png`} />
+<Seo title="{who.login} — Keenu contributors" {description} {canonical} image={`${canonical}/og.png`} />
 
 <svelte:head>
   <!-- eslint-disable-next-line svelte/no-at-html-tags -- non-executable JSON-LD built by jsonLdScript, which escapes `<`; raw injection is the only way to emit a structured-data <script> -->
@@ -77,7 +77,7 @@
     <div class="min-w-0">
       <h1 class="text-3xl font-semibold tracking-tighter sm:text-4xl">{who.login}</h1>
       <p class="mt-1 text-muted-foreground">
-        {who.role === 'maintainer' ? 'Maintains' : 'Contributes to'} freehire since
+        {who.role === 'maintainer' ? 'Maintains' : 'Contributes to'} Keenu since
         {monthYear(who.firstContributionAt)}
       </p>
       <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- external profile, not a SvelteKit route -->

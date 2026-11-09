@@ -196,7 +196,7 @@
     <p class="flex items-center gap-2 text-sm font-semibold">
       <Smartphone class="size-5" aria-hidden="true" /> Push
     </p>
-    <p class="mt-1.5 text-xs text-muted-foreground">In the freehire iPhone app</p>
+    <p class="mt-1.5 text-xs text-muted-foreground">In the Keenu iPhone app</p>
     <div class="mt-auto pt-4">
       <Button variant="outline" size="sm" class="w-full" href={APP_STORE_URL} target="_blank">Get the app</Button>
     </div>

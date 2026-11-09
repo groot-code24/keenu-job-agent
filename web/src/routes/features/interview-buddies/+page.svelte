@@ -12,7 +12,7 @@
 </script>
 
 <Seo
-  title="Interview buddies — find people interviewing where you are | freehire"
+  title="Interview buddies — find people interviewing where you are | Keenu"
   description="An anonymous, free peer network for job seekers: see who is applying to the same companies and how far they got, and message the person who just had the interview you're preparing for. Members only, no crawlers."
   {canonical}
 />

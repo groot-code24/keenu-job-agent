@@ -71,7 +71,7 @@
 </script>
 
 <!-- Sources: the two ways to get mail in — Gmail (a status line, connected on
-     Integrations) and the freehire mailbox (owned here). -->
+     Integrations) and the Keenu mailbox (owned here). -->
 <div class="grid gap-3 sm:grid-cols-2">
   <!-- Gmail: status only — the connect/disconnect/sync UI lives on Integrations. -->
   <div class="rounded-xl border border-border bg-card p-4">

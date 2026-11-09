@@ -341,7 +341,7 @@ export const jobsGroup: Group = {
       method: 'GET',
       path: '/jobs/{slug}/direct-apply',
       auth: 'none',
-      summary: 'The application form of a vacancy that takes applications on freehire.',
+      summary: 'The application form of a vacancy that takes applications on Keenu.',
       description:
         'Only for a posting whose `direct_apply` is true — its employer published it here ' +
         'and receives applications by email. Any other posting is a `404`. Signed in with the ' +
@@ -377,7 +377,7 @@ export const jobsGroup: Group = {
       method: 'POST',
       path: '/jobs/{slug}/direct-apply',
       auth: 'cookie',
-      summary: 'Apply on freehire: the employer receives your CV and answers by email.',
+      summary: 'Apply on Keenu: the employer receives your CV and answers by email.',
       description:
         'Needs a verified email. The employer gets the chosen CV as a PDF, the answers, the ' +
         'note and your address as Reply-To. One application per vacancy: `409` once it was ' +

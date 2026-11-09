@@ -20,13 +20,7 @@
   const formatDate = (iso: string) => dateFmt.format(new Date(iso));
 </script>
 
-<Seo
-  title="{data.meta.title} · freehire"
-  description={data.meta.summary}
-  {canonical}
-  ogType="article"
-  image={ogImage}
-/>
+<Seo title="{data.meta.title} · Keenu" description={data.meta.summary} {canonical} ogType="article" image={ogImage} />
 
 <svelte:head>
   <!-- eslint-disable-next-line svelte/no-at-html-tags -- non-executable JSON-LD built by jsonLdScript, which escapes `<`; raw injection is the only way to emit a structured-data <script> -->

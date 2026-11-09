@@ -12,7 +12,7 @@ import {
 import { PlanRefused } from './planRefused';
 
 describe('freehireSlugFromUrl', () => {
-  it('extracts the slug from a freehire job URL', () => {
+  it('extracts the slug from a Keenu job URL', () => {
     expect(freehireSlugFromUrl('https://freehire.me/jobs/backend-engineer-stripe-abc')).toBe(
       'backend-engineer-stripe-abc',
     );
@@ -26,7 +26,7 @@ describe('freehireSlugFromUrl', () => {
     expect(freehireSlugFromUrl('https://freehire.me/jobs/abc/similar')).toBeNull();
   });
 
-  it('ignores non-job freehire pages', () => {
+  it('ignores non-job Keenu pages', () => {
     expect(freehireSlugFromUrl('https://freehire.me/companies')).toBeNull();
   });
 
@@ -80,7 +80,7 @@ describe('resolveNotice', () => {
     expect(resolveNotice('queued')).toMatch(/look/i);
   });
 
-  it('distinguishes a company freehire already follows from a new one', () => {
+  it('distinguishes a company Keenu already follows from a new one', () => {
     // Both imported the posting, so both must confirm it landed — but only one of them can
     // promise the company's other roles will appear, and saying that of an uncrawled company
     // would be a promise we cannot keep until its board is onboarded.

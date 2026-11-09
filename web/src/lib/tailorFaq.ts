@@ -40,6 +40,6 @@ export const TAILOR_FAQ: FaqItem[] = [
   {
     question: 'Can I drive it from my own agent or the terminal?',
     answer:
-      'Yes. The freehire CLI runs the same loop with one API key — read the analysis, read the CV, apply one edit, render the PDF — under the same rules, so your agent cannot write in what you have not done either.',
+      'Yes. The Keenu CLI runs the same loop with one API key — read the analysis, read the CV, apply one edit, render the PDF — under the same rules, so your agent cannot write in what you have not done either.',
   },
 ];

@@ -4,10 +4,10 @@
 
   // The CLI half of /mcp: one prompt a person hands to a terminal agent, which does the
   // three steps itself. The same steps are spelled out on /cli for someone typing them.
-  const prompt = `Set up freehire for me so you can search jobs and track my applications.
+  const prompt = `Set up Keenu for me so you can search jobs and track my applications.
 1. Install the CLI: run \`${CLI_INSTALL}\`.
-2. Sign in: run \`freehire auth login\` and let me finish the sign-in in my browser.
-3. Check it works: run \`freehire search "golang" --remote\` and show me the first results.
+2. Sign in: run \`Keenu auth login\` and let me finish the sign-in in my browser.
+3. Check it works: run \`Keenu search "golang" --remote\` and show me the first results.
 Once that is done, let me know it is ready.`;
 
   let copied = $state(false);

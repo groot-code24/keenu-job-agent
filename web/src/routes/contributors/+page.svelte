@@ -18,7 +18,7 @@
   const people = $derived(data.maintainers.length + data.contributors.length);
 
   const description = $derived(
-    `The ${people} people who build freehire — every merged pull request and every issue opened, straight from the repository.`,
+    `The ${people} people who build Keenu — every merged pull request and every issue opened, straight from the repository.`,
   );
 
   const jsonLd = $derived(
@@ -37,7 +37,7 @@
     });
 </script>
 
-<Seo title="Contributors — the people who build freehire" {description} {canonical} />
+<Seo title="Contributors — the people who build Keenu" {description} {canonical} />
 
 <svelte:head>
   <!-- eslint-disable-next-line svelte/no-at-html-tags -- non-executable JSON-LD built by jsonLdScript, which escapes `<`; raw injection is the only way to emit a structured-data <script> -->
@@ -64,7 +64,7 @@
   <header class="dot-grid -mx-4 mb-12 px-4 pb-8 pt-4">
     <SectionLabel text="contributors" />
     <h1 class="mt-4 text-4xl font-semibold tracking-tighter sm:text-5xl">
-      {people} people build freehire.
+      {people} people build Keenu.
     </h1>
     <p class="mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground">
       Everyone below has merged code or opened an issue against the repository. The list comes straight from GitHub —
@@ -101,8 +101,7 @@
   <section class="rounded-xl border border-border bg-muted/30 p-6 sm:p-8">
     <h2 class="text-xl font-semibold tracking-tight">Your name goes here next.</h2>
     <p class="mt-2 max-w-2xl text-muted-foreground">
-      An opened issue counts as much as merged code. Pick something that annoys you about freehire and tell us, or fix
-      it.
+      An opened issue counts as much as merged code. Pick something that annoys you about Keenu and tell us, or fix it.
     </p>
     <div class="mt-5 flex flex-wrap gap-3">
       <a

@@ -16,7 +16,7 @@
   // The description is the page's own sentence, so it is also the meta description —
   // one claim, not a summary of a summary. The posting count trails it as a fact about
   // the catalogue, stated whether or not the list below is shown.
-  const metaDescription = $derived(`${data.description} ${count(data.total)} open ${data.label} jobs on freehire.`);
+  const metaDescription = $derived(`${data.description} ${count(data.total)} open ${data.label} jobs on Keenu.`);
   // Where "the open X jobs" goes. A collection pinning exactly this skill is the same
   // set behind a self-canonical URL, so it wins: /jobs?skills=X answers the reader fine
   // but its own canonical names /jobs, and this page's most-followed link should not
@@ -45,7 +45,7 @@
   );
 </script>
 
-<Seo title={`What is ${data.label}? · freehire`} description={metaDescription} {canonical} />
+<Seo title={`What is ${data.label}? · Keenu`} description={metaDescription} {canonical} />
 <svelte:head>
   <!-- eslint-disable-next-line svelte/no-at-html-tags -- non-executable JSON-LD from jsonLdScript, which escapes `<` -->
   {@html jsonLd}
@@ -53,7 +53,7 @@
 
 <div class="mx-auto w-full max-w-4xl px-4 py-6">
   <nav class="mb-4 flex items-center gap-2 text-sm text-muted-foreground" aria-label="Breadcrumb">
-    <a href={resolve('/')} class="hover:underline">freehire</a>
+    <a href={resolve('/')} class="hover:underline">Keenu</a>
     <span>/</span>
     <a href={resolve('/skills')} class="hover:underline">Skills</a>
   </nav>
@@ -81,7 +81,7 @@
     <p class="mt-4 text-sm">
       <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- jobsHref is resolve()d on the collection branch; the rule cannot see through the variable, and the fallback branch really is a query-only /jobs URL -->
       <a href={jobsHref} class="font-medium underline">{count(data.total)} open {data.label} jobs</a>
-      on freehire.
+      on Keenu.
     </p>
   </header>
 

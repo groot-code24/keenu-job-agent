@@ -33,7 +33,7 @@ describe('claimModuleReload', () => {
 
   it('treats a corrupted record as none', () => {
     const store = memoryStore();
-    store.setItem('freehire:module-reload', '{not json');
+    store.setItem('Keenu:module-reload', '{not json');
     expect(claimModuleReload(store, 'https://x/a', 0)).toBe(true);
   });
 });

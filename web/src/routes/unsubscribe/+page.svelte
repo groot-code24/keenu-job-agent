@@ -91,7 +91,7 @@
 </script>
 
 <svelte:head>
-  <title>Email settings — freehire</title>
+  <title>Email settings — Keenu</title>
   <meta name="robots" content="noindex" />
 </svelte:head>
 

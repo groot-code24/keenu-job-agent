@@ -9,8 +9,8 @@
 </script>
 
 <Seo
-  title="Job Posting Removal Requests — freehire"
-  description="Why freehire does not delete job postings on request, how a posting leaves the site on its own, and how to ask for a correction."
+  title="Job Posting Removal Requests — Keenu"
+  description="Why Keenu does not delete job postings on request, how a posting leaves the site on its own, and how to ask for a correction."
   {canonical}
 />
 
@@ -24,7 +24,7 @@
     <section class="flex flex-col gap-3">
       <h2 class="text-xl font-semibold tracking-tight">How your posting got here</h2>
       <p class="text-sm leading-relaxed text-muted-foreground">
-        freehire shows publicly available job postings. Many of them are added by our users, who save the vacancies they
+        Keenu shows publicly available job postings. Many of them are added by our users, who save the vacancies they
         find, track their applications, and share them with each other. Every posting links back to its original source,
         where candidates apply.
       </p>
@@ -33,8 +33,8 @@
     <section class="flex flex-col gap-3">
       <h2 class="text-xl font-semibold tracking-tight">Why we don't delete postings</h2>
       <p class="text-sm leading-relaxed text-muted-foreground">
-        One of freehire's goals is to give job seekers honest information about a vacancy, including its history: when
-        it first appeared, how long it stayed open, and whether it was reposted. That history is how we flag
+        One of Keenu's goals is to give job seekers honest information about a vacancy, including its history: when it
+        first appeared, how long it stayed open, and whether it was reposted. That history is how we flag
         <a href={resolve('/features/ghost-jobs')} class={link}>ghost jobs</a> — roles that stay listed with no real intent
         to hire. Deleting postings on request would erase exactly the record candidates rely on, so we keep them.
       </p>
@@ -43,9 +43,9 @@
     <section class="flex flex-col gap-3">
       <h2 class="text-xl font-semibold tracking-tight">Postings close on their own</h2>
       <p class="text-sm leading-relaxed text-muted-foreground">
-        freehire updates postings automatically. When a vacancy is taken down at its source, we detect it and mark it as
+        Keenu updates postings automatically. When a vacancy is taken down at its source, we detect it and mark it as
         closed here too. If you no longer want your posting to appear as open, unpublish it at the source — it will drop
-        out of freehire's listings within a short time, with nothing else for you to do.
+        out of Keenu's listings within a short time, with nothing else for you to do.
       </p>
     </section>
 

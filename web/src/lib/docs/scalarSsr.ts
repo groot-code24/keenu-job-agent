@@ -25,7 +25,7 @@ const SUFFIX = '?scalar-html';
 
 export function scalarHtmlPlugin(): Plugin {
   return {
-    name: 'freehire:scalar-html',
+    name: 'Keenu:scalar-html',
     load: {
       // The filter keeps the bundler from calling into JS for every other module.
       filter: { id: /\?scalar-html$/ },

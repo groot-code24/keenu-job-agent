@@ -32,7 +32,7 @@ export function buildBrandCard(opts: { stats: BrandStat[] }): string {
   <div style="display:flex;align-items:center;justify-content:space-between;width:${OG_WIDTH - 144}px">
     <div style="display:flex;align-items:center;gap:18px">
       <img src="${MARK_DATA_URI}" style="width:52px;height:52px" />
-      <div style="display:flex;font-size:44px;font-weight:700;letter-spacing:-0.03em">freehire</div>
+      <div style="display:flex;font-size:44px;font-weight:700;letter-spacing:-0.03em">Keenu</div>
     </div>
     <div style="display:flex;font-size:22px;color:#a3a3a3">freehire.me</div>
   </div>

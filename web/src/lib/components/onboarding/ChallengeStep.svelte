@@ -91,9 +91,7 @@
 </script>
 
 <h2 class="text-xl font-semibold tracking-tight text-balance">What's hardest about your job search right now?</h2>
-<p class="mt-1 text-sm text-muted-foreground text-pretty">
-  Pick all that apply — we'll show you what on freehire helps.
-</p>
+<p class="mt-1 text-sm text-muted-foreground text-pretty">Pick all that apply — we'll show you what on Keenu helps.</p>
 
 <div class="mt-6 grid items-start gap-5 md:grid-cols-2">
   <div role="group" aria-label="The hardest parts of your job search" class="flex flex-col gap-1.5">

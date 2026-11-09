@@ -101,7 +101,7 @@
 </script>
 
 <svelte:head>
-  <title>Watchlist — freehire</title>
+  <title>Watchlist — Keenu</title>
 </svelte:head>
 
 <div class="flex max-w-3xl flex-col gap-6">

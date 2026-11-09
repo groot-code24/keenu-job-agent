@@ -15,7 +15,7 @@
     { id: 'mcp', label: 'MCP', icon: Plug },
     { id: 'cli', label: 'CLI', icon: Terminal },
     { id: 'api', label: 'API', icon: Braces },
-    { id: 'assistant', label: 'freehire Assistant · Pro', icon: MessageSquare },
+    { id: 'assistant', label: 'Keenu Assistant · Pro', icon: MessageSquare },
   ] as const;
   let active = $state<(typeof tabs)[number]['id']>('mcp');
   const uid = $props.id();
@@ -25,12 +25,12 @@
     {
       title: 'Try your first search',
       note: 'Search is public. No account or API key needed.',
-      text: 'freehire facets\nfreehire search "golang" --remote --region eu',
+      text: 'Keenu facets\nfreehire search "golang" --remote --region eu',
     },
     {
       title: 'Connect your account',
       note: 'Optional. Opens your browser so you can sign in to save and track jobs.',
-      text: 'freehire auth login',
+      text: 'Keenu auth login',
     },
   ];
   const prompts = [
@@ -76,7 +76,7 @@
   <AgentSetupButton />
 </section>
 
-<TabStrip {tabs} {active} onSelect={(id) => (active = id)} label="Choose how to use freehire" {panelId} />
+<TabStrip {tabs} {active} onSelect={(id) => (active = id)} label="Choose how to use Keenu" {panelId} />
 <div
   id={panelId}
   role="tabpanel"
@@ -88,7 +88,7 @@
     <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
       <div>
         <div class="flex flex-wrap items-center gap-3">
-          <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">Start here. Stay in freehire.</h2>
+          <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">Start here. Stay in Keenu.</h2>
           <span class="rounded-full bg-foreground px-2.5 py-1 text-xs font-semibold text-background">Pro</span>
         </div>
         <p class="mt-5 max-w-xl leading-relaxed text-muted-foreground">
@@ -110,7 +110,7 @@
       </div>
       <figure class="overflow-hidden rounded-xl border border-border bg-secondary/20">
         <figcaption class="flex items-center justify-between gap-3 border-b border-border px-5 py-4 text-sm">
-          <span class="font-medium">freehire Assistant</span>
+          <span class="font-medium">Keenu Assistant</span>
           <span class="text-xs text-muted-foreground">Example conversation</span>
         </figcaption>
         <div class="space-y-5 p-5 sm:p-6">
@@ -141,10 +141,10 @@
   </div>
 
   <div hidden={active !== 'mcp'}>
-    <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">Bring freehire to your assistant.</h2>
+    <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">Bring Keenu to your assistant.</h2>
     <p class="mb-7 mt-4 max-w-2xl leading-relaxed text-muted-foreground">
-      Choose the assistant you already use and follow its connection steps. Search is free and needs no freehire
-      account. Connect your account to save and track jobs.
+      Choose the assistant you already use and follow its connection steps. Search is free and needs no Keenu account.
+      Connect your account to save and track jobs.
     </p>
     <McpSetup />
   </div>

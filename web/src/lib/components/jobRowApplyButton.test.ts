@@ -44,7 +44,7 @@ describe('JobRow direct-apply button', () => {
     expect(applyBlock).not.toBe('');
   });
 
-  it('sends a vacancy taking applications on freehire to its own page, not outside', () => {
+  it('sends a vacancy taking applications on Keenu to its own page, not outside', () => {
     const i = actionRow.indexOf('{#if directApply}');
     const block = i === -1 ? '' : actionRow.slice(i, actionRow.indexOf('{/if}', i));
     expect(block).toContain("href={resolve('/jobs/[slug]', { slug: job.public_slug })}");

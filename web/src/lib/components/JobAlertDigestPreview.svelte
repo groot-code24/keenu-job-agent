@@ -31,7 +31,7 @@
   >
     <div class="flex items-center gap-2">
       <BrandMark class="size-5 text-foreground" />
-      <span class="text-sm font-bold">freehire</span>
+      <span class="text-sm font-bold">Keenu</span>
     </div>
     <h3 class="mt-4 text-base font-semibold tracking-tight">3 new jobs for &ldquo;{search}&rdquo;</h3>
     <div class="mt-4 flex flex-col gap-2">
@@ -50,7 +50,7 @@
         View all — 12 more
       </span>
       <p class="mt-6 border-t border-border pt-4 text-xs text-muted-foreground">
-        You're getting this because you set up a job alert on freehire.
+        You're getting this because you set up a job alert on Keenu.
         <a href={resolve('/my/notifications/settings')} class="underline-offset-4 hover:underline"
           >Manage notifications</a
         >.

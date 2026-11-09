@@ -183,7 +183,7 @@ ${BASE_URL}/auth/oauth/google/start`,
       method: 'GET',
       path: '/auth/extension/connect',
       auth: 'extension',
-      summary: 'Consent screen for "Sign in with freehire" from the browser extension.',
+      summary: 'Consent screen for "Sign in with Keenu" from the browser extension.',
       description:
         'Opened by the extension via `chrome.identity.launchWebAuthFlow`, not ' +
         'called directly — renders an HTML consent page, not JSON. ' +

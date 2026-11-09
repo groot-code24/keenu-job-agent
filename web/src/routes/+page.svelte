@@ -17,7 +17,7 @@
 </script>
 
 <Seo
-  title="freehire — the open-source search engine for tech jobs"
+  title="Keenu — the open-source search engine for tech jobs"
   description="Search 4.9M+ tech jobs straight from company career boards — here, from your AI agent over MCP and the CLI, or through the Jobs API. Deduplicated, tagged by stack, seniority and location. Free search, open source."
   canonical="{origin}/"
 />

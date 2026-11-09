@@ -193,7 +193,7 @@
     exchange: 'Discord did not finish handing over access. Try connecting again.',
     // Its own message, because this one is the user's to resolve and "try again" would
     // leave them retrying forever.
-    taken: 'That Discord account is already linked to another freehire account. Disconnect it there first.',
+    taken: 'That Discord account is already linked to another Keenu account. Disconnect it there first.',
   };
 
   async function loadDiscord() {
@@ -262,7 +262,7 @@
 <div class="flex flex-col gap-4">
   <div class="flex flex-col gap-1">
     <h2 class="text-lg font-semibold tracking-tight">Connected accounts</h2>
-    <p class="text-sm text-muted-foreground">Connect the third-party accounts freehire can use on your behalf.</p>
+    <p class="text-sm text-muted-foreground">Connect the third-party accounts Keenu can use on your behalf.</p>
   </div>
 
   {#if googleNotice}

@@ -14,8 +14,8 @@
 </script>
 
 <Seo
-  title="freehire API — internal reference"
-  description="The freehire endpoints that require a signed-in browser session: saved searches, notifications, moderator tools, and the browser extension. For the endpoints an API key can call, see the public API reference."
+  title="Keenu API — internal reference"
+  description="The Keenu endpoints that require a signed-in browser session: saved searches, notifications, moderator tools, and the browser extension. For the endpoints an API key can call, see the public API reference."
   robots="noindex"
 />
 

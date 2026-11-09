@@ -19,7 +19,6 @@
         { label: 'Collections', href: resolve('/collections') },
         { label: 'Talent Network', href: resolve('/talent') },
         { label: 'Jobs by role', href: resolve('/roles') },
-        { label: 'Pricing', href: resolve('/pricing') },
         // The glossary's only link from the app — the chip's reveal opens on
         // interaction and the sitemap is for crawlers, so this is the one path a
         // reader browsing the site can follow to it.
@@ -104,7 +103,7 @@
   // cache-buster it stamps per variant.
   const productHunt = {
     href: 'https://www.producthunt.com/products/freehire?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-freehire',
-    alt: 'freehire - The open-source job search that covers every board | Product Hunt',
+    alt: 'Keenu - The open-source job search that covers every board | Product Hunt',
     light:
       'https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1196233&theme=light&t=1785605037608',
     dark: 'https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1196233&theme=dark&t=1785605357228',

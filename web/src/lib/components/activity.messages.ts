@@ -4,7 +4,7 @@ import { defineMessages } from '#lib/i18n/t.js';
 export const messages = defineMessages(
   {
     // The layout's base title; each child page overrides it with its own.
-    headTitle: 'Activity — freehire',
+    headTitle: 'Activity — Keenu',
     title: 'Activity',
     tablistLabel: 'Activity view',
     tabs: {
@@ -13,10 +13,10 @@ export const messages = defineMessages(
       hidden: 'Hidden',
     },
     headTitles: {
-      saved: 'Saved — Activity — freehire',
-      history: 'Viewed — Activity — freehire',
-      matches: 'Matches — Activity — freehire',
-      hidden: 'Hidden — Activity — freehire',
+      saved: 'Saved — Activity — Keenu',
+      history: 'Viewed — Activity — Keenu',
+      matches: 'Matches — Activity — Keenu',
+      hidden: 'Hidden — Activity — Keenu',
     },
     saved: {
       loadError: "Couldn't load your saved jobs.",
@@ -42,7 +42,7 @@ export const messages = defineMessages(
   },
   {
     ru: {
-      headTitle: 'Активность — freehire',
+      headTitle: 'Активность — Keenu',
       title: 'Активность',
       tablistLabel: 'Раздел активности',
       tabs: {
@@ -51,10 +51,10 @@ export const messages = defineMessages(
         hidden: 'Скрытые',
       },
       headTitles: {
-        saved: 'Сохранённые — Активность — freehire',
-        history: 'Просмотренные — Активность — freehire',
-        matches: 'Совпадения — Активность — freehire',
-        hidden: 'Скрытые — Активность — freehire',
+        saved: 'Сохранённые — Активность — Keenu',
+        history: 'Просмотренные — Активность — Keenu',
+        matches: 'Совпадения — Активность — Keenu',
+        hidden: 'Скрытые — Активность — Keenu',
       },
       saved: {
         loadError: 'Не удалось загрузить сохранённые вакансии.',

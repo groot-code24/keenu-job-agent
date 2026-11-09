@@ -94,9 +94,9 @@
         </h1>
 
         <p class="reveal mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground" style="--d:160ms">
-          Everyone knows a referral is the fastest way in. The hard part is finding someone inside who'll make it.
-          freehire surfaces the companies that already have a willing insider — and connects you to them, so you can
-          stop cold-DMing strangers.
+          Everyone knows a referral is the fastest way in. The hard part is finding someone inside who'll make it. Keenu
+          surfaces the companies that already have a willing insider — and connects you to them, so you can stop
+          cold-DMing strangers.
         </p>
 
         <!-- signature glyph: the path in one line, drawn in the muted mono register -->
@@ -199,9 +199,9 @@
         <p class="font-mono text-xs uppercase tracking-wide text-muted-foreground">for seekers</p>
         <h3 class="mt-4 text-xl font-semibold tracking-tight">No one on the inside? Solved.</h3>
         <p class="mt-3 text-sm leading-relaxed text-muted-foreground">
-          The hardest part of a referral is finding someone willing to give it. freehire shows you which companies
-          already have a referrer — attach your CV and ask, and if they see a fit they reach out directly. No cold DMs,
-          no application black hole.
+          The hardest part of a referral is finding someone willing to give it. Keenu shows you which companies already
+          have a referrer — attach your CV and ask, and if they see a fit they reach out directly. No cold DMs, no
+          application black hole.
         </p>
         <ul class="mt-5 flex flex-col divide-y divide-border border-y border-border">
           {#each seekerPoints as point (point)}

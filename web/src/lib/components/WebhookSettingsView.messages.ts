@@ -2,7 +2,7 @@ import { defineMessages } from '#lib/i18n/t.js';
 
 export const messages = defineMessages(
   {
-    headTitle: 'Webhook — freehire',
+    headTitle: 'Webhook — Keenu',
     signInPrompt: 'Sign in to configure a webhook.',
     heading: 'Webhook',
     description:
@@ -33,7 +33,7 @@ export const messages = defineMessages(
   },
   {
     ru: {
-      headTitle: 'Вебхук — freehire',
+      headTitle: 'Вебхук — Keenu',
       signInPrompt: 'Войдите, чтобы настроить вебхук.',
       heading: 'Вебхук',
       description:

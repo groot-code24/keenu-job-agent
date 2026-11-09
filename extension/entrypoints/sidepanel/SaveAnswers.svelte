@@ -42,7 +42,7 @@
   <Card class="save-answers">
     <p class="title">Save to your profile</p>
     <p class="hint">
-      freehire will fill these on the next form that asks. Untick anything only this employer should get.
+      Keenu will fill these on the next form that asks. Untick anything only this employer should get.
     </p>
     <ul>
       {#each offers as offer (offer.key)}

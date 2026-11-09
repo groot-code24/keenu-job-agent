@@ -70,7 +70,7 @@ export function brandFooter(): string {
   <div style="display:flex;align-items:center;justify-content:space-between">
     <div style="display:flex;align-items:center;gap:14px">
       <img src="${MARK_DATA_URI}" style="width:34px;height:34px" />
-      <div style="display:flex;font-size:30px;font-weight:700;letter-spacing:-0.03em">freehire</div>
+      <div style="display:flex;font-size:30px;font-weight:700;letter-spacing:-0.03em">Keenu</div>
     </div>
     <div style="display:flex;font-size:22px;color:#a3a3a3">freehire.me</div>
   </div>`;

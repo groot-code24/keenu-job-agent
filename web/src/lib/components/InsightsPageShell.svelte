@@ -58,7 +58,7 @@
 
 <article class="mx-auto w-full max-w-4xl px-4 py-8">
   <nav aria-label="Breadcrumb" class="mb-4 text-sm text-muted-foreground">
-    <a href={resolve('/')} class="hover:underline">freehire</a>
+    <a href={resolve('/')} class="hover:underline">Keenu</a>
     <span aria-hidden="true"> › </span>
     <a href={resolve('/insights')} class="hover:underline">Insights</a>
     <span aria-hidden="true"> › </span>

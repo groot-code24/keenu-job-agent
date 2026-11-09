@@ -26,7 +26,7 @@
   const label = $derived(count != null ? formatStars(count) : '');
   // The name has to contain the visible text (WCAG 2.5.3, label in name), or a voice user
   // saying what they see — the count — cannot reach the link.
-  const ariaLabel = $derived(label ? `freehire on GitHub, ${label} stars` : 'freehire on GitHub');
+  const ariaLabel = $derived(label ? `Keenu on GitHub, ${label} stars` : 'Keenu on GitHub');
 </script>
 
 <!-- eslint-disable svelte/no-navigation-without-resolve -- external GitHub URL, not an internal route -->

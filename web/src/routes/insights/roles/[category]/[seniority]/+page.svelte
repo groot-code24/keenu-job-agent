@@ -12,7 +12,7 @@
   const origin = $derived(page.url.origin);
   const canonical = $derived(`${origin}/insights/roles/${data.category}/${data.seniority}`);
   const heading = $derived(`What ${data.roleName} Jobs Ask For`);
-  const title = $derived(`${heading} · freehire`);
+  const title = $derived(`${heading} · Keenu`);
   const updated = $derived(new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }));
 
   const skills = $derived(data.role.skills ?? []);

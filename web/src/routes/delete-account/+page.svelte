@@ -7,8 +7,8 @@
 </script>
 
 <Seo
-  title="Delete Your Account — freehire"
-  description="How to permanently delete your freehire account and data, on the web or in the mobile app."
+  title="Delete Your Account — Keenu"
+  description="How to permanently delete your Keenu account and data, on the web or in the mobile app."
   {canonical}
 />
 
@@ -20,8 +20,8 @@
     </header>
 
     <p class="text-base leading-relaxed text-muted-foreground">
-      You can permanently delete your freehire account and its data at any time, from the website or the mobile app.
-      This cannot be undone — there is no grace period and no recovery.
+      You can permanently delete your Keenu account and its data at any time, from the website or the mobile app. This
+      cannot be undone — there is no grace period and no recovery.
     </p>
 
     <section class="flex flex-col gap-3">

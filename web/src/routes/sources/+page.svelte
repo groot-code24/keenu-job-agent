@@ -11,8 +11,8 @@
 </script>
 
 <Seo
-  title="Sources — freehire"
-  description="Every source freehire reads: applicant tracking systems, job aggregators and company career pages, with how many jobs each carries and when we last read it."
+  title="Sources — Keenu"
+  description="Every source Keenu reads: applicant tracking systems, job aggregators and company career pages, with how many jobs each carries and when we last read it."
   {canonical}
 />
 

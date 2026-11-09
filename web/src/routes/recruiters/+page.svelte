@@ -21,8 +21,8 @@
 </script>
 
 <Seo
-  title="Post a job — freehire for recruiters"
-  description="Submit a tech job to freehire, the free, open-source tech job aggregator. Moderator-reviewed postings join one clean, searchable feed of developer roles."
+  title="Post a job — Keenu for recruiters"
+  description="Submit a tech job to Keenu, the free, open-source tech job aggregator. Moderator-reviewed postings join one clean, searchable feed of developer roles."
   {canonical}
 />
 

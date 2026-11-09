@@ -23,7 +23,7 @@
   const where = $derived(data.countryLabel);
   const heading = $derived(`${what} Jobs in ${where}`);
   const pageTitle = $derived(
-    data.pageNumber > 1 ? `${heading} — page ${data.pageNumber} · freehire` : `${heading} · freehire`,
+    data.pageNumber > 1 ? `${heading} — page ${data.pageNumber} · Keenu` : `${heading} · Keenu`,
   );
 
   /** Facet distribution → the rows a strip renders, biggest first. */
@@ -63,7 +63,7 @@
 
 <div class="mx-auto w-full max-w-6xl px-4 py-6">
   <nav class="mb-4 flex items-center gap-2 text-sm text-muted-foreground" aria-label="Breadcrumb">
-    <a href={resolve('/')} class="hover:underline">freehire</a>
+    <a href={resolve('/')} class="hover:underline">Keenu</a>
     <span>/</span>
     <a href={resolve('/roles')} class="hover:underline">Roles</a>
     <span>/</span>

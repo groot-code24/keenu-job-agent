@@ -41,13 +41,13 @@
       directory: {
         url: 'https://claude.ai/directory/freehire',
         brand: siClaude,
-        note: 'Open the freehire listing',
+        note: 'Open the Keenu listing',
       },
       steps: [
         'Open Settings, then Connectors.',
         'Choose Add custom connector.',
-        'Name it freehire, paste the address, and choose Add, then sign in to freehire when asked.',
-        'Start a new chat, turn the freehire connector on, and ask a job question.',
+        'Name it Keenu, paste the address, and choose Add, then sign in to Keenu when asked.',
+        'Start a new chat, turn the Keenu connector on, and ask a job question.',
       ],
     },
     {
@@ -64,9 +64,9 @@
       steps: [
         'The directory listing above and a custom connection are separate install options. Custom connections require your ChatGPT workspace to allow adding MCP servers and using the tools you need.',
         'Open Plugins and choose Add, then Add custom MCP server.',
-        'Name it freehire and paste the address.',
+        'Name it Keenu and paste the address.',
         'Choose OAuth or no authentication, then connect with or without an account.',
-        'In a new chat, pick freehire from the + menu and ask a job question.',
+        'In a new chat, pick Keenu from the + menu and ask a job question.',
       ],
     },
     {
@@ -77,9 +77,9 @@
       mono: true,
       steps: [
         'Open Connect apps in the sidebar.',
-        'Add a custom app, name it freehire, and paste the address.',
-        'Grok Bot asks you to sign in to freehire; finish it in your browser.',
-        'In a chat, type @ and pick freehire, then ask a job question.',
+        'Add a custom app, name it Keenu, and paste the address.',
+        'Grok Bot asks you to sign in to Keenu; finish it in your browser.',
+        'In a chat, type @ and pick Keenu, then ask a job question.',
       ],
     },
     {
@@ -88,7 +88,7 @@
       domain: 'claude.ai',
       logo: '/brands/claude-code.svg',
       steps: ['Run this once in your terminal, then ask Claude Code a job question.'],
-      snippet: (u) => `claude mcp add --transport http freehire ${u}`,
+      snippet: (u) => `claude mcp add --transport http Keenu ${u}`,
     },
     {
       id: 'codex',
@@ -97,10 +97,10 @@
       logo: '/brands/codex.svg',
       mono: true,
       steps: [
-        'Run the command below in your terminal to add freehire to Codex.',
+        'Run the command below in your terminal to add Keenu to Codex.',
         'Run codex mcp list to verify the server is configured, then start a new Codex session and ask a job question.',
       ],
-      snippet: (u) => `codex mcp add freehire --url ${u}`,
+      snippet: (u) => `codex mcp add Keenu --url ${u}`,
     },
     {
       // Gemini's own web app has no way to add an MCP server; its CLI does.
@@ -108,7 +108,7 @@
       label: 'Gemini CLI',
       domain: 'gemini.google.com',
       steps: ['Run this once in your terminal, then ask Gemini CLI a job question.'],
-      snippet: (u) => `gemini mcp add --transport http freehire ${u}`,
+      snippet: (u) => `gemini mcp add --transport http Keenu ${u}`,
     },
     {
       id: 'cursor',
@@ -308,12 +308,12 @@
             {/if}
             <p class="mt-5 text-sm leading-relaxed text-muted-foreground">
               {#if h.id === 'codex'}
-                For personal tools, run <code>codex mcp login freehire</code> and approve the connection in your browser.
+                For personal tools, run <code>codex mcp login Keenu</code> and approve the connection in your browser.
               {:else if h.id === 'claude-code'}
-                For personal tools, run <code>claude mcp login freehire</code>, or use <code>/mcp</code> inside Claude Code
-                and choose Authenticate for freehire. Public search works before you sign in.
+                For personal tools, run <code>claude mcp login Keenu</code>, or use <code>/mcp</code> inside Claude Code and
+                choose Authenticate for Keenu. Public search works before you sign in.
               {:else}
-                For personal tools, use your assistant's sign-in or authentication control and approve the freehire
+                For personal tools, use your assistant's sign-in or authentication control and approve the Keenu
                 connection in your browser. Keep the same server address.
               {/if}
             </p>
@@ -323,7 +323,7 @@
     {/each}
 
     {#if !compact}
-      {@const agentPrompt = `Add the freehire MCP server to ${selected?.label ?? 'this assistant'}. Its address is ${url} (streamable HTTP transport). Public search works without an account. For personal tools, start OAuth sign-in and let me approve access in my browser. Keep this same server address. When it is connected, run one job search to confirm it works, then tell me it is ready.`}
+      {@const agentPrompt = `Add the Keenu MCP server to ${selected?.label ?? 'this assistant'}. Its address is ${url} (streamable HTTP transport). Public search works without an account. For personal tools, start OAuth sign-in and let me approve access in my browser. Keep this same server address. When it is connected, run one job search to confirm it works, then tell me it is ready.`}
       <div class="mt-8 max-w-2xl">
         <h3 class="text-sm font-medium">Or copy this and send it to your agent</h3>
         <figure class="mt-3 overflow-hidden rounded-xl border border-border bg-secondary/60 shadow-sm">

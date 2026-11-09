@@ -5,8 +5,8 @@ export const applicationMailGroup: Group = {
   intro:
     'Your job mail, and the link between a message and the application it ' +
     'belongs to. Mail arrives three ways: a connected Gmail account, the hosted ' +
-    'freehire address, or a batch your own client pushed. Only the first two are ' +
-    'classified by freehire — pushed mail is yours to triage, which is what makes ' +
+    'Keenu address, or a batch your own client pushed. Only the first two are ' +
+    'classified by Keenu — pushed mail is yours to triage, which is what makes ' +
     'that tier free. Everything here takes a full-scope API key, so a harness can ' +
     'drive the whole surface; the Gmail consent redirect is the one exception and ' +
     'stays browser-only.',
@@ -166,7 +166,7 @@ export const applicationMailGroup: Group = {
       auth: 'cookie-or-key',
       summary: 'Push a batch your own mail client fetched.',
       description:
-        'Stored under source `external`. freehire provides no transport here and ' +
+        'Stored under source `external`. Keenu provides no transport here and ' +
         'never classifies this mail — that is the point of the tier. `external_id` ' +
         '(the Message-ID in practice) is the dedup key: re-pushing the same id ' +
         'updates that message instead of storing a copy, so a nightly re-sync is ' +
@@ -343,7 +343,7 @@ export const applicationMailGroup: Group = {
       method: 'GET',
       path: '/me/mailbox',
       auth: 'cookie-or-key',
-      summary: 'Your hosted freehire address, and whether the feature is configured.',
+      summary: 'Your hosted Keenu address, and whether the feature is configured.',
       description:
         '`address` is null until you claim one; `available` is false when the instance runs without a mailbox domain.',
       curl: `curl "${BASE_URL}/me/mailbox" -H "Authorization: Bearer fhk_…"`,

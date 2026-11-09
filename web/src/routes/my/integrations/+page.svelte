@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-  <title>Integrations — freehire</title>
+  <title>Integrations — Keenu</title>
 </svelte:head>
 
 <!-- The account shell (my/+layout) owns the container, auth gate, and noindex.

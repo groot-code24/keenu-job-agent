@@ -60,7 +60,7 @@ export default defineConfig({
             },
           }
         : {}),
-      name: 'freehire',
+      name: 'Keenu',
       description: 'Your job-application agent, on any page.',
       // `debugger`/`downloads` back the "Attach tailored CV" action only: attaching the
       // debugger is what lets DOM.setFileInputFiles place a file into an

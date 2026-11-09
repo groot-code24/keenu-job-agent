@@ -63,7 +63,7 @@
       <div class="min-w-0 flex-1">
         <h2 class="text-lg font-semibold leading-tight">Connect Gmail</h2>
         <p class="mt-0.5 text-sm text-muted-foreground">
-          freehire reads only your recruiting mail and sorts it under your applications — automatically.
+          Keenu reads only your recruiting mail and sorts it under your applications — automatically.
         </p>
       </div>
       <button

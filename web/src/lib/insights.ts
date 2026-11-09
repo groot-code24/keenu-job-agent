@@ -118,7 +118,7 @@ export function roleSkillsIntro(role: InsightRole): string {
   const sample = role.sample_size ?? 0;
   const skills = role.skills ?? [];
   if (sample === 0 || skills.length === 0) {
-    return `Open ${name} postings on freehire. Not enough of them list skills yet to rank what they ask for.`;
+    return `Open ${name} postings on Keenu. Not enough of them list skills yet to rank what they ask for.`;
   }
   const top = skills
     .slice(0, 3)
@@ -165,13 +165,13 @@ function headlineBand(bands: InsightSalaryBand[]): InsightSalaryBand | null {
 export function salaryIntro(category: string, bands: InsightSalaryBand[]): string {
   const label = categoryLabel(category);
   const b = headlineBand(bands);
-  if (!b) return `Salary ranges for ${label} roles, aggregated from open postings on freehire.`;
+  if (!b) return `Salary ranges for ${label} roles, aggregated from open postings on Keenu.`;
   return `${label} roles pay a median of ${formatSalary(b.p50, b.currency)} per year across ${b.sample_size} postings that disclose pay, ranging from ${formatSalary(b.p25, b.currency)} to ${formatSalary(b.p75, b.currency)}.`;
 }
 
 export function skillsIntro(category: string, skills: InsightSkill[]): string {
   const label = categoryLabel(category);
-  if (skills.length === 0) return `The most in-demand skills for ${label} roles on freehire.`;
+  if (skills.length === 0) return `The most in-demand skills for ${label} roles on Keenu.`;
   const top = skills
     .slice(0, 3)
     .map((s) => s.skill)
@@ -184,6 +184,6 @@ export function skillsIntro(category: string, skills: InsightSkill[]): string {
  *  resolved seniority — about a quarter of the category — and understated it ~4x. */
 export function rolesIntro(category: string, openCount: number): string {
   const label = categoryLabel(category);
-  if (openCount === 0) return `Open ${label} roles by seniority on freehire.`;
-  return `There are ${openCount.toLocaleString('en-US')} open ${label} roles on freehire right now. Below: how many of them state each seniority, and how fast each level is growing.`;
+  if (openCount === 0) return `Open ${label} roles by seniority on Keenu.`;
+  return `There are ${openCount.toLocaleString('en-US')} open ${label} roles on Keenu right now. Below: how many of them state each seniority, and how fast each level is growing.`;
 }

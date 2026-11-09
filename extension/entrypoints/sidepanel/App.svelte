@@ -859,7 +859,7 @@
       const saved = chosen.length - failed.length;
       track('answers_saved', { saved, failed: failed.length });
       if (saved > 0) {
-        notices.push(`✓ Saved ${saved} answer${saved === 1 ? '' : 's'} — freehire will fill them on the next form.`);
+        notices.push(`✓ Saved ${saved} answer${saved === 1 ? '' : 's'} — Keenu will fill them on the next form.`);
       }
       if (failed.length > 0) notices.push(`Could not save: ${nameSome(failed)}.`);
     } finally {
@@ -952,7 +952,7 @@
     <div class="top">
       <span class="brand">
         <img src="/icon/32.png" alt="" class="brand-mark" width="18" height="18" />
-        <strong>freehire</strong>
+        <strong>Keenu</strong>
         <!-- The build, in the one place both of us can see it: a side panel keeps
              its script until it is closed, so "did the reload take?" is otherwise
              unanswerable from a screenshot. -->
@@ -968,7 +968,7 @@
         <button class="link" onclick={handleSignOut}>Sign out</button>
       {:else}
         <Button variant="primary" size="sm" onclick={handleSignIn} disabled={authBusy}>
-          {authBusy ? 'Signing in…' : 'Sign in with freehire'}
+          {authBusy ? 'Signing in…' : 'Sign in with Keenu'}
         </Button>
       {/if}
     </div>
@@ -1045,7 +1045,7 @@
             {/if}
 
             <!-- The account of the form the user is standing in front of. It is
-                 independent of the match: a page can show an application freehire
+                 independent of the match: a page can show an application Keenu
                  does not carry a posting for, and the checklist is just as useful
                  there. -->
             {#if !plan && planError}

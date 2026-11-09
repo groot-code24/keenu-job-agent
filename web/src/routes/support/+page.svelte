@@ -14,8 +14,8 @@
 </script>
 
 <Seo
-  title="Support — freehire"
-  description="Help with freehire on the web and in the mobile app: how the profile match works, managing your subscription, deleting your account, and how to reach us."
+  title="Support — Keenu"
+  description="Help with Keenu on the web and in the mobile app: how the profile match works, managing your subscription, deleting your account, and how to reach us."
   {canonical}
 />
 
@@ -30,7 +30,7 @@
       Something not working, or not behaving the way you expected? Write to
       <a href="mailto:{contactEmail}" class={link}>{contactEmail}</a> — a person reads it. For anything that looks like
       a bug, an issue on
-      <a href={issuesUrl} class={link}>GitHub</a> is even better: freehire is open source, so you can watch the fix happen.
+      <a href={issuesUrl} class={link}>GitHub</a> is even better: Keenu is open source, so you can watch the fix happen.
     </p>
 
     <section class="flex flex-col gap-3">
@@ -86,8 +86,8 @@
       <div class="flex flex-col gap-3 text-sm leading-relaxed text-muted-foreground">
         <p>
           <span class="text-foreground">What does "Open 75d" mean on a card?</span> How long the posting has actually been
-          open, when that is longer than its date suggests. freehire also marks a posting that has been reposted, or that
-          has several live copies — the signals that usually mean a role is not really being filled.
+          open, when that is longer than its date suggests. Keenu also marks a posting that has been reposted, or that has
+          several live copies — the signals that usually mean a role is not really being filled.
         </p>
         <p>
           <span class="text-foreground">A job I applied to is gone.</span> Postings disappear when the source removes them.
@@ -95,7 +95,7 @@
         </p>
         <p>
           <span class="text-foreground">The apply button opens someone else's site.</span> That is the employer's own application
-          form. freehire aggregates postings; it does not receive applications, and never applies on your behalf.
+          form. Keenu aggregates postings; it does not receive applications, and never applies on your behalf.
         </p>
       </div>
     </section>
@@ -135,7 +135,7 @@
       <h2 class="text-xl font-semibold tracking-tight">The mobile app</h2>
       <div class="flex flex-col gap-3 text-sm leading-relaxed text-muted-foreground">
         <p>
-          <span class="text-foreground">Notifications are not arriving.</span> Check that notifications are allowed for freehire
+          <span class="text-foreground">Notifications are not arriving.</span> Check that notifications are allowed for Keenu
           in your device settings, and that the device is listed on your account. Signing out removes that device's registration.
         </p>
         <p>
@@ -154,7 +154,7 @@
           <a href={resolve('/delete-account')} class={link}>Deleting your account</a> — how, and what it removes.
         </li>
         <li>
-          <a href={resolve('/how-it-works')} class={link}>How freehire works</a> — where the jobs come from and how they are
+          <a href={resolve('/how-it-works')} class={link}>How Keenu works</a> — where the jobs come from and how they are
           deduplicated.
         </li>
         <li><a href={repoUrl} class={link}>Source code</a> — the honest answer to "what does it do with my data".</li>

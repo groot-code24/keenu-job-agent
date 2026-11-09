@@ -342,15 +342,15 @@ export function resolveJob(url: string, token: string): Promise<ResolvedPage> {
 export function resolveNotice(status: ResolveStatus): string {
   switch (status) {
     case 'imported':
-      return '✓ Added to freehire — here is your match.';
+      return '✓ Added to Keenu — here is your match.';
     case 'tracked':
-      return '✓ Added — freehire already follows this company, so its other roles will show up too.';
+      return '✓ Added — Keenu already follows this company, so its other roles will show up too.';
     case 'found':
-      return 'freehire already had this posting — here is your match.';
+      return 'Keenu already had this posting — here is your match.';
     case 'queued':
       return "We could not read this page, so we'll have a look at the link.";
     default:
-      return 'Sent this page to freehire.';
+      return 'Sent this page to Keenu.';
   }
 }
 

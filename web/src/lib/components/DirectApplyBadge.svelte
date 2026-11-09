@@ -9,12 +9,12 @@
 </script>
 
 <span
-  title="Published by the employer on freehire — apply here, your application goes straight to them"
+  title="Published by the employer on Keenu — apply here, your application goes straight to them"
   class={cn(
     'inline-flex items-center gap-1.5 rounded-md border border-brand/30 bg-brand-muted px-2 py-0.5 text-xs font-medium text-brand-strong',
     className,
   )}
 >
   <BadgeCheck class="size-3.5 shrink-0" aria-hidden="true" />
-  Only on freehire
+  Only on Keenu
 </span>

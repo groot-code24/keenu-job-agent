@@ -112,14 +112,14 @@
          leftover space would push it visibly off-centre. `basis-0` also keeps them from
          shrinking (shrink scales the basis), so the narrow layout is untouched. -->
     <div class={['flex shrink-0 items-center', wideHeader && 'flex-1 basis-0']}>
-      <a href={resolve('/')} aria-label="freehire" class="flex items-center gap-2 text-sm font-semibold tracking-tight">
+      <a href={resolve('/')} aria-label="Keenu" class="flex items-center gap-2 text-sm font-semibold tracking-tight">
         <BrandMark />
         <!-- Dropped on a phone to leave the middle slot its width for the search box —
              except wherever showSiteNav puts no box there (the homepage's own hero is the
              box; the API reference's is Scalar's), which has the room. What the row spends
              that room on instead is the nav below, and the two budgets are the same 358px:
              they are set together. -->
-        <span class={showSiteNav ? 'inline' : 'hidden sm:inline'} aria-hidden="true">freehire</span>
+        <span class={showSiteNav ? 'inline' : 'hidden sm:inline'} aria-hidden="true">Keenu</span>
       </a>
     </div>
 

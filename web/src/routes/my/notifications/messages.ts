@@ -2,7 +2,7 @@ import { defineMessages } from '#lib/i18n/t.js';
 
 export const messages = defineMessages(
   {
-    headTitle: 'Notifications — freehire',
+    headTitle: 'Notifications — Keenu',
     markAllRead: 'Mark all read',
     empty: 'No notifications yet.',
     emptyHint: 'New-job matches and reminders arrive here once you set up an alert.',
@@ -10,7 +10,7 @@ export const messages = defineMessages(
   },
   {
     ru: {
-      headTitle: 'Уведомления — freehire',
+      headTitle: 'Уведомления — Keenu',
       markAllRead: 'Отметить всё прочитанным',
       empty: 'Пока нет уведомлений.',
       emptyHint: 'Новые вакансии и напоминания появятся здесь, когда вы настроите оповещение.',

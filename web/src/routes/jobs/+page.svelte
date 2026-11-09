@@ -14,9 +14,7 @@
   const canonical = $derived(data.pageNumber > 1 ? `${origin}/jobs?page=${data.pageNumber}` : `${origin}/jobs`);
   // Page 2 onward says so, or every page competes for one SERP entry under one title.
   const title = $derived(
-    data.pageNumber > 1
-      ? `Tech jobs — page ${data.pageNumber} · freehire`
-      : 'Tech jobs — search 4.9M+ openings · freehire',
+    data.pageNumber > 1 ? `Tech jobs — page ${data.pageNumber} · Keenu` : 'Tech jobs — search 4.9M+ openings · Keenu',
   );
   // Who publishes this. The site-level WebSite + SearchAction pair stays on the
   // homepage, which is the URL search engines treat as the site; the feed names only

@@ -19,8 +19,8 @@
 </script>
 
 <Seo
-  title="Discussions — freehire"
-  description="What job seekers are asking about companies and vacancies on freehire: is this posting real, does this employer reply, what is the process actually like."
+  title="Discussions — Keenu"
+  description="What job seekers are asking about companies and vacancies on Keenu: is this posting real, does this employer reply, what is the process actually like."
   {canonical}
 />
 

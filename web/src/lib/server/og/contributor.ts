@@ -24,7 +24,7 @@ function firstSeen(iso: string): string {
 /** Builds the card HTML for `entry`. `avatar` is a data-URI or null — null renders
  *  the shared monogram tile, so an unreachable avatar degrades instead of failing. */
 export function buildContributorCard(entry: ContributorEntry, opts: { avatar: string | null }): string {
-  const role = entry.role === 'maintainer' ? 'Maintains freehire' : 'Contributes to freehire';
+  const role = entry.role === 'maintainer' ? 'Maintains Keenu' : 'Contributes to Keenu';
 
   return `
 <div style="display:flex;flex-direction:column;justify-content:space-between;width:${OG_WIDTH}px;height:${OG_HEIGHT}px;padding:64px 72px;background:#ffffff;color:#0a0a0a;font-family:Inter">

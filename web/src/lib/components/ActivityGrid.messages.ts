@@ -10,7 +10,7 @@ import { defineMessages, plurals } from '#lib/i18n/t.js';
 // with by the catalog.
 export const messages = defineMessages(
   {
-    headTitle: 'Streak — Tracking — freehire',
+    headTitle: 'Streak — Tracking — Keenu',
     heading: 'Your last year',
     // Said on the page rather than left to be inferred. Someone who sees four events on
     // Calendar and three squares here is owed the reason, and this caption is it.
@@ -35,7 +35,7 @@ export const messages = defineMessages(
   },
   {
     ru: {
-      headTitle: 'Серия — Отслеживание — freehire',
+      headTitle: 'Серия — Отслеживание — Keenu',
       heading: 'Ваш последний год',
       caption:
         'Один квадрат — один день, оттенок зависит от того, что вы сделали: отклики, напоминания и стадии, которые вы передвинули сами.',

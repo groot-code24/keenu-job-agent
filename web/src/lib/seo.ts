@@ -81,13 +81,13 @@ export function companyMetaDescription(company: Company, max = 200): string {
 
   let text: string;
   if (lead && factClause) {
-    text = `${lead} — ${factClause}. Open roles on freehire.`;
+    text = `${lead} — ${factClause}. Open roles on Keenu.`;
   } else if (lead) {
-    text = `${lead}. Open roles at ${company.name} on freehire.`;
+    text = `${lead}. Open roles at ${company.name} on Keenu.`;
   } else if (factClause) {
-    text = `${company.name}: ${factClause}. Open roles on freehire.`;
+    text = `${company.name}: ${factClause}. Open roles on Keenu.`;
   } else {
-    text = `Open jobs at ${company.name}, aggregated by freehire.`;
+    text = `Open jobs at ${company.name}, aggregated by Keenu.`;
   }
 
   if (text.length <= max) return text;
@@ -700,7 +700,7 @@ export function definedTermJsonLd(
     inDefinedTermSet: {
       '@type': 'DefinedTermSet',
       '@id': `${origin}/skills`,
-      name: 'freehire IT skills glossary',
+      name: 'Keenu IT skills glossary',
     },
   };
 }
@@ -712,9 +712,9 @@ export function webApiJsonLd(origin: string): Record<string, unknown> {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebAPI',
-    name: 'freehire API',
+    name: 'Keenu API',
     description:
-      'A read-first, open HTTP API over the freehire job catalogue: query jobs by seniority, skills, region and salary, read companies, and track applications with an API key.',
+      'A read-first, open HTTP API over the Keenu job catalogue: query jobs by seniority, skills, region and salary, read companies, and track applications with an API key.',
     url: `${origin}/docs/api`,
     documentation: `${origin}/docs/api`,
     termsOfService: `${origin}/privacy`,
@@ -734,9 +734,9 @@ export function cliApplicationJsonLd(origin: string, repositories: string[]): Re
   return {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: 'freehire CLI',
+    name: 'Keenu CLI',
     description:
-      'A small Go CLI and an MCP server over the freehire job API, so an AI agent or a script can search, open and track jobs without a browser. The hosted MCP connection offers public search and OAuth account access.',
+      'A small Go CLI and an MCP server over the Keenu job API, so an AI agent or a script can search, open and track jobs without a browser. The hosted MCP connection offers public search and OAuth account access.',
     url: `${origin}/cli`,
     applicationCategory: 'DeveloperApplication',
     operatingSystem: 'macOS, Linux',
@@ -756,7 +756,7 @@ export function extensionApplicationJsonLd(origin: string, installUrls: string[]
   return {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: 'freehire browser extension',
+    name: 'Keenu browser extension',
     description:
       "A job-application agent in your browser's side panel: it reads the posting you are on, scores it against your CV, and fills the application form from your profile — you press Submit.",
     url: `${origin}/features/extension`,

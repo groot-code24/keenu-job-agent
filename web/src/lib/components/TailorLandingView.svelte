@@ -83,8 +83,8 @@
         Your CV, rewritten for this job. Nothing made up.
       </h1>
       <p class="mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground text-pretty">
-        freehire reads the vacancy, brings your relevant work forward in the job's own words, and asks you about
-        anything it can't find in your history.
+        Keenu reads the vacancy, brings your relevant work forward in the job's own words, and asks you about anything
+        it can't find in your history.
       </p>
       <div class="mt-9 flex flex-wrap items-center gap-3">
         <ProCheckoutButton {price} />
@@ -218,7 +218,7 @@
         <thead class="bg-secondary/50 text-xs uppercase tracking-wide text-muted-foreground">
           <tr>
             <th scope="col" class="px-4 py-3 font-medium"><span class="sr-only">Feature</span></th>
-            <th scope="col" class="px-4 py-3 font-semibold text-foreground">freehire</th>
+            <th scope="col" class="px-4 py-3 font-semibold text-foreground">Keenu</th>
             <th scope="col" class="px-4 py-3 font-medium">Pasting into a chatbot</th>
             <th scope="col" class="px-4 py-3 font-medium">A CV builder</th>
           </tr>

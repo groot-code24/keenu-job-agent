@@ -3,7 +3,7 @@
 <figure class="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
   <figcaption class="flex items-center gap-2 border-b border-border px-4 py-2.5 text-xs text-muted-foreground">
     <span class="size-2.5 rounded-full bg-muted-foreground/30"></span>
-    freehire · Tailoring
+    Keenu · Tailoring
   </figcaption>
   <div class="grid gap-px bg-border sm:grid-cols-[1fr_1.1fr_0.85fr]">
     <div class="bg-background p-3">

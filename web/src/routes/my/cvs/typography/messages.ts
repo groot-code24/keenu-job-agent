@@ -2,14 +2,14 @@ import { defineMessages } from '#lib/i18n/t.js';
 
 export const messages = defineMessages(
   {
-    headTitle: 'CV typography defaults — freehire',
+    headTitle: 'CV typography defaults — Keenu',
     lead: 'The type and margins a new CV starts with.',
     marginsHeading: 'Page margins',
     marginsUnit: '(inches)',
   },
   {
     ru: {
-      headTitle: 'Типографика резюме по умолчанию — freehire',
+      headTitle: 'Типографика резюме по умолчанию — Keenu',
       lead: 'Шрифт и поля, с которых начинается новое резюме.',
       marginsHeading: 'Поля страницы',
       marginsUnit: '(в дюймах)',
