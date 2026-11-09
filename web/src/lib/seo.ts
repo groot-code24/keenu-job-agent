@@ -8,7 +8,7 @@ import { COUNTRY_REGION_MAP } from './generated/contracts';
 import { companyLogoUrl } from './logo';
 import type { Company, Enrichment, Job, JobCard } from './types';
 
-const SITE = 'freehire';
+const SITE = 'Keenu';
 // Site-level facts reused across the homepage WebSite/Organization schema.
 const SITE_DESCRIPTION =
   'Freehire is an open-source search engine for tech jobs: it indexes millions of openings straight from company career boards, deduplicates them, and tags each with stack, seniority and location. Free and open source.';
