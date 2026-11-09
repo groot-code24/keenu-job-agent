@@ -51,6 +51,13 @@ func run() int {
 	client := search.NewClient(cfg.MeiliURL, cfg.MeiliKey)
 	q := db.New(pool)
 
+	// The deletion wave marks closed and duplicate jobs through an experimental engine
+	// feature. A failure here is logged, not fatal: indexing new jobs does not need it,
+	// and the deletion wave reports its own error if the feature is still off.
+	if err := client.EnableDocumentEdits(ctx); err != nil {
+		log.Printf("search-drain: %v", err)
+	}
+
 	runner := searchdrain.Runner{
 		Store:   newDBStore(pool),
 		Indexer: searchIndexer{client: client, q: q},

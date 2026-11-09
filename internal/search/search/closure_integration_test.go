@@ -22,7 +22,7 @@ func TestIntegration_VisibilityUpdatesRetainContentAndHideFromAllReaders(t *test
 		t.Run(status.marker, func(t *testing.T) {
 			ctx := context.Background()
 			c := startMeili(t)
-			if _, err := c.manager.ExperimentalFeatures().SetEditDocumentsByFunction(true).UpdateWithContext(ctx); err != nil {
+			if err := c.EnableDocumentEdits(ctx); err != nil {
 				t.Fatal(err)
 			}
 			if err := c.EnsureIndex(ctx); err != nil {

@@ -24,6 +24,19 @@ func (c *Client) MarkDuplicateJobs(ctx context.Context, ids []int64) error {
 	return c.markJobs(ctx, ids, "is_duplicate")
 }
 
+// EnableDocumentEdits turns on the engine's experimental edit-documents-by-function
+// feature, which CloseJobs and MarkDuplicateJobs need: without it every marker write
+// is refused with a 400, and closed and duplicate jobs stay visible in search. The
+// feature is instance-wide and the call idempotent, so the writer runs it on every
+// start instead of relying on an operator to have enabled it once by hand — which a
+// fresh install never does.
+func (c *Client) EnableDocumentEdits(ctx context.Context) error {
+	if _, err := c.manager.ExperimentalFeatures().SetEditDocumentsByFunction(true).UpdateWithContext(ctx); err != nil {
+		return fmt.Errorf("search: enable edit-documents-by-function: %w", err)
+	}
+	return nil
+}
+
 // Each marker has its own idempotency guard: a closed duplicate still needs both
 // markers, so the public-search predicate cannot gate these writes.
 func (c *Client) markJobs(ctx context.Context, ids []int64, marker string) error {
