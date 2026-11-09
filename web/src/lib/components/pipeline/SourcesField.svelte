@@ -55,7 +55,7 @@
       const ctx = document.createElement('canvas').getContext('2d');
       const readCssColor = (name: string) => {
         const raw = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-        if (!ctx || !raw) return new THREE.Color(0x5b6f00);
+        if (!ctx || !raw) return new THREE.Color(0x4d53d9);
         ctx.fillStyle = raw;
         ctx.fillRect(0, 0, 1, 1);
         const pixel = ctx.getImageData(0, 0, 1, 1).data;

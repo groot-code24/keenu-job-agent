@@ -1,29 +1,29 @@
 .dark {
-  --background: oklch(0.16 0.006 110);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.155 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.21 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.155 0 0);
-  --secondary: oklch(0.31 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.24 0 0);
-  --muted-foreground: oklch(0.72 0 0);
-  --accent: oklch(0.27 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --background: oklch(0.165 0.018 275);
+  --foreground: oklch(0.97 0.006 275);
+  --card: oklch(0.195 0.02 275);
+  --card-foreground: oklch(0.97 0.006 275);
+  --popover: oklch(0.225 0.022 275);
+  --popover-foreground: oklch(0.97 0.006 275);
+  --primary: oklch(0.97 0.006 275);
+  --primary-foreground: oklch(0.19 0.025 275);
+  --secondary: oklch(0.29 0.022 275);
+  --secondary-foreground: oklch(0.97 0.006 275);
+  --muted: oklch(0.245 0.02 275);
+  --muted-foreground: oklch(0.74 0.02 275);
+  --accent: oklch(0.275 0.024 275);
+  --accent-foreground: oklch(0.97 0.006 275);
   --destructive: oklch(0.704 0.191 22.216);
   --destructive-foreground: oklch(0.16 0 0);
   --destructive-strong: oklch(0.704 0.191 22.216); /** Same as the action color: on the dark background it already clears 4.5:1. */
   --border: oklch(1 0 0 / 8%);
   --input: oklch(1 0 0 / 35%);
-  --ring: oklch(0.6 0.09 118);
-  --brand: oklch(0.72 0.095 121); /** Oats green on dark — calmer olive (not neon) with dark ink. */
-  --brand-foreground: oklch(0.18 0.02 120);
-  --brand-strong: oklch(0.79 0.1 118);
-  --brand-muted: oklch(0.31 0.045 118);
-  --brand-ring: oklch(0.6 0.09 118);
+  --ring: oklch(0.62 0.15 278);
+  --brand: oklch(0.72 0.14 278); /** Keenu indigo on dark — lifted for contrast, with dark ink on the fill. */
+  --brand-foreground: oklch(0.17 0.035 278);
+  --brand-strong: oklch(0.8 0.11 278);
+  --brand-muted: oklch(0.31 0.07 278);
+  --brand-ring: oklch(0.62 0.15 278);
   --warning: oklch(0.828 0.189 84.429); /** Caution fill. The solid block that marks something as needing attention. */
   --warning-foreground: oklch(0.279 0.077 45.635); /** Text on the caution fill. */
   --warning-strong: oklch(0.828 0.189 84.429); /** Caution text and borders on the page background, where the fill is not legible. */

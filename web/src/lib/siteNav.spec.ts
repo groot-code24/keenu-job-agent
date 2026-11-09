@@ -13,8 +13,13 @@ describe('site navigation', () => {
   // header menu while no sitemap, and so no crawler, knew they existed. A page the site's
   // own navigation points at is a page we ask people to visit; a search engine should be
   // told the same thing.
+  //
+  // The account area is the one exception: a page behind sign-in answers a crawler with a
+  // redirect, so it has no place in a sitemap. The local edition's agent page is one —
+  // it is the setup a person is sent to, not a page for search engines.
   it('leads only to destinations the sitemap also offers', () => {
     for (const { href, label } of Object.values(NAV)) {
+      if (href.startsWith('/my/')) continue;
       expect(STATIC_PATHS, `${label} (${href}) is in the site nav but not the sitemap`).toContain(href);
     }
   });

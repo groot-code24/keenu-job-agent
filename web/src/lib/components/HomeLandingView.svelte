@@ -1,10 +1,12 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { resolve } from '$app/paths';
-  import { ArrowRight } from '@lucide/svelte';
+  import { ArrowRight, Bot, Check, FileCheck2, FileUp, Hand, LockKeyhole, Puzzle, UserPlus } from '@lucide/svelte';
+  import type { Component } from 'svelte';
   import FilterModal from './filters/FilterModal.svelte';
   import HeaderSearch from './HeaderSearch.svelte';
   import RecentJobsFeed from './RecentJobsFeed.svelte';
+  import ChatExample from './ChatExample.svelte';
   import { ROLE_PLACEHOLDER } from '#lib/placeholderRoles.js';
   import { api } from '#lib/api.js';
   import { browseQuery, planForSuggestion } from '#lib/browseTarget.js';
@@ -12,61 +14,45 @@
   import { countryLabel } from '#lib/facets.js';
   import { emptyFilters, filtersToParams } from '#lib/facetModel.js';
   import type { StagedFilters } from '#lib/stagedFilters.svelte.js';
-  import { EXTENSION_FIREFOX_URL, EXTENSION_STORE_URL } from '#lib/extensionLinks.js';
-  import ExtensionPanelPreview from './ExtensionPanelPreview.svelte';
   import { starterSuggestions } from '#lib/suggestions.js';
-  import { Button, ProviderIcon, SectionLabel } from '#lib/ui/index.js';
-  import McpSetup from './McpSetup.svelte';
-  import ChatExample from './ChatExample.svelte';
+  import { Button, SectionLabel } from '#lib/ui/index.js';
   import type { CatalogScale, FacetCounts } from '#lib/types.js';
   import { formatCount } from '#lib/utils.js';
 
-  // The homepage. One search box on an otherwise empty screen, and under it — for the
-  // visitor who came to look rather than to search — how big the catalogue is and the
-  // two places freehire runs that are not this page.
+  // The local edition's homepage. Keenu runs on the person's own computer and is worked
+  // by their own AI agent, so the page says that first, puts the search box under it,
+  // and then answers the one question a fresh install raises — "what do I do now?" — as
+  // four steps. Below them: how big this install's catalogue is, what the agent can be
+  // asked, and the rules the server holds it to whatever it is told.
   //
   // The box is the header's own search component at hero size. On a page with no list
   // registered, that component already drives a target that turns every pick into a
-  // link to the feed (see browseTarget) — so the dropdown, its three sections, the
-  // keyboard walk, the composed picks and the hotkeys all arrive here unchanged, and
-  // the landing owns none of that behaviour. The header renders no box on this route
-  // (see TopBar): one screen, one field.
-  //
-  // Everything below the fold is a POINTER, not a second copy of a page that exists:
-  // /open owns the numbers, /cli owns the CLI, /features/extension owns the extension.
-  // Each section here says the one sentence that makes someone click, and the copy is
-  // lifted verbatim from the page it leads to rather than written again.
+  // link to the feed (see browseTarget) — so the dropdown, its keyboard walk and the
+  // hotkeys all arrive here unchanged. The header renders no box on this route (see
+  // TopBar): one screen, one field.
   let {
     counts,
     scale,
+    signedIn = false,
   }: {
     /** The unfiltered category and country distributions, or null when the call
-     *  failed. Feeds both rows of chips below and — handed to the box — the empty
-     *  dropdown's starting points, so the two cannot disagree about what the catalogue
-     *  holds. */
+     *  failed. Feeds both rows of chips and the box's empty dropdown. */
     counts: FacetCounts | null;
-    /** How big the catalogue is, or null when the call failed. */
+    /** How big this install's catalogue is, or null before rollup-stats has run. */
     scale: CatalogScale | null;
+    /** Whether the visitor has an account here: the first setup step is then done. */
+    signedIn?: boolean;
   } = $props();
 
-  /** How many shortcuts each row draws. The dropdown offers ten crafts; six and three
-   *  are what fit on ONE line each at 1280px, measured rather than guessed — every chip
-   *  carries a six-digit count, so eight of them wrapped to three lines and pushed the
-   *  catalogue's own figures off the first screen. Those figures are the argument this
-   *  page makes; the shortcuts are a convenience, so the shortcuts give way. */
+  /** How many shortcuts each row draws: what fits on one line at 1280px. */
   const CHIP_LIMIT = 6;
   const COUNTRY_CHIP_LIMIT = 3;
 
   type Chip = { href: string; label: string; count?: number };
 
   /** Where a chip goes, serialized by the same `browseQuery` a pick in the dropdown
-   *  navigates through — so the link and the control that offers it cannot come to
-   *  filter differently. A chip always names exactly one facet, so the query is never
-   *  empty and needs no fallback to the bare feed.
-   *
-   *  Rendered as a real `<a href>` rather than a click handler: these are the
-   *  homepage's only outgoing links into the catalogue, so they are what a crawler
-   *  follows to reach the feed at all. */
+   *  navigates through, so the link and the control cannot filter differently. Real
+   *  `<a href>`s rather than click handlers. */
   function planHref(plan: ApplyPlan): string {
     return `${resolve('/jobs')}?${browseQuery(plan)}`;
   }
@@ -75,57 +61,35 @@
     return planHref({ facets: [[param, value]] });
   }
 
-  /** What, rather than where: the starting points in the curated group order the filter
-   *  modal uses — Engineering first, the consumer industries last. Built by the same
-   *  function the dropdown's empty state uses, from the same distribution, and turned
-   *  into a link by the same `planForSuggestion` the dropdown applies — so which facet
-   *  a craft means is answered in one place, not two. */
+  /** What, rather than where — built by the same function the dropdown's empty state
+   *  uses, biggest first. */
   const crafts = $derived<Chip[]>(
     starterSuggestions(counts, CHIP_LIMIT)
-      .map((s) => ({
-        href: planHref(planForSuggestion(s)),
-        label: s.label,
-        count: s.count,
-      }))
-      // Biggest first, as the row's own label promises.
+      .map((s) => ({ href: planHref(planForSuggestion(s)), label: s.label, count: s.count }))
       .sort((a, b) => (b.count ?? 0) - (a.count ?? 0)),
   );
 
-  /** Where, rather than what. Remote leads because it is the answer that is not a place;
-   *  behind it the busiest countries the catalogue actually carries — measured, not
-   *  listed, so this row cannot offer a country with nothing in it.
-   *
-   *  Unlike the crafts there is no curated order to honour: a country's only claim on
-   *  the row is how much work is in it. */
+  /** Where, rather than what: Remote, then the busiest countries this catalogue holds. */
   const places = $derived<Chip[]>([
     { href: feedHref('work_mode', 'remote'), label: 'Remote' },
     ...Object.entries(counts?.facets?.countries ?? {})
       .sort(([, a], [, b]) => b - a)
       .slice(0, COUNTRY_CHIP_LIMIT)
-      .map(([code, count]) => ({
-        href: feedHref('countries', code),
-        label: countryLabel(code),
-        count,
-      })),
+      .map(([code, count]) => ({ href: feedHref('countries', code), label: countryLabel(code), count })),
   ]);
 
   type Figure = { value: string; label: string };
 
-  /** One catalogue figure, or nothing at all. A cold stats snapshot answers with an
-   *  estimated open-job count and zeroes the figures that exist only in the database,
-   *  so a zero here is an ABSENT measurement — and a homepage that says "0 companies"
-   *  is worse than one that says nothing. Same rule /open applies to the same
-   *  snapshot. */
+  /** One catalogue figure, or nothing: a cold stats snapshot zeroes what it could not
+   *  measure, and a page saying "0 companies" is worse than one saying nothing. */
   function figure(value: number | undefined, label: string): Figure | null {
     if (!value) return null;
     return { value: value.toLocaleString('en-US'), label };
   }
 
-  /** The hero's one number, live from the same snapshot as the figures below and
-   *  floored to two significant figures (4,968,000 → "4.9M+", 6,358 → "6,300+", never
-   *  rounded up): a "+" figure must not overstate the catalogue. Flooring to a fixed tenth
-   *  of a million read "0+" on a catalogue of thousands. Before rollup-stats has published a
-   *  figure the line says so in words rather than quoting another deployment's catalogue. */
+  /** The hero's number, floored to two significant figures (6,358 → "6,300+", never
+   *  rounded up): a "+" figure must not overstate the catalogue. Before rollup-stats has
+   *  published a figure the line says so in words. */
   function floorFigure(n: number): number {
     const step = 10 ** Math.max(0, Math.floor(Math.log10(n)) - 1);
     return Math.floor(n / step) * step;
@@ -136,38 +100,86 @@
 
   const figures = $derived(
     [
-      // The de-duplicated count, the one /jobs shows — `open_jobs` counts a posting
-      // once per board carrying it, so it overstates the catalogue a click below opens.
-      figure(scale?.unique_open_jobs, 'unique jobs'),
-      figure(scale?.companies, 'companies'),
-      figure(scale?.sources, 'sources'),
-      figure(scale?.ats_platforms, 'ATS platforms'),
+      // The de-duplicated count, the one /jobs shows.
+      figure(scale?.unique_open_jobs, 'open jobs'),
+      figure(scale?.companies, 'companies hiring'),
+      figure(scale?.sources, 'job boards read'),
     ].filter((f) => f !== null),
   );
 
-  /** The All-filters modal, hosted here rather than by a list — there is no list.
-   *
-   *  Everywhere else this modal NARROWS what is already on screen, so it writes into
-   *  that page's URL-synced store as you pick. Here it COMPOSES a search: it is seeded
-   *  empty, edits nothing, and its footer hands back the staged selection, which
-   *  becomes the query the feed opens with. `seed` and `onApply` are the modal's own
-   *  provisions for exactly this — the same pair the profile editor uses. */
+  type Step = { title: string; body: string; href: string; action: string; icon: Component; done?: boolean };
+
+  /** Getting a fresh install working, in the order it has to happen. The agent and the
+   *  extension are both set up from the one integrations page, which builds its commands
+   *  from the origin it is opened on. */
+  const steps = $derived<Step[]>([
+    {
+      title: 'Create your account',
+      body: 'An email and a password. Nothing is sent anywhere, and there is nothing to verify.',
+      href: resolve('/signin'),
+      action: 'Create account',
+      icon: UserPlus,
+      done: signedIn,
+    },
+    {
+      title: 'Upload your CV',
+      body: 'A PDF on your profile page. It is stored on this computer, not uploaded anywhere.',
+      href: resolve('/my/profile'),
+      action: 'Open profile',
+      icon: FileUp,
+    },
+    {
+      title: 'Connect your agent',
+      body: 'Paste one command into Claude Code or Codex, then approve it here. No API key.',
+      href: resolve('/my/integrations/agent'),
+      action: 'Get the command',
+      icon: Bot,
+    },
+    {
+      title: 'Add the browser extension',
+      body: 'Build it once. It fills application forms beside the posting; you press Submit.',
+      href: resolve('/my/integrations/agent'),
+      action: 'How to install',
+      icon: Puzzle,
+    },
+  ]);
+
+  /** What the server enforces whatever the agent is told — the reason a person can let
+   *  an AI near their CV. Worded from LOCAL_EDITION.md's "Rules the server enforces". */
+  const rules: { title: string; body: string; icon: Component }[] = [
+    {
+      title: 'Only what your CV says',
+      body: 'An import keeps only what your uploaded file contains; anything else is dropped and reported to you.',
+      icon: FileCheck2,
+    },
+    {
+      title: 'Every claim cites your evidence',
+      body: 'A tailored CV can state only achievements you made. One the agent infers waits for your Confirm.',
+      icon: Check,
+    },
+    {
+      title: 'You press Submit',
+      body: 'The extension fills the form. Nothing is ever sent to an employer from the browser for you.',
+      icon: Hand,
+    },
+    {
+      title: 'Your data stays here',
+      body: 'Your account, CVs and applications live in this computer’s Docker volumes, and nowhere else.',
+      icon: LockKeyhole,
+    },
+  ];
+
+  /** The All-filters modal, hosted here rather than by a list — there is no list. Here
+   *  it COMPOSES a search: seeded empty, and its footer hands back the staged selection,
+   *  which becomes the query the feed opens with. */
   let filtersOpen = $state(false);
 
-  /** The distribution behind the modal's controls, recomputed as the selection moves.
-   *
-   *  Not optional decoration: a DYNAMIC facet — Skills, City, Job language, Source —
-   *  has no compiled option list at all. FacetSection builds its entire list from this
-   *  map (see its `def.dynamic` branch), so without it those four panes are empty
-   *  selects with nothing to pick. The page's own `counts` cannot serve: the SSR call
-   *  asks for `category` and `countries` alone, which is all the chips need.
-   *
-   *  `disjunctive` so each facet's numbers ignore its own selection — the same call
-   *  every other host of this modal makes. */
+  /** The distribution behind the modal's controls: the dynamic facets (Skills, City,
+   *  Job language, Source) build their whole option list from it. `disjunctive` so each
+   *  facet's numbers ignore its own selection. */
   const stagedCounts = (params: URLSearchParams) => api.facetCounts(params, { disjunctive: true });
 
-  /** How many postings the staged selection would open, for the footer's Apply — read
-   *  off the same count call rather than a one-row search, the way /analytics does. */
+  /** How many postings the staged selection would open, for the footer's Apply. */
   const previewCount = (params: URLSearchParams) => api.facetCounts(params).then((c) => c.total);
 
   function searchWithFilters(staged: StagedFilters) {
@@ -178,8 +190,7 @@
   }
 </script>
 
-<!-- One row of shortcuts into the catalogue. Two rows use it — the crafts and the
-     places — and they differ only in what they list, so they are one shape. -->
+<!-- One row of shortcuts into the catalogue: the crafts and the places share it. -->
 {#snippet chipRow(label: string, chips: Chip[])}
   <div class="flex flex-col items-center gap-2">
     <p class="text-xs uppercase tracking-wide text-muted-foreground/80" aria-hidden="true">{label}</p>
@@ -188,11 +199,11 @@
         <!-- eslint-disable svelte/no-navigation-without-resolve -- feedHref resolves /jobs and appends the serialized filter -->
         <a
           href={chip.href}
-          class="rounded-full border border-border px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:border-brand-strong hover:text-foreground"
+          class="rounded-full border border-border bg-card px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:border-brand hover:text-foreground"
         >
           {chip.label}
           {#if chip.count !== undefined}
-            <span class="ml-1 text-xs tabular-nums">{chip.count.toLocaleString('en-US')}</span>
+            <span class="ml-1 text-xs tabular-nums text-muted-foreground/80">{chip.count.toLocaleString('en-US')}</span>
           {/if}
         </a><!-- eslint-enable svelte/no-navigation-without-resolve -->
       {/each}
@@ -200,79 +211,37 @@
   </div>
 {/snippet}
 
-<!-- The one link shape this page uses twice: an onward link with an arrow that leans
-     when you point at it. Written once so the two cannot drift into being two
-     different-looking ways of saying "there is more of this over there". -->
-{#snippet onward(href: string, text: string)}
-  <!-- eslint-disable svelte/no-navigation-without-resolve -- every caller passes a resolve() result; the rule cannot see through a snippet parameter -->
-  <a
-    {href}
-    class="group inline-flex items-center gap-1.5 text-sm font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:decoration-foreground"
-  >
-    {text}
-    <ArrowRight class="size-4 transition-transform group-hover:translate-x-0.5" />
-  </a><!-- eslint-enable svelte/no-navigation-without-resolve -->
-{/snippet}
-
-<!-- Hero. Deliberately shorter than the viewport: `-19rem` is the 3.5rem header plus
-     the room the figures below need, so how big the catalogue is lands on the FIRST
-     screen rather than under it. The number is the argument — a stranger deciding
-     whether to type anything into the box is answering "does this place even have my
-     job", and making them scroll to find out asks them to trust it first.
-
-     `svh` rather than `vh`: on mobile Safari `100vh` counts browser chrome that is not
-     there, so the box it centres would sit noticeably below the middle of the screen.
-
-     `dot-grid` is the shared backdrop from app.css that every landing hero here wears.
-     `dot-grid-centred` (also in app.css) is its one variant: the same grid, the same
-     fade from the top, moved to the horizontal centre because this hero is not a left
-     column beside a visual. -->
+<!-- Hero. `svh` rather than `vh`: on mobile Safari `100vh` counts browser chrome that is
+     not there. `dot-grid dot-grid-centred` is the shared landing backdrop from app.css. -->
 <section
-  class="dot-grid dot-grid-centred -mx-4 flex min-h-[calc(100svh-19rem)] flex-col items-center justify-center px-4 pb-10 pt-10"
+  class="dot-grid dot-grid-centred -mx-4 flex min-h-[calc(100svh-14rem)] flex-col items-center justify-center px-4 pb-12 pt-12"
 >
   <div class="flex w-full max-w-2xl flex-col items-center gap-6">
-    <!-- No mark or wordmark here: the header carries both, three centimetres above and
-         on the same screen. Repeating them made the page introduce itself twice before
-         it said anything. -->
     <div class="flex flex-col items-center gap-5 text-center">
-      <h1 class="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-        Every tech job, straight from the source.
+      <p
+        class="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground"
+      >
+        <span class="relative flex size-2" aria-hidden="true">
+          <span
+            class="absolute inline-flex size-full animate-ping rounded-full bg-success opacity-60 motion-reduce:hidden"
+          ></span>
+          <span class="relative inline-flex size-2 rounded-full bg-success"></span>
+        </span>
+        Running privately on this computer
+      </p>
+      <h1 class="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
+        Your job search, run by
+        <span class="text-brand-strong">your own AI agent.</span>
       </h1>
-      <!-- The developer doors live in this one sentence rather than in a row of buttons
-           under the box: the box stays the page's only task, and the hero stays two lines. -->
-      <p class="text-balance text-base leading-relaxed text-muted-foreground">
-        {jobsFigure} live postings. Search them here, from
-        <a
-          href={resolve('/agents')}
-          class="whitespace-nowrap font-medium text-foreground underline decoration-border underline-offset-4 hover:decoration-foreground"
-          >your AI agent</a
-        >
-        or through
-        <a
-          href={resolve('/jobs-api')}
-          class="whitespace-nowrap font-medium text-foreground underline decoration-border underline-offset-4 hover:decoration-foreground"
-          >the API</a
-        >. Free and open source.
+      <p class="max-w-xl text-balance text-base leading-relaxed text-muted-foreground sm:text-lg">
+        {jobsFigure} live postings, read straight from company career pages. Search them here, or let Claude Code or Codex
+        find the right ones, tailor your CV and fill the application.
       </p>
     </div>
 
-    <!-- The box's root is `min-w-0 flex-1`, so this wrapper is what sets its width.
-         `relative z-30` makes it the layer every panel the box opens (suggestions, the
-         Location popover, the link panel — each `z-50` inside it) is drawn in: above
-         the chips and figures that follow it in the page, and below the sticky header
-         (`z-40`), so a panel left open while the page scrolls slides under the header
-         instead of over it. -->
+    <!-- `relative z-30`: the layer every panel the box opens is drawn in — above the chips
+         that follow it, below the sticky header (`z-40`). -->
     <div class="relative z-30 flex w-full">
-      <!-- The visible examples are roles; the accessible name is the broad one, because
-           this box does search companies and skills too. An example is a starting point
-           rather than a boundary, and a role is what people actually type first.
-
-           `autofocus` stays, deliberately: this box is the page's one task, it takes the
-           caret only at `sm` and up (HeaderSearch's WIDE_QUERY), and it opens no panel
-           when it does. What a screen-reader user loses is the h1 and one sentence, and
-           both precede the box in the DOM, so reading backwards from the field reaches
-           them; the field announces itself by the descriptive name below rather than by
-           an example role. -->
       <HeaderSearch
         placeholder={ROLE_PLACEHOLDER}
         label="Search jobs, companies and skills"
@@ -287,106 +256,127 @@
       {@render chipRow('Biggest specializations', crafts)}
     {/if}
     {#if places.length > 1}
-      <!-- Only with real countries behind it: Remote alone is a row that looks like a
-           measurement and is a constant. -->
+      <!-- Only with real countries behind it: Remote alone is a constant, not a measurement. -->
       {@render chipRow('Locations', places)}
     {/if}
-
-    {@render onward(resolve('/jobs'), 'See every specialization and location in the catalogue')}
   </div>
 </section>
 
+<!-- Setup. Numbered cards in the order the steps have to happen; the first one ticks
+     itself off once the visitor has an account. -->
+<section class="border-t border-border py-12 sm:py-16" aria-labelledby="setup-heading">
+  <div class="flex flex-col gap-2">
+    <SectionLabel text="get started" />
+    <h2 id="setup-heading" class="text-2xl font-semibold tracking-tight sm:text-3xl">
+      Four steps, about five minutes.
+    </h2>
+  </div>
+  <ol class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    {#each steps as step, i (step.title)}
+      {@const Icon = step.icon}
+      <li
+        class={[
+          'flex flex-col gap-3 rounded-xl border bg-card p-5 transition-colors',
+          step.done ? 'border-success-strong/40' : 'border-border hover:border-brand/50',
+        ]}
+      >
+        <div class="flex items-center justify-between">
+          <span class="flex size-9 items-center justify-center rounded-lg bg-brand-muted text-brand-strong">
+            <Icon class="size-4.5" aria-hidden="true" />
+          </span>
+          {#if step.done}
+            <span class="inline-flex items-center gap-1 text-xs font-medium text-success-strong">
+              <Check class="size-3.5" aria-hidden="true" /> Done
+            </span>
+          {:else}
+            <span class="text-xs font-medium tabular-nums text-muted-foreground" aria-hidden="true">0{i + 1}</span>
+          {/if}
+        </div>
+        <h3 class="font-semibold tracking-tight">{step.title}</h3>
+        <p class="text-sm leading-relaxed text-muted-foreground">{step.body}</p>
+        {#if !step.done}
+          <!-- eslint-disable svelte/no-navigation-without-resolve -- every step's href is a resolve() result -->
+          <a
+            href={step.href}
+            class="group mt-auto inline-flex items-center gap-1.5 pt-1 text-sm font-medium text-brand-strong hover:underline hover:underline-offset-4"
+          >
+            {step.action}
+            <ArrowRight class="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+          </a><!-- eslint-enable svelte/no-navigation-without-resolve -->
+        {/if}
+      </li>
+    {/each}
+  </ol>
+</section>
+
 {#if figures.length > 0}
-  <!-- How big it is. The figures come from the one catalogue-scale snapshot /open
-       reads, so the two pages cannot quote numbers measured at different moments —
-       and a figure the snapshot could not measure is dropped rather than shown as a
-       zero. `tabular-nums` keeps the row from twitching as the counts move. -->
+  <!-- How big this install's catalogue is, from the one snapshot rollup-stats publishes;
+       a figure it could not measure is dropped rather than shown as a zero. -->
   <section class="border-t border-border py-10">
-    <SectionLabel as="h2" text="the catalogue, today" />
-    <dl class="mt-6 grid grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-4">
+    <SectionLabel as="h2" text="this install, today" />
+    <dl class="mt-6 grid grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-3">
       {#each figures as f (f.label)}
-        <!-- `flex-col-reverse` so the number reads first and the label sits under it,
-             while the DOM keeps the term before its description. The label is written
-             once and is its own <dt>: an sr-only copy plus an aria-label plus a visible
-             span was three spellings of one word, and each could go stale alone. -->
+        <!-- `flex-col-reverse` so the number reads first while the DOM keeps the term
+             before its description. -->
         <div class="flex flex-col-reverse gap-1">
           <dt class="text-sm text-muted-foreground">{f.label}</dt>
-          <dd class="text-3xl font-semibold tabular-nums tracking-tight sm:text-4xl">
-            {f.value}
-          </dd>
+          <dd class="text-3xl font-semibold tabular-nums tracking-tight sm:text-4xl">{f.value}</dd>
         </div>
       {/each}
     </dl>
-    <div class="mt-6">
-      {@render onward(resolve('/open'), 'Every number, live, with the endpoint behind it')}
-    </div>
   </section>
 {/if}
 
-<!-- The two places freehire runs that are not a web page. Side by side because they
-     are the same offer twice — the catalogue where you already work — and stacking
-     them would make the second read as an afterthought. Each card carries its own
-     evidence: the CLI its install line, the extension what the panel actually does. -->
+<!-- What the agent is for, beside what it may not do. `grid-cols-1` is load-bearing: with
+     no column template the single track below `lg` sizes to its widest content. -->
 <section class="border-t border-border py-12 sm:py-16">
-  <SectionLabel as="h2" text="for your agent and your browser" />
-  <!-- `grid-cols-1` is load-bearing, not the default written out: with no column template
-       the single track below `lg` is `auto`, which sizes to its widest content — the
-       install line in the `pre`, which does not wrap. That took the track to 416px on a
-       390px phone and gave the whole page a horizontal scrollbar. Tailwind's `grid-cols-*`
-       are `repeat(N, minmax(0, 1fr))` for exactly this, and the `pre` scrolls itself. -->
-  <div class="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
-    <div class="flex flex-col gap-5 rounded-xl border border-border p-6 sm:p-8">
-      <h3 class="text-2xl font-semibold tracking-tight">Search and track from your AI assistant.</h3>
-      <p class="text-sm leading-relaxed text-muted-foreground">
-        Add Keenu to your assistant and ask for jobs in plain words.
-      </p>
+  <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+    <div class="flex flex-col gap-5 rounded-2xl border border-border bg-card p-6 sm:p-8">
+      <div class="flex flex-col gap-2">
+        <h2 class="text-2xl font-semibold tracking-tight">Ask in plain words.</h2>
+        <p class="text-sm leading-relaxed text-muted-foreground">
+          Your agent searches this catalogue, reads your CV, and keeps your board up to date — on the subscription you
+          already pay for.
+        </p>
+      </div>
       <div class="[zoom:0.8]"><ChatExample /></div>
-      <McpSetup iconsOnly />
-
-      <div class="mt-auto flex flex-wrap items-center justify-end gap-3">
-        <Button href={resolve('/mcp')} variant="cta" size="md" class="group">
-          Connect your assistant
+      <div class="mt-auto flex flex-wrap items-center gap-3">
+        <Button href={resolve('/my/integrations/agent')} variant="cta" size="md" class="group">
+          Connect your agent
           <ArrowRight class="size-4 transition-transform group-hover:translate-x-1" />
         </Button>
-        <Button href={resolve('/cli')} variant="ghost" size="md">CLI docs</Button>
+        <Button href={resolve('/how-it-works')} variant="ghost" size="md">How it works</Button>
       </div>
     </div>
 
-    <div class="flex flex-col gap-5 rounded-xl border border-border p-6 sm:p-8">
-      <div class="flex flex-col gap-3">
-        <h3 class="text-2xl font-semibold tracking-tight">Apply where you already are.</h3>
+    <div class="flex flex-col gap-6 rounded-2xl border border-border bg-card p-6 sm:p-8">
+      <div class="flex flex-col gap-2">
+        <h2 class="text-2xl font-semibold tracking-tight">Rules your agent cannot break.</h2>
         <p class="text-sm leading-relaxed text-muted-foreground">
-          A job-application agent in Chrome's side panel, next to the posting you are reading — on any site, not just
-          the ones Keenu tracks.
+          The server enforces these, whatever the agent is told. That is what makes it safe to hand it your CV.
         </p>
       </div>
-
-      <!-- The same preview as /features/extension, drawn smaller: `zoom` shrinks the layout box too, unlike a transform. -->
-      <!-- Centred in whatever height the taller card beside it leaves, so the spare room
-           sits around the preview instead of as one empty band above the buttons. -->
-      <div class="flex flex-1 items-center"><div class="w-full [zoom:0.7]"><ExtensionPanelPreview /></div></div>
-
-      <div class="mt-auto flex flex-wrap items-center justify-end gap-3">
-        <Button href={EXTENSION_STORE_URL} target="_blank" variant="primary" size="md">
-          <ProviderIcon provider="chrome" class="size-4" />
-          Add to Chrome
-        </Button>
-        <Button href={EXTENSION_FIREFOX_URL} target="_blank" variant="outline" size="md">
-          <ProviderIcon provider="firefox" class="size-4" />
-          Add to Firefox
-        </Button>
-      </div>
+      <ul class="flex flex-col gap-5">
+        {#each rules as rule (rule.title)}
+          {@const Icon = rule.icon}
+          <li class="flex gap-4">
+            <span class="flex size-9 shrink-0 items-center justify-center rounded-lg bg-brand-muted text-brand-strong">
+              <Icon class="size-4.5" aria-hidden="true" />
+            </span>
+            <div class="flex flex-col gap-1">
+              <h3 class="text-sm font-semibold">{rule.title}</h3>
+              <p class="text-sm leading-relaxed text-muted-foreground">{rule.body}</p>
+            </div>
+          </li>
+        {/each}
+      </ul>
     </div>
   </div>
 </section>
 
 <RecentJobsFeed />
 
-<!-- Seeded empty and applied by navigating: see `searchWithFilters`. `savedSearches`
-     is off — that tab manages the alerts a signed-in visitor saved from a list, and
-     this modal has no list behind it. `counts` seeds the controls before the first
-     staged fetch answers; `stagedCounts` is what keeps them right, and what gives the
-     dynamic facets any options at all. -->
+<!-- Seeded empty and applied by navigating: see `searchWithFilters`. -->
 <FilterModal
   seed={emptyFilters()}
   {counts}

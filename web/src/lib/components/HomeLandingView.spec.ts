@@ -58,10 +58,32 @@ describe('HomeLandingView hero', () => {
     expect(screen.getByText(/Thousands of live postings/)).toBeTruthy();
     expect(screen.queryByText(/4\.9M/)).toBeNull();
   });
+});
 
-  it('links the agent and API doors from the hero sentence', () => {
+describe('HomeLandingView setup steps', () => {
+  it('walks a fresh install through account, CV, agent and extension, in that order', () => {
     render(HomeLandingView, { props: { counts: null, scale: null } });
-    expect(screen.getByRole('link', { name: 'your AI agent' }).getAttribute('href')).toBe('/agents');
-    expect(screen.getByRole('link', { name: 'the API' }).getAttribute('href')).toBe('/jobs-api');
+    const titles = screen.getAllByRole('heading', { level: 3 }).map((h) => h.textContent?.trim());
+    expect(titles.slice(0, 4)).toEqual([
+      'Create your account',
+      'Upload your CV',
+      'Connect your agent',
+      'Add the browser extension',
+    ]);
+    expect(screen.getByRole('link', { name: /Create account/ }).getAttribute('href')).toBe('/signin');
+    expect(screen.getByRole('link', { name: /Get the command/ }).getAttribute('href')).toBe('/my/integrations/agent');
+  });
+
+  it('marks the account step done once the visitor is signed in', () => {
+    render(HomeLandingView, { props: { counts: null, scale: null, signedIn: true } });
+    expect(screen.getByText('Done')).toBeTruthy();
+    expect(screen.queryByRole('link', { name: /Create account/ })).toBeNull();
+  });
+
+  it('offers no store listing: the extension that works here is built from the repository', () => {
+    render(HomeLandingView, { props: { counts: null, scale: null } });
+    for (const link of screen.getAllByRole('link')) {
+      expect(link.getAttribute('href') ?? '').not.toMatch(/chromewebstore|addons\.mozilla/);
+    }
   });
 });

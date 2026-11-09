@@ -2,11 +2,11 @@
   "$description": "Semantic color tokens. Light-mode values; dark overrides in color-dark.tokens.json. Ported from web/src/app.css :root block — do not drop or rename without reason.",
   "$type": "color",
   "background": {
-    "$value": "oklch(0.997 0.003 130)",
-    "$description": "Page background. One fill for the whole canvas; separation comes from spacing and thin borders."
+    "$value": "oklch(0.985 0.005 275)",
+    "$description": "Page background: a cool off-white, so white cards read as raised without a shadow. One fill for the whole canvas; separation comes from spacing and thin borders."
   },
   "foreground": {
-    "$value": "oklch(0.13 0 0)",
+    "$value": "oklch(0.19 0.025 275)",
     "$description": "Default text color."
   },
   "card": {
@@ -14,7 +14,7 @@
     "$description": "Card surface fill."
   },
   "card-foreground": {
-    "$value": "oklch(0.13 0 0)",
+    "$value": "oklch(0.19 0.025 275)",
     "$description": "Text on card surface."
   },
   "popover": {
@@ -22,11 +22,11 @@
     "$description": "Popover/dropdown surface fill."
   },
   "popover-foreground": {
-    "$value": "oklch(0.13 0 0)",
+    "$value": "oklch(0.19 0.025 275)",
     "$description": "Text on popover surface."
   },
   "primary": {
-    "$value": "oklch(0.13 0 0)",
+    "$value": "oklch(0.21 0.03 275)",
     "$description": "Primary action color (high-contrast neutral)."
   },
   "primary-foreground": {
@@ -34,27 +34,27 @@
     "$description": "Text/icon on primary surface."
   },
   "secondary": {
-    "$value": "oklch(0.955 0 0)",
+    "$value": "oklch(0.955 0.008 275)",
     "$description": "Secondary surface fill."
   },
   "secondary-foreground": {
-    "$value": "oklch(0.13 0 0)",
+    "$value": "oklch(0.19 0.025 275)",
     "$description": "Text on secondary surface."
   },
   "muted": {
-    "$value": "oklch(0.955 0 0)",
+    "$value": "oklch(0.955 0.008 275)",
     "$description": "Muted surface fill (same as secondary in light)."
   },
   "muted-foreground": {
-    "$value": "oklch(0.43 0 0)",
+    "$value": "oklch(0.45 0.025 275)",
     "$description": "Low-emphasis text (captions, placeholders)."
   },
   "accent": {
-    "$value": "oklch(0.93 0 0)",
+    "$value": "oklch(0.935 0.014 275)",
     "$description": "Accent surface fill (hover states, highlights)."
   },
   "accent-foreground": {
-    "$value": "oklch(0.13 0 0)",
+    "$value": "oklch(0.19 0.025 275)",
     "$description": "Text on accent surface."
   },
   "destructive": {
@@ -70,11 +70,11 @@
     "$description": "Destructive text on the page background or a destructive tint, where the action color falls short of 4.5:1."
   },
   "border": {
-    "$value": "oklch(0.92 0 0)",
+    "$value": "oklch(0.91 0.01 275)",
     "$description": "Default border color."
   },
   "input": {
-    "$value": "oklch(0.66 0 0)",
+    "$value": "oklch(0.64 0.015 275)",
     "$description": "Input border/fill color. Dark enough (3.1:1 on the page and on cards) that a field's edge identifies it as a control (WCAG 1.4.11); at 0.93 it measured 1.2:1 and empty fields vanished into the page."
   },
   "ring": {
@@ -82,23 +82,23 @@
     "$description": "Focus ring color: the brand fill, which clears 3:1 against every light surface (WCAG 1.4.11). brand-ring is too pale for a focus indicator on the page background (1.9:1)."
   },
   "brand": {
-    "$value": "#5b6f00",
-    "$description": "Brand CTA fill — oats green, dark olive (Granola palette)."
+    "$value": "oklch(0.52 0.2 275)",
+    "$description": "Brand CTA fill — Keenu indigo. Clears 4.5:1 for its foreground and 3:1 against every light surface, which is why it also serves as the focus ring."
   },
   "brand-foreground": {
-    "$value": "#f3f6e2",
+    "$value": "oklch(0.99 0.008 275)",
     "$description": "Text/icon on brand surface."
   },
   "brand-strong": {
-    "$value": "#4c5c00",
+    "$value": "oklch(0.45 0.19 275)",
     "$description": "Darker brand tone for readable text/links."
   },
   "brand-muted": {
-    "$value": "#e5eacd",
-    "$description": "Soft brand tint for chips/badges."
+    "$value": "oklch(0.94 0.035 275)",
+    "$description": "Soft indigo tint for chips, badges and highlighted rows."
   },
   "brand-ring": {
-    "$value": "#b2c248",
+    "$value": "oklch(0.74 0.12 275)",
     "$description": "Focus outline color on brand surfaces."
   },
   "warning": {

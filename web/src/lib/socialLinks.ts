@@ -4,10 +4,8 @@ import { GITHUB_URL } from './github.svelte';
 // Telegram / Discord row (Footer, the /signin brand panel) — one place so the URLs
 // can't drift between them the way jobs.company_slug_aliases exists precisely
 // because a fact like this once lived in more than one place and disagreed.
-/** The community invite. Exported because the header menu offers the same room the
- *  footer's socials row does, and it used to carry its own copy of the URL — the
- *  drift this file's own comment warns about, one import away from being real. */
-export const DISCORD_URL = 'https://discord.gg/79cgB9RRfx';
+/** The community invite of the project this edition is built from. */
+const DISCORD_URL = 'https://discord.gg/79cgB9RRfx';
 
 export const SOCIAL_LINKS: { provider: string; label: string; href: string }[] = [
   { provider: 'github', label: 'GitHub', href: GITHUB_URL },

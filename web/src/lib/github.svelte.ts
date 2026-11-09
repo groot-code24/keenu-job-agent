@@ -13,7 +13,7 @@ import { browser } from '$app/env';
 // is a 403: a console error, and a badge with no number. The server route answers
 // from one process-wide hourly cache (see #lib/server/github).
 
-const REPO = 'strelov1/freehire';
+const REPO = 'groot-code24/keenu-job-agent';
 export const GITHUB_URL = `https://github.com/${REPO}`;
 const STARS_ENDPOINT = '/github-stars';
 

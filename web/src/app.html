@@ -20,7 +20,7 @@
     <!-- The browser chrome's colour: the light --background token in sRGB, since light is
          the default. The script below swaps in the dark one before paint, and
          theme.svelte.ts re-reads the token on every toggle. -->
-    <meta name="theme-color" content="#fdfefc" />
+    <meta name="theme-color" content="#f9fafe" />
     <script>
       // No flash of the wrong theme: apply the persisted choice before first
       // paint. Defaults to light (no OS sniffing) — mirrors theme.svelte.ts;
@@ -29,7 +29,7 @@
         try {
           if (localStorage.getItem('hire.theme') === 'dark') {
             document.documentElement.classList.add('dark');
-            document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0e0b');
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0c0e16');
           }
         } catch (e) {}
       })();

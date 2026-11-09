@@ -13,6 +13,7 @@
 
 import {
   Bell,
+  Bot,
   Briefcase,
   Building2,
   ChartColumn,
@@ -45,6 +46,9 @@ export const NAV = {
   companies: { href: '/companies', label: 'Companies', icon: Building2 },
   collections: { href: '/collections', label: 'Collections', icon: Layers },
   talent: { href: '/talent', label: 'Talent Network', icon: Radar },
+  // The local edition's own front door: where the person connects Claude Code or Codex
+  // to this install. Signed out, /my sends them to sign in first and back here.
+  agent: { href: '/my/integrations/agent', label: 'Your agent', icon: Bot },
 
   // What this is and how it works — what a first-time visitor reads.
   howItWorks: { href: '/how-it-works', label: 'How it works', icon: Compass },
@@ -66,28 +70,15 @@ export const NAV = {
 /** What the homepage header shows where every other page shows the search box.
  *
  *  A shortcut to the menu's own top, not a second navigation with its own opinions
- *  about what matters — which is the bound, and the count is only ever what that bound
- *  happens to allow. It read "five, and no more" while it listed four ways into the
- *  catalogue and two ways to find out what this is; Talent Network is a fourth
- *  catalogue, so the shape held and the number moved.
+ *  about what matters. On a local install that is the catalogue and the agent that works
+ *  it: Talent Network (a recruiter-facing directory of the public deployment) and About
+ *  (who publishes that deployment) stay in the menu, not in the bar.
  *
- *  Six is what fits, measured rather than chosen: at 1024px — `lg`, where the whole row
- *  first appears, and therefore the tightest case, since below it TopBar draws only the
- *  first two — the nav ends 37px short of the controls on its right. A seventh label
- *  costs more than that, so it does not fit. Check at `lg` before adding one: the row
- *  has no overflow behaviour, so passing the bound crowds those controls silently rather
- *  than wrapping.
+ *  Five fit with room to spare at 1024px — `lg`, where the whole row first appears, and
+ *  therefore the tightest case. Check at `lg` before adding one: the row has no overflow
+ *  behaviour, so passing the bound crowds the controls on its right silently.
  *
  *  TopBar decides when the row is drawn — and, below `lg`, how much of it: it takes
- *  entries from the FRONT of this list, so the ORDER here is what a narrow screen gets,
- *  not just the order it reads in. */
-export const HEADER_LINKS = [
-  NAV.jobs,
-  NAV.companies,
-  NAV.collections,
-  NAV.howItWorks,
-  // Before About deliberately: About is who publishes the site, and everything ahead of
-  // it is something to go and look at.
-  NAV.talent,
-  NAV.about,
-] as const;
+ *  entries from the FRONT of this list, so the ORDER here is what a narrow screen gets.
+ *  Jobs and the agent are what a phone shows. */
+export const HEADER_LINKS = [NAV.jobs, NAV.agent, NAV.companies, NAV.collections, NAV.howItWorks] as const;

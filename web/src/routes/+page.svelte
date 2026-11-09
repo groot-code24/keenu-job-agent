@@ -17,8 +17,8 @@
 </script>
 
 <Seo
-  title="Keenu — the open-source search engine for tech jobs"
-  description="Search tech jobs straight from company career boards — here, from your AI agent over MCP and the CLI, or through the Jobs API. Deduplicated, tagged by stack, seniority and location. Free search, open source."
+  title="Keenu Job Agent — your private job search, run by your own AI agent"
+  description="Jobs read straight from company career pages, searched here or by Claude Code and Codex over MCP. Your CV and applications stay on this computer; every tailored claim is backed by your own record."
   canonical="{origin}/"
 />
 
@@ -33,5 +33,5 @@
      dropped: the hero measures itself against the viewport and adds its own vertical
      room, and a wrapper's padding on top of that pushes the fold. -->
 <div class="mx-auto w-full max-w-6xl px-4">
-  <HomeLandingView counts={data.counts} scale={data.scale} />
+  <HomeLandingView counts={data.counts} scale={data.scale} signedIn={page.data.user != null} />
 </div>

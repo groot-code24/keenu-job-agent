@@ -2,46 +2,46 @@
   "$description": "Dark-mode color overrides. Same token paths as color.tokens.json; SD merges these into the .dark output. Values ported from web/src/app.css .dark block.",
   "$type": "color",
   "background": {
-    "$value": "oklch(0.16 0.006 110)"
+    "$value": "oklch(0.165 0.018 275)"
   },
   "foreground": {
-    "$value": "oklch(0.985 0 0)"
+    "$value": "oklch(0.97 0.006 275)"
   },
   "card": {
-    "$value": "oklch(0.155 0 0)"
+    "$value": "oklch(0.195 0.02 275)"
   },
   "card-foreground": {
-    "$value": "oklch(0.985 0 0)"
+    "$value": "oklch(0.97 0.006 275)"
   },
   "popover": {
-    "$value": "oklch(0.21 0 0)"
+    "$value": "oklch(0.225 0.022 275)"
   },
   "popover-foreground": {
-    "$value": "oklch(0.985 0 0)"
+    "$value": "oklch(0.97 0.006 275)"
   },
   "primary": {
-    "$value": "oklch(0.985 0 0)"
+    "$value": "oklch(0.97 0.006 275)"
   },
   "primary-foreground": {
-    "$value": "oklch(0.155 0 0)"
+    "$value": "oklch(0.19 0.025 275)"
   },
   "secondary": {
-    "$value": "oklch(0.31 0 0)"
+    "$value": "oklch(0.29 0.022 275)"
   },
   "secondary-foreground": {
-    "$value": "oklch(0.985 0 0)"
+    "$value": "oklch(0.97 0.006 275)"
   },
   "muted": {
-    "$value": "oklch(0.24 0 0)"
+    "$value": "oklch(0.245 0.02 275)"
   },
   "muted-foreground": {
-    "$value": "oklch(0.72 0 0)"
+    "$value": "oklch(0.74 0.02 275)"
   },
   "accent": {
-    "$value": "oklch(0.27 0 0)"
+    "$value": "oklch(0.275 0.024 275)"
   },
   "accent-foreground": {
-    "$value": "oklch(0.985 0 0)"
+    "$value": "oklch(0.97 0.006 275)"
   },
   "destructive": {
     "$value": "oklch(0.704 0.191 22.216)"
@@ -63,20 +63,20 @@
     "$value": "{brand-ring}"
   },
   "brand": {
-    "$value": "oklch(0.72 0.095 121)",
-    "$description": "Oats green on dark — calmer olive (not neon) with dark ink."
+    "$value": "oklch(0.72 0.14 278)",
+    "$description": "Keenu indigo on dark — lifted for contrast, with dark ink on the fill."
   },
   "brand-foreground": {
-    "$value": "oklch(0.18 0.02 120)"
+    "$value": "oklch(0.17 0.035 278)"
   },
   "brand-strong": {
-    "$value": "oklch(0.79 0.1 118)"
+    "$value": "oklch(0.8 0.11 278)"
   },
   "brand-muted": {
-    "$value": "oklch(0.31 0.045 118)"
+    "$value": "oklch(0.31 0.07 278)"
   },
   "brand-ring": {
-    "$value": "oklch(0.6 0.09 118)"
+    "$value": "oklch(0.62 0.15 278)"
   },
   "warning": {
     "$value": "oklch(0.828 0.189 84.429)",

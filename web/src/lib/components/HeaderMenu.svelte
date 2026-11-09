@@ -12,14 +12,11 @@
   import { cn } from '#lib/ui/index.js';
   import { menuNav } from '#lib/actions/menuNav.js';
   import BrandMark from './BrandMark.svelte';
-  import GithubStars from './GithubStars.svelte';
   import NotificationBell from './NotificationBell.svelte';
   import HeaderProfileMenu from './HeaderProfileMenu.svelte';
   import WorkspaceSwitcher from './WorkspaceSwitcher.svelte';
   import { ensureAccountSetupLoaded, setupOutstanding } from '#lib/accountSetup.svelte.js';
-  import { ProviderIcon } from '#lib/ui/index.js';
   import { NAV } from '#lib/siteNav.js';
-  import { DISCORD_URL } from '#lib/socialLinks.js';
   import { isAccountArea } from '#lib/shellLayout.js';
 
   // This menu carries the site nav and the theme toggle on every viewport; on
@@ -44,8 +41,8 @@
     'flex items-center gap-2 rounded-md px-4 min-h-11 text-base transition-colors hover:bg-accent hover:text-accent-foreground sm:min-h-0 sm:rounded-none sm:px-3 sm:py-2 sm:text-sm';
   const linkClass = (href: string) =>
     cn(rowBase, isActive(href) ? 'font-medium text-foreground' : 'text-muted-foreground');
-  // Shared icon-button treatment for this component's own bar controls
-  // (Discord, menu) — HeaderProfileMenu defines its own copy for its trigger.
+  // Shared icon-button treatment for this component's own bar control (the menu
+  // button) — HeaderProfileMenu defines its own copy for its trigger.
   const iconButton =
     'size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring';
 
@@ -57,8 +54,9 @@
   // Static nav (always shown) and the signed-in account items (shown only when
   // authenticated). Moderation is gated on the moderator role at render time.
   // Primary destinations pinned to the very top of the menu. Jobs is the feed at
-  // /jobs — the homepage is the landing page above it, reachable via the logo.
-  const primaryLinks = [NAV.jobs, NAV.companies];
+  // /jobs — the homepage is the landing page above it, reachable via the logo. The agent
+  // page is where a local install is put to work, so it sits with them.
+  const primaryLinks = [NAV.jobs, NAV.agent, NAV.companies];
 
   // About and Open are rendered on their own at the foot of the list, so their
   // glyphs are lifted out of NAV here rather than spelled a second time.
@@ -104,9 +102,8 @@
     return () => unlockScroll();
   });
 
-  // Inside /my the visitor came to work: the project's own links (stars, Discord) and the
-  // setup nudge (Profile already carries the checklist) step out of the bar there. Both
-  // stay in the drawer.
+  // Inside /my the visitor came to work: the setup nudge (Profile already carries the
+  // checklist) steps out of the bar there.
   const inAccount = $derived(isAccountArea(page.url.pathname));
 
   function closeSelf() {
@@ -185,28 +182,11 @@
 {/snippet}
 
 <div class="relative flex items-center gap-1" bind:this={root}>
-  <!-- Desktop bar order: GitHub stars, Discord, then the visitor's OWN two controls —
-       the bell and profile/sign-in — then the menu button pinned to the far right. The
-       bell used to sit ahead of the project's links, which put two icons about the site
-       between it and the account it notifies about. On mobile the two about the site
-       collapse into the drawer (below) and the two that are the visitor's stay: the
-       bell is how they learn something happened, and it cannot be a tap deeper than
-       the menu that would tell them. -->
-  {#if !inAccount}
-    <GithubStars class="hidden sm:inline-flex" />
-
-    <!-- eslint-disable svelte/no-navigation-without-resolve -- external Discord invite, not an internal route -->
-    <a
-      href={DISCORD_URL}
-      target="_blank"
-      rel="noreferrer"
-      aria-label="Keenu on Discord"
-      class={cn('hidden sm:inline-flex', iconButton)}
-    >
-      <ProviderIcon provider="discord" />
-    </a><!-- eslint-enable svelte/no-navigation-without-resolve -->
-  {/if}
-
+  <!-- Desktop bar order: the visitor's OWN two controls — the bell and profile/sign-in —
+       then the menu button pinned to the far right. The project links upstream carries
+       here (a GitHub star count fetched from GitHub, a Discord invite) are not this
+       install's, and the star count was a request to GitHub from a computer that
+       promises to contact nobody by default. -->
   <NotificationBell />
 
   <!-- Desktop only: the profile menu (signed in) or a direct sign-in action
@@ -375,21 +355,8 @@
         </div>
       </div>
 
-      <!-- Mobile-only: GitHub + theme + auth pinned to the bottom of the drawer. -->
+      <!-- Mobile-only: theme + auth pinned to the bottom of the drawer. -->
       <div class="shrink-0 border-t border-border p-2 sm:hidden">
-        <GithubStars variant="row" class={cn(rowBase, 'text-muted-foreground')} />
-        <!-- eslint-disable svelte/no-navigation-without-resolve -- external Discord invite, not an internal route -->
-        <a
-          href={DISCORD_URL}
-          target="_blank"
-          rel="noreferrer"
-          role="menuitem"
-          aria-label="Keenu on Discord"
-          class={cn(rowBase, 'text-muted-foreground')}
-        >
-          <ProviderIcon provider="discord" class="size-4 shrink-0" />
-          <span>Discord</span>
-        </a><!-- eslint-enable svelte/no-navigation-without-resolve -->
         {@render themeButton()}
         {@render authButton()}
       </div>

@@ -1,29 +1,29 @@
 :root {
-  --background: oklch(0.997 0.003 130); /** Page background. One fill for the whole canvas; separation comes from spacing and thin borders. */
-  --foreground: oklch(0.13 0 0); /** Default text color. */
+  --background: oklch(0.985 0.005 275); /** Page background: a cool off-white, so white cards read as raised without a shadow. One fill for the whole canvas; separation comes from spacing and thin borders. */
+  --foreground: oklch(0.19 0.025 275); /** Default text color. */
   --card: oklch(1 0 0); /** Card surface fill. */
-  --card-foreground: oklch(0.13 0 0); /** Text on card surface. */
+  --card-foreground: oklch(0.19 0.025 275); /** Text on card surface. */
   --popover: oklch(1 0 0); /** Popover/dropdown surface fill. */
-  --popover-foreground: oklch(0.13 0 0); /** Text on popover surface. */
-  --primary: oklch(0.13 0 0); /** Primary action color (high-contrast neutral). */
+  --popover-foreground: oklch(0.19 0.025 275); /** Text on popover surface. */
+  --primary: oklch(0.21 0.03 275); /** Primary action color (high-contrast neutral). */
   --primary-foreground: oklch(1 0 0); /** Text/icon on primary surface. */
-  --secondary: oklch(0.955 0 0); /** Secondary surface fill. */
-  --secondary-foreground: oklch(0.13 0 0); /** Text on secondary surface. */
-  --muted: oklch(0.955 0 0); /** Muted surface fill (same as secondary in light). */
-  --muted-foreground: oklch(0.43 0 0); /** Low-emphasis text (captions, placeholders). */
-  --accent: oklch(0.93 0 0); /** Accent surface fill (hover states, highlights). */
-  --accent-foreground: oklch(0.13 0 0); /** Text on accent surface. */
+  --secondary: oklch(0.955 0.008 275); /** Secondary surface fill. */
+  --secondary-foreground: oklch(0.19 0.025 275); /** Text on secondary surface. */
+  --muted: oklch(0.955 0.008 275); /** Muted surface fill (same as secondary in light). */
+  --muted-foreground: oklch(0.45 0.025 275); /** Low-emphasis text (captions, placeholders). */
+  --accent: oklch(0.935 0.014 275); /** Accent surface fill (hover states, highlights). */
+  --accent-foreground: oklch(0.19 0.025 275); /** Text on accent surface. */
   --destructive: oklch(0.577 0.245 27.325); /** Destructive action color (delete, remove, error). */
   --destructive-foreground: oklch(0.985 0 0); /** Text/icon on a filled destructive surface. */
   --destructive-strong: oklch(0.52 0.22 27.325); /** Destructive text on the page background or a destructive tint, where the action color falls short of 4.5:1. */
-  --border: oklch(0.92 0 0); /** Default border color. */
-  --input: oklch(0.66 0 0); /** Input border/fill color. Dark enough (3.1:1 on the page and on cards) that a field's edge identifies it as a control (WCAG 1.4.11); at 0.93 it measured 1.2:1 and empty fields vanished into the page. */
-  --ring: #5b6f00; /** Focus ring color: the brand fill, which clears 3:1 against every light surface (WCAG 1.4.11). brand-ring is too pale for a focus indicator on the page background (1.9:1). */
-  --brand: #5b6f00; /** Brand CTA fill — oats green, dark olive (Granola palette). */
-  --brand-foreground: #f3f6e2; /** Text/icon on brand surface. */
-  --brand-strong: #4c5c00; /** Darker brand tone for readable text/links. */
-  --brand-muted: #e5eacd; /** Soft brand tint for chips/badges. */
-  --brand-ring: #b2c248; /** Focus outline color on brand surfaces. */
+  --border: oklch(0.91 0.01 275); /** Default border color. */
+  --input: oklch(0.64 0.015 275); /** Input border/fill color. Dark enough (3.1:1 on the page and on cards) that a field's edge identifies it as a control (WCAG 1.4.11); at 0.93 it measured 1.2:1 and empty fields vanished into the page. */
+  --ring: oklch(0.52 0.2 275); /** Focus ring color: the brand fill, which clears 3:1 against every light surface (WCAG 1.4.11). brand-ring is too pale for a focus indicator on the page background (1.9:1). */
+  --brand: oklch(0.52 0.2 275); /** Brand CTA fill — Keenu indigo. Clears 4.5:1 for its foreground and 3:1 against every light surface, which is why it also serves as the focus ring. */
+  --brand-foreground: oklch(0.99 0.008 275); /** Text/icon on brand surface. */
+  --brand-strong: oklch(0.45 0.19 275); /** Darker brand tone for readable text/links. */
+  --brand-muted: oklch(0.94 0.035 275); /** Soft indigo tint for chips, badges and highlighted rows. */
+  --brand-ring: oklch(0.74 0.12 275); /** Focus outline color on brand surfaces. */
   --warning: oklch(0.769 0.188 70.08); /** Caution fill. The solid block that marks something as needing attention. */
   --warning-foreground: oklch(0.279 0.077 45.635); /** Text on the caution fill. */
   --warning-strong: oklch(0.555 0.163 48.998); /** Caution text and borders on the page background, where the fill is not legible. */
@@ -62,11 +62,11 @@
   --line-height-tight: 1.25; /** Headings. */
   --line-height-normal: 1.5; /** Body text. */
   --line-height-relaxed: 1.75; /** Long-form reading. */
-  --radius: 0.625rem; /** Base radius (10px). The scale derives from this. */
-  --radius-sm: calc(0.625rem * 0.6); /** 6px — chips, badges, small inputs. */
-  --radius-md: calc(0.625rem * 0.8); /** 8px — buttons, inputs. */
-  --radius-lg: 0.625rem; /** 10px — cards, dialogs. */
-  --radius-xl: calc(0.625rem * 1.4); /** 14px — large containers. */
+  --radius: 0.75rem; /** Base radius (12px). The scale derives from this. */
+  --radius-sm: calc(0.75rem * 0.6); /** ~7px — chips, badges, small inputs. */
+  --radius-md: calc(0.75rem * 0.8); /** ~10px — buttons, inputs. */
+  --radius-lg: 0.75rem; /** 12px — cards, dialogs. */
+  --radius-xl: calc(0.75rem * 1.4); /** ~17px — large containers. */
   --shadow-sm: 0px 1px 2px 0px oklch(0 0 0 / 0.05); /** Subtle elevation — dropdowns, tooltips. */
   --shadow-md: 0px 2px 4px 0px oklch(0 0 0 / 0.1); /** Default elevation — cards, popovers. */
   --shadow-lg: 0px 4px 12px 0px oklch(0 0 0 / 0.15); /** High elevation — dialogs, modals. */
