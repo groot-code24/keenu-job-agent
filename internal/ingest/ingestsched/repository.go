@@ -113,9 +113,23 @@ func clamp(v, lo, hi int) int {
 // QueriesRepository is the sqlc-backed Repository.
 type QueriesRepository struct {
 	q *db.Queries
+	// manageAll lifts the rollout gate (ingest_schedule.managed) for a deployment that has
+	// no static timers to share providers with — see ManagingAll.
+	manageAll bool
 }
 
 func NewQueriesRepository(q *db.Queries) *QueriesRepository { return &QueriesRepository{q: q} }
+
+// ManagingAll returns the repository for a deployment where the scheduler is the only thing
+// that ever crawls: every enabled provider is claimable, managed or not. The rollout gate
+// exists so the scheduler and a provider's static systemd timer never both crawl it; with
+// the process launcher there is no systemd, so no timer, and a provider left unmanaged
+// would simply never be crawled — silently, including every board added later.
+func (r *QueriesRepository) ManagingAll() *QueriesRepository {
+	c := *r
+	c.manageAll = true
+	return &c
+}
 
 func (r *QueriesRepository) Eligible(ctx context.Context) ([]Settings, error) {
 	rows, err := r.q.ListSchedulableProviders(ctx)
@@ -203,6 +217,7 @@ func (r *QueriesRepository) Claim(ctx context.Context, heavy bool, limit int, gr
 			DefaultCadenceSec: seconds(DefaultCadence),
 			DefaultTimeoutSec: seconds(DefaultRunTimeout),
 			GraceSec:          seconds(grace),
+			ManageAll:         r.manageAll,
 			MaxRuns:           toInt32(limit, 0, maxRuns),
 		})
 		if err != nil {
@@ -224,6 +239,7 @@ func (r *QueriesRepository) Claim(ctx context.Context, heavy bool, limit int, gr
 		DefaultCadenceSec: seconds(DefaultCadence),
 		DefaultTimeoutSec: seconds(DefaultRunTimeout),
 		GraceSec:          seconds(grace),
+		ManageAll:         r.manageAll,
 		MaxRuns:           toInt32(limit, 0, maxRuns),
 	})
 	if err != nil {
@@ -284,6 +300,7 @@ func (r *QueriesRepository) PreviewDue(ctx context.Context, heavy bool, limit in
 		rows, err := r.q.PreviewDueHeavyRuns(ctx, db.PreviewDueHeavyRunsParams{
 			DefaultTimeoutSec: seconds(DefaultRunTimeout),
 			GraceSec:          seconds(grace),
+			ManageAll:         r.manageAll,
 			MaxRuns:           toInt32(limit, 0, maxRuns),
 		})
 		if err != nil {
@@ -304,6 +321,7 @@ func (r *QueriesRepository) PreviewDue(ctx context.Context, heavy bool, limit in
 	rows, err := r.q.PreviewDueLightRuns(ctx, db.PreviewDueLightRunsParams{
 		DefaultTimeoutSec: seconds(DefaultRunTimeout),
 		GraceSec:          seconds(grace),
+		ManageAll:         r.manageAll,
 		MaxRuns:           toInt32(limit, 0, maxRuns),
 	})
 	if err != nil {

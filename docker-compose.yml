@@ -95,14 +95,37 @@ services:
       exit 0;
       "
 
+  # Brings an EXISTING database up to date before the app starts. The initdb mount above runs
+  # every migration only when the volume is first created, so without this a local install
+  # that pulls a release with a new migration would serve code against the old schema. On a
+  # fresh volume it records the files initdb already ran (auto-baseline) and changes nothing.
+  migrate:
+    image: freehire-app:local
+    pull_policy: never
+    entrypoint: ["/app/migrate"]
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: "postgres://hire:hire@db:5432/hire?sslmode=disable"
+      # Every worker reads its pause switch from Redis first (internal/platform/worker).
+      REDIS_URL: "redis://redis:6379/0"
+
   app:
     build: .
+    # One image for app and the workers beside it (migrate, seed-boards, crawler, search-drain),
+    # built once: five `build: .` services would compile the same Go tree five times in parallel.
+    image: freehire-app:local
     depends_on:
       db:
         condition: service_healthy
       redis:
         condition: service_healthy
       s3-init:
+        condition: service_completed_successfully
+      migrate:
         condition: service_completed_successfully
     environment:
       PORT: "8080"
@@ -156,8 +179,12 @@ services:
       # Dev default — set a real, random JWT_SECRET in any non-local deployment.
       JWT_SECRET: "${JWT_SECRET:-dev-insecure-secret-change-me-0123456789}"
       # OAuth callbacks redirect the browser back to this origin; it also
-      # derives the per-provider callback URL registered at each provider.
-      FRONTEND_ORIGIN: "${FRONTEND_ORIGIN:-http://localhost:5173}"
+      # derives the per-provider callback URL registered at each provider. It is also the
+      # ONE origin the sign-in and sign-up routes accept (requireSameOrigin), so it must be
+      # the origin the browser is actually on: the `web` service below, whose origin is
+      # WEB_ORIGIN. Reading the same variable keeps the two from disagreeing, which would
+      # refuse every sign-in as cross-site.
+      FRONTEND_ORIGIN: "${WEB_ORIGIN:-http://localhost:8090}"
       # OAuth sign-in is optional: a provider with empty credentials is simply
       # disabled (no button in the SPA, its routes 404). Set the values in .env.
       OAUTH_GOOGLE_CLIENT_ID: "${OAUTH_GOOGLE_CLIENT_ID:-}"
@@ -177,6 +204,60 @@ services:
       REDIS_URL: "redis://redis:6379/0"
     ports:
       - "${HIRE_HOST_PORT:-8080}:8080"
+
+  # The local edition's job pipeline: what production runs as systemd timers on the crawl
+  # host, as three containers. See deploy/local/README.md.
+  #
+  # seed-boards adds the starter boards (deploy/local/starter-boards) that answer live, on
+  # every start; boards already in the catalogue are skipped, so repeats are cheap.
+  seed-boards:
+    image: freehire-app:local
+    pull_policy: never
+    entrypoint:
+      - /bin/sh
+      - -c
+      - for p in greenhouse lever ashby; do /app/harvest-boards --apply "$$p" "/app/starter-boards/$$p.json" || true; done
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    environment:
+      DATABASE_URL: "postgres://hire:hire@db:5432/hire?sslmode=disable"
+      REDIS_URL: "redis://redis:6379/0"
+
+  # crawler runs cmd/ingest-scheduler with the process launcher: it stays up, decides which
+  # provider is due each minute, and crawls it as a child process. CAP 2 keeps a laptop
+  # usable; raise INGEST_SCHEDULER_CAP on a bigger machine.
+  crawler:
+    image: freehire-app:local
+    pull_policy: never
+    entrypoint: ["/app/ingest-scheduler"]
+    restart: unless-stopped
+    depends_on:
+      seed-boards:
+        condition: service_completed_successfully
+    environment:
+      DATABASE_URL: "postgres://hire:hire@db:5432/hire?sslmode=disable"
+      REDIS_URL: "redis://redis:6379/0"
+      INGEST_SCHEDULER_LAUNCHER: process
+      INGEST_SCHEDULER_APPLY: "1"
+      INGEST_SCHEDULER_BINARY: /app/ingest
+      INGEST_SCHEDULER_CAP: "${INGEST_SCHEDULER_CAP:-2}"
+
+  # search-drain pushes what the crawler wrote into Meilisearch. It drains and exits, so it
+  # is repeated here the way a timer repeats it on the crawl host.
+  search-drain:
+    image: freehire-app:local
+    pull_policy: never
+    entrypoint: ["/bin/sh", "-c", "while true; do /app/search-drain; sleep 120; done"]
+    restart: unless-stopped
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    environment:
+      DATABASE_URL: "postgres://hire:hire@db:5432/hire?sslmode=disable"
+      REDIS_URL: "redis://redis:6379/0"
+      MEILI_URL: "http://meilisearch:7700"
+      MEILI_MASTER_KEY: "${MEILI_MASTER_KEY:-dev-insecure-meili-key}"
 
   # SvelteKit SSR frontend. nginx (:8080) fronts both the Node SSR server and the
   # Go API, keeping them same-origin for the auth cookie. The browser talks only

@@ -36,14 +36,15 @@ WITH candidate AS (
     -- provider so the stagger and the shadow preview exist from day one; what ` + "`" + `managed` + "`" + `
     -- decides is whether the SCHEDULER may launch it, or whether its static timer still
     -- owns it. COALESCE to false: while the column exists, a provider nobody has handed
-    -- over is still the static timer's.
-    AND COALESCE(s.managed, false)
+    -- over is still the static timer's. manage_all is a deployment with no static timers at
+    -- all (the local edition's process launcher), where nothing else could own a provider.
+    AND (COALESCE(s.managed, false) OR $4::bool)
     -- The heavy-pool gate. See the query's header for what "heavy" means and why it is
     -- read the same way in Go and SQL.
     AND (COALESCE(s.heavy, false)
          OR (SELECT count(*) FROM ingest_run_state peer WHERE peer.provider = rs.provider) > 1)
     ORDER BY rs.next_due_at
-    LIMIT $4
+    LIMIT $5
     FOR UPDATE OF rs SKIP LOCKED
 )
 UPDATE ingest_run_state rs
@@ -59,6 +60,7 @@ type ClaimDueHeavyRunsParams struct {
 	DefaultCadenceSec int32 `json:"default_cadence_sec"`
 	DefaultTimeoutSec int32 `json:"default_timeout_sec"`
 	GraceSec          int32 `json:"grace_sec"`
+	ManageAll         bool  `json:"manage_all"`
 	MaxRuns           int32 `json:"max_runs"`
 }
 
@@ -98,6 +100,7 @@ func (q *Queries) ClaimDueHeavyRuns(ctx context.Context, arg ClaimDueHeavyRunsPa
 		arg.DefaultCadenceSec,
 		arg.DefaultTimeoutSec,
 		arg.GraceSec,
+		arg.ManageAll,
 		arg.MaxRuns,
 	)
 	if err != nil {
@@ -137,13 +140,13 @@ WITH candidate AS (
             AND rs.claimed_at < now() - make_interval(
                     secs => COALESCE(s.timeout_sec, $2::int)
                             + $3::int)))
-    AND COALESCE(s.managed, false)
+    AND (COALESCE(s.managed, false) OR $4::bool)
     -- The light-pool gate: the negation of ClaimDueHeavyRuns's heavy gate, so every due,
     -- managed row is claimed by exactly one of the two queries and never by both.
     AND NOT (COALESCE(s.heavy, false)
              OR (SELECT count(*) FROM ingest_run_state peer WHERE peer.provider = rs.provider) > 1)
     ORDER BY rs.next_due_at
-    LIMIT $4
+    LIMIT $5
     FOR UPDATE OF rs SKIP LOCKED
 )
 UPDATE ingest_run_state rs
@@ -159,6 +162,7 @@ type ClaimDueLightRunsParams struct {
 	DefaultCadenceSec int32 `json:"default_cadence_sec"`
 	DefaultTimeoutSec int32 `json:"default_timeout_sec"`
 	GraceSec          int32 `json:"grace_sec"`
+	ManageAll         bool  `json:"manage_all"`
 	MaxRuns           int32 `json:"max_runs"`
 }
 
@@ -178,6 +182,7 @@ func (q *Queries) ClaimDueLightRuns(ctx context.Context, arg ClaimDueLightRunsPa
 		arg.DefaultCadenceSec,
 		arg.DefaultTimeoutSec,
 		arg.GraceSec,
+		arg.ManageAll,
 		arg.MaxRuns,
 	)
 	if err != nil {
@@ -456,17 +461,19 @@ WHERE ((rs.claimed_at IS NULL AND rs.next_due_at <= now())
     -- provider so the stagger and the shadow preview exist from day one; what ` + "`" + `managed` + "`" + `
     -- decides is whether the SCHEDULER may launch it, or whether its static timer still
     -- owns it. COALESCE to false: while the column exists, a provider nobody has handed
-    -- over is still the static timer's.
-    AND COALESCE(s.managed, false)
+    -- over is still the static timer's. manage_all is a deployment with no static timers at
+    -- all (the local edition's process launcher), where nothing else could own a provider.
+    AND (COALESCE(s.managed, false) OR $3::bool)
     AND (COALESCE(s.heavy, false)
          OR (SELECT count(*) FROM ingest_run_state peer WHERE peer.provider = rs.provider) > 1)
 ORDER BY rs.next_due_at
-LIMIT $3
+LIMIT $4
 `
 
 type PreviewDueHeavyRunsParams struct {
 	DefaultTimeoutSec int32 `json:"default_timeout_sec"`
 	GraceSec          int32 `json:"grace_sec"`
+	ManageAll         bool  `json:"manage_all"`
 	MaxRuns           int32 `json:"max_runs"`
 }
 
@@ -487,7 +494,12 @@ type PreviewDueHeavyRunsRow struct {
 // something other than what apply mode does, so they are asserted equivalent by an
 // integration test rather than by inspection.
 func (q *Queries) PreviewDueHeavyRuns(ctx context.Context, arg PreviewDueHeavyRunsParams) ([]PreviewDueHeavyRunsRow, error) {
-	rows, err := q.db.Query(ctx, previewDueHeavyRuns, arg.DefaultTimeoutSec, arg.GraceSec, arg.MaxRuns)
+	rows, err := q.db.Query(ctx, previewDueHeavyRuns,
+		arg.DefaultTimeoutSec,
+		arg.GraceSec,
+		arg.ManageAll,
+		arg.MaxRuns,
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -523,16 +535,17 @@ WHERE ((rs.claimed_at IS NULL AND rs.next_due_at <= now())
         AND rs.claimed_at < now() - make_interval(
                 secs => COALESCE(s.timeout_sec, $1::int)
                         + $2::int)))
-    AND COALESCE(s.managed, false)
+    AND (COALESCE(s.managed, false) OR $3::bool)
     AND NOT (COALESCE(s.heavy, false)
              OR (SELECT count(*) FROM ingest_run_state peer WHERE peer.provider = rs.provider) > 1)
 ORDER BY rs.next_due_at
-LIMIT $3
+LIMIT $4
 `
 
 type PreviewDueLightRunsParams struct {
 	DefaultTimeoutSec int32 `json:"default_timeout_sec"`
 	GraceSec          int32 `json:"grace_sec"`
+	ManageAll         bool  `json:"manage_all"`
 	MaxRuns           int32 `json:"max_runs"`
 }
 
@@ -546,7 +559,12 @@ type PreviewDueLightRunsRow struct {
 // The LIGHT pool's half of PreviewDueHeavyRuns: identical query, opposite gate, mirroring
 // ClaimDueLightRuns the same way PreviewDueHeavyRuns mirrors ClaimDueHeavyRuns.
 func (q *Queries) PreviewDueLightRuns(ctx context.Context, arg PreviewDueLightRunsParams) ([]PreviewDueLightRunsRow, error) {
-	rows, err := q.db.Query(ctx, previewDueLightRuns, arg.DefaultTimeoutSec, arg.GraceSec, arg.MaxRuns)
+	rows, err := q.db.Query(ctx, previewDueLightRuns,
+		arg.DefaultTimeoutSec,
+		arg.GraceSec,
+		arg.ManageAll,
+		arg.MaxRuns,
+	)
 	if err != nil {
 		return nil, err
 	}

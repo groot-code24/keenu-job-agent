@@ -106,8 +106,9 @@ WITH candidate AS (
     -- provider so the stagger and the shadow preview exist from day one; what `managed`
     -- decides is whether the SCHEDULER may launch it, or whether its static timer still
     -- owns it. COALESCE to false: while the column exists, a provider nobody has handed
-    -- over is still the static timer's.
-    AND COALESCE(s.managed, false)
+    -- over is still the static timer's. manage_all is a deployment with no static timers at
+    -- all (the local edition's process launcher), where nothing else could own a provider.
+    AND (COALESCE(s.managed, false) OR sqlc.arg(manage_all)::bool)
     -- The heavy-pool gate. See the query's header for what "heavy" means and why it is
     -- read the same way in Go and SQL.
     AND (COALESCE(s.heavy, false)
@@ -142,7 +143,7 @@ WITH candidate AS (
             AND rs.claimed_at < now() - make_interval(
                     secs => COALESCE(s.timeout_sec, sqlc.arg(default_timeout_sec)::int)
                             + sqlc.arg(grace_sec)::int)))
-    AND COALESCE(s.managed, false)
+    AND (COALESCE(s.managed, false) OR sqlc.arg(manage_all)::bool)
     -- The light-pool gate: the negation of ClaimDueHeavyRuns's heavy gate, so every due,
     -- managed row is claimed by exactly one of the two queries and never by both.
     AND NOT (COALESCE(s.heavy, false)
@@ -236,8 +237,9 @@ WHERE ((rs.claimed_at IS NULL AND rs.next_due_at <= now())
     -- provider so the stagger and the shadow preview exist from day one; what `managed`
     -- decides is whether the SCHEDULER may launch it, or whether its static timer still
     -- owns it. COALESCE to false: while the column exists, a provider nobody has handed
-    -- over is still the static timer's.
-    AND COALESCE(s.managed, false)
+    -- over is still the static timer's. manage_all is a deployment with no static timers at
+    -- all (the local edition's process launcher), where nothing else could own a provider.
+    AND (COALESCE(s.managed, false) OR sqlc.arg(manage_all)::bool)
     AND (COALESCE(s.heavy, false)
          OR (SELECT count(*) FROM ingest_run_state peer WHERE peer.provider = rs.provider) > 1)
 ORDER BY rs.next_due_at
@@ -257,7 +259,7 @@ WHERE ((rs.claimed_at IS NULL AND rs.next_due_at <= now())
         AND rs.claimed_at < now() - make_interval(
                 secs => COALESCE(s.timeout_sec, sqlc.arg(default_timeout_sec)::int)
                         + sqlc.arg(grace_sec)::int)))
-    AND COALESCE(s.managed, false)
+    AND (COALESCE(s.managed, false) OR sqlc.arg(manage_all)::bool)
     AND NOT (COALESCE(s.heavy, false)
              OR (SELECT count(*) FROM ingest_run_state peer WHERE peer.provider = rs.provider) > 1)
 ORDER BY rs.next_due_at

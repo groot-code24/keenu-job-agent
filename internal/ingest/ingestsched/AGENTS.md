@@ -130,6 +130,25 @@ per-posting-detail providers) and a template carries one value. `--collect` is l
 without it a failed run's unit keeps its name and the next launch is refused, so the fleet
 would stop one provider at a time with nothing failing loudly.
 
+## The process launcher (no systemd)
+
+`ProcessLauncher` (`launcher_process.go`) is the second `Launcher`, for a deployment with no
+service manager: the local edition's `crawler` container. It keeps `SystemdLauncher`'s
+contract — the key is validated at launch, the run is told `INGEST_RUN_TIMEOUT_SECONDS` and
+killed past it, the shard selector is passed only when sharded, and `Finished` forgets a run
+once its outcome is read — but a run is a CHILD of the scheduler. Two consequences:
+
+- **The scheduler must outlive its runs**, so `cmd/ingest-scheduler` loops (holding the
+  advisory lock, ticking every `INGEST_SCHEDULER_INTERVAL_SECONDS`) instead of exiting after
+  one tick, and a failed tick is retried rather than fatal.
+- **A restart loses every child.** `Finished` therefore reports a run it never launched as
+  ended in failure, so its claim is released at once instead of holding the shard for the
+  whole reclaim window.
+
+It also uses `QueriesRepository.ManagingAll()`: the `managed` gate exists so the scheduler
+and a static timer never both crawl a provider, and without systemd there is no timer — a
+provider left unmanaged would simply never be crawled, including every board added later.
+
 ## The measurements this inherits
 
 These numbers came from `gen-ingest-timers.sh`'s comments and are the reason the overrides

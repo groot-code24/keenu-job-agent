@@ -22,6 +22,7 @@ import (
 	"fmt"
 	"log"
 	"strings"
+	"time"
 
 	"github.com/strelov1/freehire/internal/ingest/ingestsched"
 	"github.com/strelov1/freehire/internal/platform/config"
@@ -87,6 +88,33 @@ func run() int {
 		Paused: func(ctx context.Context) bool {
 			return worker.Paused(ctx, config.Load().RedisURL, "ingest")
 		},
+	}
+
+	switch cfg.Launcher {
+	case "systemd":
+	case "process":
+		// The crawls are this process's children, so it must outlive them: hold the lock
+		// and tick until stopped. A failed tick is logged and retried at the next interval —
+		// exiting would end every crawl in flight with it, and nothing would restart them.
+		scheduler.Launcher = ingestsched.NewProcessLauncher(cfg.IngestBinary)
+		scheduler.Repo = ingestsched.NewQueriesRepository(db.New(pool)).ManagingAll()
+		ticker := time.NewTicker(cfg.Interval)
+		defer ticker.Stop()
+		for {
+			result, err := scheduler.Tick(ctx)
+			report(result, cfg.Apply)
+			if err != nil {
+				log.Printf("scheduler: %v", err)
+			}
+			select {
+			case <-ctx.Done():
+				return 0
+			case <-ticker.C:
+			}
+		}
+	default:
+		log.Printf("scheduler: unknown INGEST_SCHEDULER_LAUNCHER %q (want systemd or process)", cfg.Launcher)
+		return 1
 	}
 
 	result, err := scheduler.Tick(ctx)

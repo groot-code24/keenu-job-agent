@@ -1,0 +1,10 @@
+[
+  {"board": "plaid", "company": "Plaid"},
+  {"board": "palantir", "company": "Palantir"},
+  {"board": "spotify", "company": "Spotify"},
+  {"board": "kraken", "company": "Kraken"},
+  {"board": "mistral", "company": "Mistral AI"},
+  {"board": "zoox", "company": "Zoox"},
+  {"board": "netlify", "company": "Netlify"},
+  {"board": "veeva", "company": "Veeva Systems"}
+]

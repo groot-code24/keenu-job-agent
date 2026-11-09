@@ -39,6 +39,12 @@ type IngestScheduler struct {
 	WorkingDir   string
 	EnvFile      string
 	RunAs        string
+
+	// Launcher is "systemd" (the crawl host: one tick per timer firing, runs as transient
+	// units) or "process" (a deployment with no systemd, such as the local Docker edition:
+	// the scheduler stays up, ticks every Interval, and runs crawls as its own children).
+	Launcher string
+	Interval time.Duration
 }
 
 // LoadIngestScheduler reads the scheduler's environment.
@@ -52,6 +58,11 @@ func LoadIngestScheduler() IngestScheduler {
 		WorkingDir:   env("INGEST_SCHEDULER_WORKDIR", "/opt/freehire/src/hire-current"),
 		EnvFile:      env("INGEST_SCHEDULER_ENV_FILE", "/opt/freehire/.env"),
 		RunAs:        env("INGEST_SCHEDULER_RUN_AS", "freehire"),
+		Launcher:     env("INGEST_SCHEDULER_LAUNCHER", "systemd"),
+		Interval:     time.Duration(envInt("INGEST_SCHEDULER_INTERVAL_SECONDS", 60)) * time.Second,
+	}
+	if c.Interval < 5*time.Second {
+		c.Interval = 5 * time.Second
 	}
 	// A non-positive cap would make every tick read as saturated and the fleet would stop
 	// crawling while every check stayed green — the failure mode this whole change exists

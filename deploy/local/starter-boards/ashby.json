@@ -1,0 +1,12 @@
+[
+  {"board": "openai", "company": "OpenAI"},
+  {"board": "notion", "company": "Notion"},
+  {"board": "ramp", "company": "Ramp"},
+  {"board": "linear", "company": "Linear"},
+  {"board": "vercel", "company": "Vercel"},
+  {"board": "supabase", "company": "Supabase"},
+  {"board": "posthog", "company": "PostHog"},
+  {"board": "replit", "company": "Replit"},
+  {"board": "deel", "company": "Deel"},
+  {"board": "cursor", "company": "Cursor"}
+]
