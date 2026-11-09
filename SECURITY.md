@@ -1,16 +1,20 @@
 # Security Policy
 
-freehire is a server-side application: a public HTTP API, a set of standalone
-crawl/enrichment workers, a PostgreSQL database, and a Meilisearch index. This
+Keenu Job Agent is a local edition of freehire: a server-side application (an HTTP API,
+crawl workers, PostgreSQL, Meilisearch) that each user runs on their own computer. This
 document describes the trust boundaries and how to report a vulnerability.
 
 ## Reporting a Vulnerability
 
-Please report suspected vulnerabilities **privately**, by either:
+Please report suspected vulnerabilities **privately**, by opening a report through **GitHub
+Security Advisories** on
+[groot-code24/keenu-job-agent](https://github.com/groot-code24/keenu-job-agent/security/advisories/new)
+(Security → Report a vulnerability).
 
-- Opening a private report through **GitHub Security Advisories** for this
-  repository (Security → Report a vulnerability), or
-- Emailing **hello@freehire.me**.
+If the issue is in code shared with the original project (most of the server is), please also
+report it to [freehire](https://github.com/strelov1/freehire/security) so it is fixed in both.
+
+There is no hosted Keenu service. Reports about `freehire.me` belong to the freehire project.
 
 Please include:
 
@@ -24,8 +28,7 @@ coordinate disclosure as appropriate.
 
 ## In Scope
 
-The hosted service at `freehire.me` and the code in this repository, in
-particular:
+The code in this repository, in particular:
 
 - **Authentication and session handling** — bypass of the JWT session cookie,
   API-key authentication, or the authorization-code OAuth flows

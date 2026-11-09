@@ -139,6 +139,7 @@ hire
 !/.env.example
 !/web/.env.example
 !/extension/.env.production
+!/extension/.env.localedition
 
 # IDE / OS
 .idea/

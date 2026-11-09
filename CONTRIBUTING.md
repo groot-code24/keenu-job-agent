@@ -1,3 +1,50 @@
+# Contributing to Keenu Job Agent
+
+Keenu Job Agent is a local edition of [freehire](https://github.com/strelov1/freehire), and
+contributions are welcome. The repository is
+<https://github.com/groot-code24/keenu-job-agent>.
+
+## What belongs here, and what belongs upstream
+
+**Here:** whatever makes the local edition work on someone's own computer. That covers running
+it in Docker (`docker-compose.yml`, `scripts/local-up.*`, the crawler), the MCP tools a
+candidate's own agent uses (`internal/api/handler/mcp_cv_tools.go`, `mcp_apply_tools.go`), the
+starter job boards (`deploy/local/starter-boards`), the extension's local build, and
+[LOCAL_EDITION.md](LOCAL_EDITION.md).
+
+**Upstream:** a fix or feature for the shared core, such as a source adapter, the pipeline,
+search or the CV editor. Send it to [freehire](https://github.com/strelov1/freehire) too, so both
+projects get it and this fork can keep pulling updates.
+
+## Getting started
+
+```sh
+git clone https://github.com/groot-code24/keenu-job-agent.git
+cd keenu-job-agent
+./scripts/local-up.sh        # or: powershell -ExecutionPolicy Bypass -File scripts\local-up.ps1
+```
+
+Then follow [LOCAL_EDITION.md](LOCAL_EDITION.md). For the toolchain behind the checks below
+(Go, pnpm, sqlc, linters), `mise install` sets up the exact versions CI uses.
+
+## Ground rules for this fork
+
+- **The honesty rules are not negotiable.** A change must not let an agent write a claim the
+  candidate did not make, or submit an application without the candidate's explicit opt-in.
+  The import check, the CV evidence gate and "the extension never submits" exist for that, and
+  a PR that weakens them will not be merged.
+- **No AI costs on the server.** The local edition's AI runs in the user's own agent. A feature
+  that needs the server to call a model must stay optional, and off unless a key is configured.
+- **Nothing leaves the user's computer by default.** No analytics, telemetry or outbound calls
+  beyond crawling public job boards.
+- PR titles follow Conventional Commits (`feat: …`, `fix(ingest): …`); CI checks this.
+- Before pushing Go: `gofmt -l .`, `go vet ./...`, `go vet -tags=integration ./...`,
+  `go test ./...`. For the web app: `pnpm check` and `pnpm exec vitest run` in `web/`.
+
+The rest of this guide is the original project's and still applies to the shared code.
+
+---
+
 # Contributing to freehire
 
 Contributions are welcome. This guide exists to save both sides time.
