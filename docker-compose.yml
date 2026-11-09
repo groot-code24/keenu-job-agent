@@ -14,7 +14,7 @@ services:
       POSTGRES_PASSWORD: hire
       POSTGRES_DB: hire
     ports:
-      - "${DB_HOST_PORT:-5432}:5432"
+      - "${BIND_ADDRESS:-127.0.0.1}:${DB_HOST_PORT:-5432}:5432"
     volumes:
       # postgres:18+ stores data in a version-specific subdirectory and expects
       # the volume at /var/lib/postgresql (not the legacy .../data path, which it
@@ -37,7 +37,7 @@ services:
       MEILI_MASTER_KEY: "${MEILI_MASTER_KEY:-dev-insecure-meili-key}"
       MEILI_ENV: development
     ports:
-      - "${MEILI_HOST_PORT:-7700}:7700"
+      - "${BIND_ADDRESS:-127.0.0.1}:${MEILI_HOST_PORT:-7700}:7700"
     volumes:
       - meilisearch_data:/meili_data
 
@@ -83,7 +83,7 @@ services:
       # S3_ENDPOINT. No credentials: s3mock accepts any signature.
       AWS_REGION: "${AWS_REGION:-us-east-1}"
     ports:
-      - "${S3_HOST_PORT:-9000}:9090"
+      - "${BIND_ADDRESS:-127.0.0.1}:${S3_HOST_PORT:-9000}:9090"
 
   s3-init:
     image: curlimages/curl:8.23.0
@@ -100,7 +100,7 @@ services:
   # that pulls a release with a new migration would serve code against the old schema. On a
   # fresh volume it records the files initdb already ran (auto-baseline) and changes nothing.
   migrate:
-    image: freehire-app:local
+    image: ${KEENU_IMAGES:-ghcr.io/groot-code24/keenu-job-agent}/app:${KEENU_TAG:-latest}
     pull_policy: never
     entrypoint: ["/app/migrate"]
     depends_on:
@@ -117,7 +117,9 @@ services:
     build: .
     # One image for app and the workers beside it (migrate, seed-boards, crawler, search-drain),
     # built once: five `build: .` services would compile the same Go tree five times in parallel.
-    image: freehire-app:local
+    # It is published by .github/workflows/images.yml, so a start normally PULLS it
+    # (scripts/local-up.*) and builds only when it cannot.
+    image: ${KEENU_IMAGES:-ghcr.io/groot-code24/keenu-job-agent}/app:${KEENU_TAG:-latest}
     depends_on:
       db:
         condition: service_healthy
@@ -203,7 +205,7 @@ services:
       MEILI_MASTER_KEY: "${MEILI_MASTER_KEY:-dev-insecure-meili-key}"
       REDIS_URL: "redis://redis:6379/0"
     ports:
-      - "${HIRE_HOST_PORT:-8080}:8080"
+      - "${BIND_ADDRESS:-127.0.0.1}:${HIRE_HOST_PORT:-8080}:8080"
 
   # The local edition's job pipeline: what production runs as systemd timers on the crawl
   # host, as three containers. See deploy/local/README.md.
@@ -211,7 +213,7 @@ services:
   # seed-boards adds the starter boards (deploy/local/starter-boards) that answer live, on
   # every start; boards already in the catalogue are skipped, so repeats are cheap.
   seed-boards:
-    image: freehire-app:local
+    image: ${KEENU_IMAGES:-ghcr.io/groot-code24/keenu-job-agent}/app:${KEENU_TAG:-latest}
     pull_policy: never
     entrypoint:
       - /bin/sh
@@ -228,7 +230,7 @@ services:
   # provider is due each minute, and crawls it as a child process. CAP 2 keeps a laptop
   # usable; raise INGEST_SCHEDULER_CAP on a bigger machine.
   crawler:
-    image: freehire-app:local
+    image: ${KEENU_IMAGES:-ghcr.io/groot-code24/keenu-job-agent}/app:${KEENU_TAG:-latest}
     pull_policy: never
     entrypoint: ["/app/ingest-scheduler"]
     restart: unless-stopped
@@ -246,7 +248,7 @@ services:
   # search-drain pushes what the crawler wrote into Meilisearch. It drains and exits, so it
   # is repeated here the way a timer repeats it on the crawl host.
   search-drain:
-    image: freehire-app:local
+    image: ${KEENU_IMAGES:-ghcr.io/groot-code24/keenu-job-agent}/app:${KEENU_TAG:-latest}
     pull_policy: never
     entrypoint: ["/bin/sh", "-c", "while true; do /app/search-drain; sleep 120; done"]
     restart: unless-stopped
@@ -259,10 +261,15 @@ services:
       MEILI_URL: "http://meilisearch:7700"
       MEILI_MASTER_KEY: "${MEILI_MASTER_KEY:-dev-insecure-meili-key}"
 
+  # Every published port binds to BIND_ADDRESS, 127.0.0.1 by default: the database password
+  # is public in this file, and a CV is personal data, so nothing here should answer anyone
+  # else on the network unless its owner opts in (BIND_ADDRESS=0.0.0.0).
+  #
   # SvelteKit SSR frontend. nginx (:8080) fronts both the Node SSR server and the
   # Go API, keeping them same-origin for the auth cookie. The browser talks only
   # to this container.
   web:
+    image: ${KEENU_IMAGES:-ghcr.io/groot-code24/keenu-job-agent}/web:${KEENU_TAG:-latest}
     build:
       context: .
       dockerfile: web/Dockerfile
@@ -273,8 +280,11 @@ services:
     environment:
       # The Node SSR server fetches the Go API server-to-server (never relative).
       API_INTERNAL_URL: "http://app:8080"
+      # Both off unless set in .env: no logo proxy and no analytics see what a user browses.
+      PUBLIC_LOGO_ORIGIN: "${PUBLIC_LOGO_ORIGIN:-}"
+      PUBLIC_GA_MEASUREMENT_ID: "${PUBLIC_GA_MEASUREMENT_ID:-}"
     ports:
-      - "${WEB_HOST_PORT:-8090}:8080"
+      - "${BIND_ADDRESS:-127.0.0.1}:${WEB_HOST_PORT:-8090}:8080"
     depends_on:
       - app
 

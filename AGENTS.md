@@ -1,5 +1,8 @@
 # AGENTS.md
 
+> **Asked to set up or use Keenu Job Agent rather than develop it?** Follow
+> [AGENT_SETUP.md](AGENT_SETUP.md) instead of this file.
+
 Guidance for AI agents working in this repository.
 
 ## Working principles

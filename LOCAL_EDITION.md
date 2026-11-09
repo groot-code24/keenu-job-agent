@@ -6,10 +6,12 @@ Every feature is open to every account, and nothing is sold. The AI work runs in
 Claude Code or Codex, on the subscription you already have, so this server needs no API key and
 makes no AI calls itself.
 
+The easiest way to set it up is to let your agent do it: give Claude Code or Codex the
+repository URL and ask it to follow [AGENT_SETUP.md](AGENT_SETUP.md).
+
 ## What you need
 
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/), with about 4 GB of free memory
-  the first time you start, while the images build.
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) or Codex, signed in with your own
   subscription.
 - [Node.js](https://nodejs.org/) 24, only to build the browser extension.
@@ -21,8 +23,14 @@ makes no AI calls itself.
 powershell -ExecutionPolicy Bypass -File scripts\local-up.ps1  # Windows
 ```
 
-The first start builds the images, which can take 20–30 minutes on a laptop. Later starts take
-seconds. Then open **<http://localhost:8090>** and sign up.
+The script pulls ready-made images (published by this repository's `images` workflow), so the
+first start takes a few minutes. If it cannot pull them, or you set `KEENU_BUILD=1`, it builds
+them on your machine instead: 20–50 minutes and about 4 GB of free memory. Then open
+**<http://localhost:8090>** and sign up.
+
+On first start the script writes this install's own secrets (`JWT_SECRET`, `MEILI_MASTER_KEY`)
+into `.env`. Every port listens on `127.0.0.1` only, so nobody else on your network can reach
+it. Set `BIND_ADDRESS=0.0.0.0` in `.env` only if you mean to share it.
 
 `docker compose down` stops everything. Your data stays in Docker volumes; only
 `docker compose down -v` erases it.
@@ -87,5 +95,8 @@ descriptions. That goes to Anthropic or OpenAI as part of your own conversation 
 - No email is sent, so there are no verification codes, password-reset mails or job-alert emails.
 - Without an LLM key on the server, its built-in AI features (the in-app assistant, dictation,
   the server-side fit analysis) stay off. Your agent does that work instead.
-- `docker compose` needs about 4 GB of free memory while building. If a build dies, close other
-  apps and run the start script again.
+- Building the images locally needs about 4 GB of free memory. If a build dies, close other apps
+  and run the start script again.
+- Company logos are off by default, so no company name you look at leaves your computer. Set
+  `PUBLIC_LOGO_ORIGIN` to a logo proxy to turn them on. Analytics never load unless you set
+  `PUBLIC_GA_MEASUREMENT_ID` yourself.

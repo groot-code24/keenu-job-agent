@@ -1,6 +1,13 @@
 > **Keenu Job Agent** is a local edition of freehire: it runs on your own computer, every feature
 > is free, and the AI runs through your own Claude Code or Codex subscription.
-> Setup: [LOCAL_EDITION.md](LOCAL_EDITION.md). The rest of this README is the original project's.
+>
+> **Quick start:** paste this into Claude Code or Codex:
+>
+> ```text
+> Set up Keenu Job Agent for me from https://github.com/groot-code24/keenu-job-agent — follow its AGENT_SETUP.md.
+> ```
+>
+> Or by hand: [LOCAL_EDITION.md](LOCAL_EDITION.md). The rest of this README is the original project's.
 
 <div align="center">
 

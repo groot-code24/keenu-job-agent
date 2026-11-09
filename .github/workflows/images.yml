@@ -1,0 +1,53 @@
+# Publishes the two images a local install runs (the Go app and the web app) to this
+# repository's GitHub Container Registry, so scripts/local-up.* can PULL them instead of
+# building them on the user's machine — a build that takes 20-50 minutes and more memory than
+# many laptops have spare. A start falls back to building when it cannot pull.
+#
+# The web image bakes its public origin in at build time; this one is built for the default,
+# http://localhost:8090. A user with another origin builds locally (local-up does that itself).
+#
+# After the first run, make both packages public once (Package settings → Change visibility),
+# or pulls without a GitHub login are refused and every start falls back to building.
+name: images
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: images
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Log in to the GitHub Container Registry
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ACTOR: ${{ github.actor }}
+        run: echo "$TOKEN" | docker login ghcr.io -u "$ACTOR" --password-stdin
+
+      - name: Build and push
+        env:
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+        run: |
+          prefix="ghcr.io/${REPO,,}"
+          source="org.opencontainers.image.source=https://github.com/${REPO}"
+          docker build --label "$source" -t "$prefix/app:latest" -t "$prefix/app:$SHA" .
+          docker build --label "$source" --build-arg ORIGIN=http://localhost:8090 \
+            -f web/Dockerfile -t "$prefix/web:latest" -t "$prefix/web:$SHA" .
+          docker push --all-tags "$prefix/app"
+          docker push --all-tags "$prefix/web"
