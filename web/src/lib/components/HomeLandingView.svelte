@@ -123,9 +123,10 @@
 
   /** The hero's one number, live from the same snapshot as the figures below and
    *  floored to a tenth of a million (4,968,000 → "4.9M+", never "5M+"): a "+" figure
-   *  must not overstate the catalogue. The fallback is the last measured floor. */
+   *  must not overstate the catalogue. Before rollup-stats has published a figure the line says
+   *  so in words rather than quoting another deployment's catalogue. */
   const jobsFigure = $derived(
-    scale?.unique_open_jobs ? `${formatCount(Math.floor(scale.unique_open_jobs / 1e5) * 1e5)}+` : '4.9M+',
+    scale?.unique_open_jobs ? `${formatCount(Math.floor(scale.unique_open_jobs / 1e5) * 1e5)}+` : 'Thousands of',
   );
 
   const figures = $derived(

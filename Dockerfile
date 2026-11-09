@@ -21,7 +21,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o /out/hire ./cmd/server
       ./cmd/ingest ./cmd/enrich ./cmd/reindex ./cmd/tg-ingest ./cmd/tg-extract \
       ./cmd/backfill-derive ./cmd/liveness ./cmd/notify ./cmd/import-collections \
       ./cmd/recount-companies ./cmd/migrate \
-      ./cmd/ingest-scheduler ./cmd/search-drain ./cmd/add-board ./cmd/harvest-boards
+      ./cmd/ingest-scheduler ./cmd/search-drain ./cmd/add-board ./cmd/harvest-boards ./cmd/rollup-stats
 
 # --- typst stage: fetch the pinned, statically-linked typst binary used to render CV
 # PDFs (internal/cv). The musl build is fully static, so it runs on distroless/static;
@@ -51,7 +51,7 @@ RUN apt-get update \
  && groupadd --system --gid 65532 nonroot \
  && useradd --system --uid 65532 --gid nonroot --home-dir /app nonroot \
  && pdftotext -v
-COPY --from=build /out/hire /out/ingest /out/enrich /out/reindex /out/tg-ingest /out/tg-extract /out/backfill-derive /out/liveness /out/notify /out/import-collections /out/recount-companies /out/migrate /out/ingest-scheduler /out/search-drain /out/add-board /out/harvest-boards /app/
+COPY --from=build /out/hire /out/ingest /out/enrich /out/reindex /out/tg-ingest /out/tg-extract /out/backfill-derive /out/liveness /out/notify /out/import-collections /out/recount-companies /out/migrate /out/ingest-scheduler /out/search-drain /out/add-board /out/harvest-boards /out/rollup-stats /app/
 # The migration runner reads its *.sql files from the image (WORKDIR /app, default
 # -dir migrations), so /app/migrate works the same as `go run ./cmd/migrate` on the host.
 COPY --from=build /src/migrations /app/migrations

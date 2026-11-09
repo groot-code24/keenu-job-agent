@@ -11,7 +11,7 @@ import type { Company, Enrichment, Job, JobCard } from './types';
 const SITE = 'Keenu';
 // Site-level facts reused across the homepage WebSite/Organization schema.
 const SITE_DESCRIPTION =
-  'Freehire is an open-source search engine for tech jobs: it indexes millions of openings straight from company career boards, deduplicates them, and tags each with stack, seniority and location. Free and open source.';
+  'Keenu is an open-source search engine for tech jobs: it indexes openings straight from company career boards, deduplicates them, and tags each with stack, seniority and location. Free and open source.';
 const SITE_GITHUB = 'https://github.com/strelov1/freehire';
 
 /** One question/answer pair; the shape shared by the visible FAQ and its schema. */

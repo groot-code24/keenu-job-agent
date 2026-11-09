@@ -24,9 +24,9 @@
   // are aggregators and 30 are single-company career feeds, so the label was counting
   // things it did not describe. It is live now, so it also stops going stale.
   const figures = $derived([
-    { value: compact(stats.jobs, '4.9M+'), label: 'unique jobs' },
-    { value: compact(stats.companies, '700K+'), label: 'companies' },
-    { value: stats.sources == null ? '430+' : String(stats.sources), label: 'sources' },
+    { value: compact(stats.jobs, '—'), label: 'unique jobs' },
+    { value: compact(stats.companies, '—'), label: 'companies' },
+    { value: stats.sources == null ? '—' : String(stats.sources), label: 'sources' },
     { value: '100%', label: 'open source' },
   ]);
 
@@ -182,8 +182,8 @@
         </h1>
 
         <p class="reveal mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground" style="--d:160ms">
-          Freehire pulls openings straight from company career boards, strips the duplicates, and tags each one with
-          stack, seniority and location — so you search jobs, not job boards.
+          Keenu pulls openings straight from company career boards, strips the duplicates, and tags each one with stack,
+          seniority and location — so you search jobs, not job boards.
         </p>
 
         <div class="reveal mt-9 flex flex-wrap items-center gap-3" style="--d:240ms">

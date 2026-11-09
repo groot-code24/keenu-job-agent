@@ -262,11 +262,13 @@ services:
       INGEST_SCHEDULER_CAP: "${INGEST_SCHEDULER_CAP:-2}"
 
   # search-drain pushes what the crawler wrote into Meilisearch. It drains and exits, so it
-  # is repeated here the way a timer repeats it on the crawl host.
+  # is repeated here the way a timer repeats it on the crawl host. Every 15th pass (about
+  # half an hour, and once at start) it also runs rollup-stats, which publishes the catalogue
+  # figures the site shows; without it every page falls back to a figure of its own.
   search-drain:
     image: ${KEENU_IMAGES:-ghcr.io/groot-code24/keenu-job-agent}/app:${KEENU_TAG:-latest}
     pull_policy: never
-    entrypoint: ["/bin/sh", "-c", "while true; do /app/search-drain; sleep 120; done"]
+    entrypoint: ["/bin/sh", "-c", "i=0; while true; do /app/search-drain; if [ $$((i % 15)) -eq 0 ]; then /app/rollup-stats; fi; i=$$((i + 1)); sleep 120; done"]
     restart: unless-stopped
     depends_on:
       migrate:

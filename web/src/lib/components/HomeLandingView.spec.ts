@@ -43,9 +43,12 @@ describe('HomeLandingView hero', () => {
   });
 
   // A cold snapshot must not make the hero say nothing, or overstate: the fallback is a floor.
-  it('falls back to the last measured floor when the snapshot is missing', () => {
+  // Before rollup-stats has published a figure the line says so in words: quoting another
+  // deployment's catalogue size would overstate a self-hosted one by orders of magnitude.
+  it('says it in words, with no figure, when the snapshot is missing', () => {
     render(HomeLandingView, { props: { counts: null, scale: null } });
-    expect(screen.getByText(/4\.9M\+ live postings/)).toBeTruthy();
+    expect(screen.getByText(/Thousands of live postings/)).toBeTruthy();
+    expect(screen.queryByText(/4\.9M/)).toBeNull();
   });
 
   it('links the agent and API doors from the hero sentence', () => {
