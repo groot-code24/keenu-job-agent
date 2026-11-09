@@ -172,22 +172,22 @@ func (h *cvHandlers) applySeedToBase(ctx context.Context, userID int64, base cv.
 // the seed is unusable — or the candidate has edited the base by hand: an upload must never
 // silently erase that. (The explicit "update from my CV" is ReseedCV on the base.)
 // Current structure: full reseed. Pending extract: header heal only (see AGENTS.md).
-func (h *cvHandlers) reseedBaseIfStaleVsUpload(c *fiber.Ctx, userID int64, baseID uuid.UUID) error {
+func (h *cvHandlers) reseedBaseIfStaleVsUpload(ctx context.Context, userID int64, baseID uuid.UUID) error {
 	if h.resume == nil {
 		return nil
 	}
-	uploadedAt, err := h.resume.UploadedAt(c.Context(), userID)
+	uploadedAt, err := h.resume.UploadedAt(ctx, userID)
 	if err != nil || uploadedAt == nil {
 		return err
 	}
-	base, ok, err := h.cvStore.BaseOrDefault(c.Context(), userID, baseID)
+	base, ok, err := h.cvStore.BaseOrDefault(ctx, userID, baseID)
 	if err != nil || !ok {
 		return err
 	}
 	if base.HandEdited || !base.UpdatedAt.Before(*uploadedAt) {
 		return nil
 	}
-	st, usable, err := h.seedSource().Structured(c.Context(), userID)
+	st, usable, err := h.seedSource().Structured(ctx, userID)
 	if err != nil || !usable {
 		return err
 	}
@@ -196,17 +196,17 @@ func (h *cvHandlers) reseedBaseIfStaleVsUpload(c *fiber.Ctx, userID int64, baseI
 	// summary/education the candidate already has on the base. Same for a seed that
 	// is technically current/usable but carries identity alone: not enough reason to
 	// wipe an existing base's body.
-	if _, current, cerr := h.resume.Structured(c.Context(), userID); cerr != nil {
+	if _, current, cerr := h.resume.Structured(ctx, userID); cerr != nil {
 		return cerr
 	} else if !current {
-		_, err := h.healRecordHeader(c.Context(), userID, base)
+		_, err := h.healRecordHeader(ctx, userID, base)
 		return err
 	}
 	if !hasSeedBody(st) {
-		_, err := h.healRecordHeader(c.Context(), userID, base)
+		_, err := h.healRecordHeader(ctx, userID, base)
 		return err
 	}
-	return h.applySeedToBase(c.Context(), userID, base, cv.Seed(st))
+	return h.applySeedToBase(ctx, userID, base, cv.Seed(st))
 }
 
 // hasSeedBody reports whether a composed seed carries body content — experience,

@@ -545,7 +545,9 @@ func (h *assistantHandlers) checkExperienceContextRequired(ctx context.Context, 
 // outside the model confirmed the words. The bank turns the answer into the stored label.
 func (h *assistantHandlers) authorFor(ctx context.Context, sessionID uuid.UUID, said string) experience.Author {
 	said = strings.TrimSpace(said)
-	if said == "" || h.store == nil {
+	// No session is the MCP surface: the candidate's own agent talks to them somewhere this
+	// process never sees, so there is no transcript to check the words against.
+	if said == "" || h.store == nil || sessionID == uuid.Nil {
 		return experience.AuthorAgent
 	}
 	transcript, err := h.store.Transcript(ctx, sessionID)

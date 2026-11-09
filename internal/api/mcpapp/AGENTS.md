@@ -2,7 +2,7 @@
 
 The canonical MCP at `/api/v1/mcp` combines anonymous catalogue reads with
 OAuth account tools (`mixed.go`). Anonymous and OAuth sessions discover the same
-51 tools; personal calls without authentication never reach business code.
+69 tools; personal calls without authentication never reach business code.
 ChatGPT (User-Agent `openai-mcp`) gets an error result carrying `mcp/www_authenticate`,
 the in-band challenge its Apps SDK opens sign-in from. Every other host gets HTTP 401 with
 `WWW-Authenticate`, because Grok and Claude.ai ignore the in-band challenge and open sign-in
@@ -53,6 +53,26 @@ push-device rule are enforced once. A channel is only added where the delivery w
 would actually reach (`GetAlertChannelState`). Digest timing is account-wide on the
 website, so it is shown but not changed here. "What is new" reads `subscription_matches`,
 the ledger the digests are built from, rather than re-running the search.
+
+## CV tailoring and applying (the candidate's own agent)
+
+The account server — OAuth grants and full-scope keys alike — also serves the tools a
+candidate's OWN agent (Claude Code, Codex, on their own subscription) tailors CVs and fills
+applications with: `internal/api/handler/mcp_cv_tools.go` and `mcp_apply_tools.go`. The server
+makes no model call for any of them; the agent is the model. The rules are the in-app agent's,
+in the same service paths:
+
+- `import_my_cv` keeps only values the uploaded file's text contains
+  (`resumeextract.KeepSupported`), which is what entitles them to `cv_import`; the rest is
+  dropped and named back.
+- `edit_cv` goes through `cvedit`'s evidence gate, and `experience_add` has no `said`: there is
+  no transcript here to check the candidate's words against, so what the agent banks stays
+  `agent_inferred` until the candidate confirms it on the website.
+- Most CV tools ARE the in-app session's, served by `cvScoped` with the CV named by argument and
+  loaded owner-scoped first.
+- `fill_application_form` writes into the form in the candidate's browser through the
+  extension and never submits. Auto-apply, which does submit, stays OAuth-only behind
+  `users.agents_may_apply`.
 
 ## Why there are two MCP servers
 

@@ -46,6 +46,50 @@ type tailorCVResponse struct {
 	ColdStartRunning bool `json:"cold_start_running"`
 }
 
+// tailorCopy creates the caller's tailored copy of a base CV for one vacancy, or returns the
+// one that already exists (Tailor is idempotent per vacancy). It is the part of starting to
+// tailor that does not depend on who does the tailoring: TailorCV adds the in-app agent's
+// session and its plan charge on top, and the MCP tool (tailor_cv_for_job) — whose agent is
+// the candidate's own, outside this process — uses it alone. justCreated is true only when
+// this call made the copy.
+func (h *cvHandlers) tailorCopy(ctx context.Context, userID int64, job db.Job, baseID uuid.UUID) (base, tailored cv.Meta, justCreated bool, err error) {
+	// When the base CV is behind the latest résumé upload, refresh it from the seed before
+	// Tailor copies it into a new vacancy-bound row. Reload of an existing tailored copy
+	// still returns that copy unchanged (Tailor is idempotent); the base refresh is a no-op
+	// once updated_at catches the upload stamp. Best-effort: this refresh exists to keep the
+	// base in sync, not to gate opening the tailor workspace — a role over the bullet cap (or
+	// any other refresh failure) must not block bootstrap. Tailor below falls back to the base
+	// as it currently stands.
+	if err := h.reseedBaseIfStaleVsUpload(ctx, userID, baseID); err != nil {
+		log.Printf("cv: base refresh before tailor bootstrap user=%d: %v", userID, err)
+	}
+	base, tailored, justCreated, err = h.cvStore.Tailor(ctx, userID, job.ID, baseID, tailoredCVTitle(job.Title), h.seedSource(), skilltag.PreferredFromText(job.Description))
+	if errors.Is(err, cv.ErrNoResume) {
+		return base, tailored, false, fiber.NewError(fiber.StatusConflict, "add a résumé before tailoring")
+	}
+	if err != nil {
+		return base, tailored, false, mapCVError(err)
+	}
+	// Existing vacancy-bound copies (and a base left empty before provisional contacts
+	// were usable) heal empty header fields on bootstrap the same way GetCV does.
+	if trec, gerr := h.cvStore.Get(ctx, tailored.ID, userID); gerr == nil {
+		if _, herr := h.healRecordHeader(ctx, userID, trec); herr != nil {
+			log.Printf("cv: healing tailored header on tailor %s: %v", tailored.ID, herr)
+		}
+	}
+	h.healBaseHeaderIfNeeded(ctx, userID)
+	// Open the copy's history with where it came from, so the feed starts at the beginning
+	// rather than mid-story with the first edit. Best-effort and idempotency-aware: Tailor
+	// returns the EXISTING copy on a reload, and a second milestone would be a second
+	// "created from your base CV" under a CV that was created once.
+	if justCreated {
+		if _, err := h.editor.Seed(ctx, tailored.ID, userID, "Created from your base CV"); err != nil {
+			log.Printf("cv: seeding the revision history for %s: %v", tailored.ID, err)
+		}
+	}
+	return base, tailored, justCreated, nil
+}
+
 // TailorCV bootstraps a tailoring session for a vacancy: it ensures the user has a base CV
 // (seeding one from their résumé, 409 when they have none), creates a vacancy-bound tailored
 // copy, mints the CLI credential, and returns the ids plus the cached analysis if one already
@@ -91,39 +135,9 @@ func (h *cvHandlers) TailorCV(c *fiber.Ctx) error {
 	if refused, err := h.refuseNewTailoring(c, userID, job.ID); refused {
 		return err
 	}
-	// When the base CV is behind the latest résumé upload, refresh it from the seed before
-	// Tailor copies it into a new vacancy-bound row. Reload of an existing tailored copy
-	// still returns that copy unchanged (Tailor is idempotent); the base refresh is a no-op
-	// once updated_at catches the upload stamp. Best-effort: this refresh exists to keep the
-	// base in sync, not to gate opening the tailor workspace — a role over the bullet cap (or
-	// any other refresh failure) must not block bootstrap. Tailor below falls back to the base
-	// as it currently stands.
-	if err := h.reseedBaseIfStaleVsUpload(c, userID, baseID); err != nil {
-		log.Printf("cv: base refresh before tailor bootstrap user=%d: %v", userID, err)
-	}
-	base, tailored, justCreated, err := h.cvStore.Tailor(c.Context(), userID, job.ID, baseID, tailoredCVTitle(job.Title), h.seedSource(), skilltag.PreferredFromText(job.Description))
-	if errors.Is(err, cv.ErrNoResume) {
-		return fiber.NewError(fiber.StatusConflict, "add a résumé before tailoring")
-	}
+	base, tailored, justCreated, err := h.tailorCopy(c.Context(), userID, job, baseID)
 	if err != nil {
-		return mapCVError(err)
-	}
-	// Existing vacancy-bound copies (and a base left empty before provisional contacts
-	// were usable) heal empty header fields on bootstrap the same way GetCV does.
-	if trec, gerr := h.cvStore.Get(c.Context(), tailored.ID, userID); gerr == nil {
-		if _, herr := h.healRecordHeader(c.Context(), userID, trec); herr != nil {
-			log.Printf("cv: healing tailored header on tailor %s: %v", tailored.ID, herr)
-		}
-	}
-	h.healBaseHeaderIfNeeded(c.Context(), userID)
-	// Open the copy's history with where it came from, so the feed starts at the beginning
-	// rather than mid-story with the first edit. Best-effort and idempotency-aware: Tailor
-	// returns the EXISTING copy on a reload, and a second milestone would be a second
-	// "created from your base CV" under a CV that was created once.
-	if justCreated {
-		if _, err := h.editor.Seed(c.Context(), tailored.ID, userID, "Created from your base CV"); err != nil {
-			log.Printf("cv: seeding the revision history for %s: %v", tailored.ID, err)
-		}
+		return err
 	}
 	// A reload of /tailor/<slug> re-runs this request. The CV it reaches is the one that
 	// already exists (Tailor is idempotent per vacancy), so its conversation must be reached

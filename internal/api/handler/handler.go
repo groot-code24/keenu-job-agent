@@ -13,6 +13,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 
 	"github.com/strelov1/freehire/internal/ai/assistant"
+	"github.com/strelov1/freehire/internal/api/candidateprofile"
 	"github.com/strelov1/freehire/internal/ai/browsertools"
 	"github.com/strelov1/freehire/internal/ai/enrich"
 	"github.com/strelov1/freehire/internal/ai/llmkey"
@@ -870,8 +871,12 @@ func Register(app *fiber.App, cfg Config) {
 	// The autofill planner is one cheap structured call per run, so it travels on the
 	// shared client's default timeout. The contact block it plans over comes from the base
 	// CV, then the structured résumé — see autofillHandlers.autofillProfile.
-	autofillH := newAutofillHandlers(cvStore, resumeStore, queries, screeningAnswersSvc, answerBank, a.browserTools, llmBinding{client: cfg.LLM, keys: llmKeys}, cfg.TypesafeAPIKey)
-	autofillH.profiles.WithProfileLocation(profileSvc)
+	// Built here rather than inside newAutofillHandlers because two features read it: the
+	// extension's autofill, and the MCP surface's get_autofill_profile.
+	autofillProfiles := candidateprofile.NewAssembler(cvStore, resumeStore, queries, screeningAnswersSvc, answerBank)
+	autofillProfiles.WithProfileLocation(profileSvc)
+	assistantH.autofillProfiles = autofillProfiles
+	autofillH := newAutofillHandlers(autofillProfiles, a.browserTools, llmBinding{client: cfg.LLM, keys: llmKeys}, cfg.TypesafeAPIKey)
 	usageH := newUsageHandlers(cfg.LLMKeys, llmKeys)
 	accountDeletion.WithGatewayKeys(llmKeys.Revoke)
 

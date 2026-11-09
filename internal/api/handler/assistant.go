@@ -16,6 +16,7 @@ import (
 	"github.com/valyala/fasthttp"
 
 	"github.com/strelov1/freehire/internal/ai/assistant"
+	"github.com/strelov1/freehire/internal/api/candidateprofile"
 	"github.com/strelov1/freehire/internal/ai/browsertools"
 	"github.com/strelov1/freehire/internal/ai/llmkey"
 	"github.com/strelov1/freehire/internal/ai/plan"
@@ -75,6 +76,9 @@ type assistantHandlers struct {
 	// server (buddy_mcp_tools.go). Set by Register to the handler behind the cookie routes.
 	buddies *buddyHandlers
 	cv      *cvHandlers
+	// autofillProfiles is the candidate's canonical application-form fields (contact
+	// block, location, links), served to their own agent by get_autofill_profile.
+	autofillProfiles *candidateprofile.Assembler
 	// profile backs the get_profile tool. Reusing the profile handlers rather than the
 	// services underneath keeps the tool and GET /me/profile on one assembly, so the
 	// agent cannot drift from what the profile page shows.

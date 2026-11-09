@@ -122,6 +122,31 @@ func TestMCPAccountTools_DeclareTheirEffect(t *testing.T) {
 		// Replaces the alert's search, name, channels or paused state.
 		"update_subscription": assistant.EffectOverwrites,
 
+		// CV tailoring by the candidate's own agent (mcp_cv_tools.go).
+		"read_my_cv_file":         assistant.EffectReads,
+		"list_my_cvs":             assistant.EffectReads,
+		"tailoring_context":       assistant.EffectReads,
+		"get_cv":                  assistant.EffectReads,
+		"cv_job_match":            assistant.EffectReads,
+		"cv_page_count":           assistant.EffectReads,
+		"check_evidence_fidelity": assistant.EffectReads,
+		"experience_search":       assistant.EffectReads,
+		"experience_get":          assistant.EffectReads,
+		"experience_employments":  assistant.EffectReads,
+		// Creates a tailored copy (or returns the existing one); the base is untouched.
+		"tailor_cv_for_job": assistant.EffectAdds,
+		"experience_add":    assistant.EffectAdds,
+		// Replaces the stored structured CV for the current upload.
+		"import_my_cv": assistant.EffectOverwrites,
+		// Rewrites the CV's content (undoable on the website, but a client should still ask).
+		"edit_cv": assistant.EffectOverwrites,
+		// Applying from the candidate's own browser (mcp_apply_tools.go).
+		"read_current_page":     assistant.EffectReads,
+		"read_application_form": assistant.EffectReads,
+		"get_autofill_profile":  assistant.EffectReads,
+		// Replaces what the page's fields held; never submits.
+		"fill_application_form": assistant.EffectOverwrites,
+
 		"buddy_status":            assistant.EffectReads,
 		"buddy_mock_hosts":        assistant.EffectReads,
 		"buddy_mock_slots":        assistant.EffectReads,

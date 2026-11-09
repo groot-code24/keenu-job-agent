@@ -126,6 +126,22 @@ func (s *Service) TailoringContext(ctx context.Context, userID int64, job db.Job
 	return ProjectTailoring(analysis, job, requirements), nil
 }
 
+// PostingJob is the vacancy as a tailoring reader sees it, with no analysis behind it: the
+// half of ProjectTailoring that a reader doing its own analysis needs (a candidate's own agent
+// over MCP, which is the model, and so reads the posting rather than a model's verdict on it).
+func PostingJob(job db.Job, requirements []enrich.Requirement) TailoringJob {
+	return TailoringJob{
+		Title:        job.Title,
+		Company:      job.Company,
+		Slug:         job.PublicSlug,
+		Requirements: requirements,
+		// The posting reaches the model as words, bounded, the same way get_job already
+		// serves it. Sending markup spends the context window on tags and widens what
+		// there is to misread.
+		Description: llm.ClipRunesEllipsis(htmltext.ToMarkdown(job.Description), descriptionLimit),
+	}
+}
+
 // ProjectTailoring splits an analysis's requirements into the reframe-able and the genuine
 // gaps and pairs them with the vacancy. Pure, so the split is unit-testable without a store.
 func ProjectTailoring(a *matchanalysis.Analysis, job db.Job, requirements []enrich.Requirement) TailoringContext {
@@ -139,16 +155,7 @@ func ProjectTailoring(a *matchanalysis.Analysis, job db.Job, requirements []enri
 		}
 	}
 	return TailoringContext{
-		Job: TailoringJob{
-			Title:        job.Title,
-			Company:      job.Company,
-			Slug:         job.PublicSlug,
-			Requirements: requirements,
-			// The posting reaches the model as words, bounded, the same way get_job already
-			// serves it. Sending markup spends the context window on tags and widens what
-			// there is to misread.
-			Description: llm.ClipRunesEllipsis(htmltext.ToMarkdown(job.Description), descriptionLimit),
-		},
+		Job:            PostingJob(job, requirements),
 		Verdict:        a.Verdict,
 		OverallScore:   a.OverallScore,
 		Recommendation: a.Recommendation,

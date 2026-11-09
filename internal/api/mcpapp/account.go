@@ -24,6 +24,15 @@ const accountAutoApplyInstructions = "Auto-apply prepares applications for revie
 
 const accountAlertInstructions = "Alerts use configured channels. "
 
+// accountCVInstructions covers the CV-tailoring tools. The rules it states are enforced by
+// the server whatever the agent reads here; saying them saves the round trips an agent
+// otherwise spends learning them from refusals.
+const accountCVInstructions = "CV tailoring: the experience bank is the evidence a CV may cite. " +
+	"import_my_cv fills it from the uploaded CV file and keeps only values the file's text contains. " +
+	"A CV edit stating something about the candidate needs an evidence id whose can_write_cv is true; " +
+	"achievements the agent adds stay unprintable until the candidate confirms them on the website. " +
+	"A requirement with no printable evidence is a question for the candidate, not something to write. "
+
 const accountDictionaryInstructions = "Use suggest_dictionary_term for an unknown skill, specialization or industry; " +
 	"zero search hits alone is not a gap. "
 
@@ -74,6 +83,9 @@ func accountInstructions(tools []assistant.Tool) string {
 	}
 	if served("subscribe") {
 		out += accountAlertInstructions
+	}
+	if served("tailor_cv_for_job") {
+		out += accountCVInstructions
 	}
 	if served("suggest_dictionary_term") {
 		out += accountDictionaryInstructions

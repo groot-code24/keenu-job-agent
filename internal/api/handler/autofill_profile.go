@@ -30,9 +30,9 @@ type autofillHandlers struct {
 	typesafeAPIKey string
 }
 
-func newAutofillHandlers(cvs candidateprofile.CVReader, resumes candidateprofile.ResumeReader, accounts candidateprofile.AccountReader, screeningAnswers candidateprofile.ScreeningAnswersReader, bank candidateprofile.BankReader, tools *browsertools.Hub, llm llmBinding, typesafeAPIKey string) *autofillHandlers {
+func newAutofillHandlers(profiles *candidateprofile.Assembler, tools *browsertools.Hub, llm llmBinding, typesafeAPIKey string) *autofillHandlers {
 	return &autofillHandlers{
-		profiles:       candidateprofile.NewAssembler(cvs, resumes, accounts, screeningAnswers, bank),
+		profiles:       profiles,
 		browserTools:   tools,
 		llm:            llm,
 		typesafeAPIKey: typesafeAPIKey,

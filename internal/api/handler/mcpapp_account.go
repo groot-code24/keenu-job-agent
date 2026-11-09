@@ -81,6 +81,11 @@ func mcpKeyTools(assistants *assistantHandlers, origin string) []assistant.Tool 
 	all := append(assistants.assistantDiscoveryTools(), assistants.assistantTrackingTools()...)
 	all = append(all, assistants.reportMCPTools()...)
 	all = append(all, assistants.subscriptionMCPTools(origin)...)
+	// CV tailoring by the candidate's own agent. A full-scope key reaches it too: the CV
+	// surface has always taken a key over REST, and the evidence gate, not the credential,
+	// is what keeps an agent from writing a claim the candidate never made.
+	all = append(all, assistants.mcpCVTools()...)
+	all = append(all, assistants.mcpApplyTools()...)
 	// An MCP client keeps every result in its context, so it gets the bounded variants.
 	for i, t := range all {
 		switch t.Name {
