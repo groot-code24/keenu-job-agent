@@ -37,6 +37,14 @@ describe('HomeLandingView hero', () => {
     expect(screen.getByText(/5\.2M\+ live postings/)).toBeTruthy();
   });
 
+  // A self-hosted catalogue holds thousands, not millions: flooring to a fixed tenth of a
+  // million read "0+ live postings" there.
+  it('floors a small catalogue to two significant figures, never to zero', () => {
+    render(HomeLandingView, { props: { counts: null, scale: { ...scale, unique_open_jobs: 6_358 } } });
+    expect(screen.getByText(/6(\.3K|,300)\+ live postings/)).toBeTruthy();
+    expect(screen.queryByText(/\b0\+ live postings/)).toBeNull();
+  });
+
   it('floors rather than rounds, so the "+" never overstates', () => {
     render(HomeLandingView, { props: { counts: null, scale: { ...scale, unique_open_jobs: 4_968_000 } } });
     expect(screen.getByText(/4\.9M\+ live postings/)).toBeTruthy();

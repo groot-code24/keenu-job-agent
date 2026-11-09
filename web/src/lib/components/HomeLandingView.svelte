@@ -122,11 +122,16 @@
   }
 
   /** The hero's one number, live from the same snapshot as the figures below and
-   *  floored to a tenth of a million (4,968,000 → "4.9M+", never "5M+"): a "+" figure
-   *  must not overstate the catalogue. Before rollup-stats has published a figure the line says
-   *  so in words rather than quoting another deployment's catalogue. */
+   *  floored to two significant figures (4,968,000 → "4.9M+", 6,358 → "6,300+", never
+   *  rounded up): a "+" figure must not overstate the catalogue. Flooring to a fixed tenth
+   *  of a million read "0+" on a catalogue of thousands. Before rollup-stats has published a
+   *  figure the line says so in words rather than quoting another deployment's catalogue. */
+  function floorFigure(n: number): number {
+    const step = 10 ** Math.max(0, Math.floor(Math.log10(n)) - 1);
+    return Math.floor(n / step) * step;
+  }
   const jobsFigure = $derived(
-    scale?.unique_open_jobs ? `${formatCount(Math.floor(scale.unique_open_jobs / 1e5) * 1e5)}+` : 'Thousands of',
+    scale?.unique_open_jobs ? `${formatCount(floorFigure(scale.unique_open_jobs))}+` : 'Thousands of',
   );
 
   const figures = $derived(
