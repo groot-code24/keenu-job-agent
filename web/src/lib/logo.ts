@@ -1,16 +1,23 @@
-// Company logos are served from our own logo.freehire.me proxy. It fronts a free
-// favicon service (faviconapi.com) that resolves the real brand mark for most
-// company names; on a miss the proxy returns a clean 404 so each consumer falls
-// back to its own placeholder (the SVG monogram in the SPA, a monogram tile in the
-// OG card). No third-party token or attribution ships in the browser — the proxy
-// owns everything server-side. Resolves by company name, since that is all most
-// call sites carry (job rows, search, referrals).
-const COMPANY_LOGO_BASE = 'https://logo.freehire.me';
+import { PUBLIC_LOGO_ORIGIN } from '$app/env/public';
+
+// Company logos are served by a logo proxy named in PUBLIC_LOGO_ORIGIN (the public deployment
+// runs one at https://logo.freehire.me, fronting a free favicon service that resolves the real
+// brand mark for most company names). On a miss the proxy returns a clean 404 so each consumer
+// falls back to its own placeholder (the SVG monogram in the SPA, a monogram tile in the OG
+// card). Resolves by company name, since that is all most call sites carry.
+//
+// Unset, there are no logo URLs at all: every consumer shows its placeholder, and no company
+// name a person looks at leaves their browser. That is the default for a self-hosted copy,
+// which must not tell somebody else's server what its user is browsing.
+function logoBase(): string {
+  return (PUBLIC_LOGO_ORIGIN ?? '').trim().replace(/\/+$/, '');
+}
 
 /** The proxy logo URL for a company name, or null when there is no name. */
 export function companyLogoUrl(name: string): string | null {
-  if (!name) return null;
-  return `${COMPANY_LOGO_BASE}/${encodeURIComponent(name)}`;
+  const base = logoBase();
+  if (!name || !base) return null;
+  return `${base}/${encodeURIComponent(name)}`;
 }
 
 /** The proxy logo URL for a SOURCE, resolved from its DISPLAY NAME — "Greenhouse",
@@ -27,8 +34,9 @@ export function companyLogoUrl(name: string): string | null {
  *  A miss still 404s, so every caller needs its own fallback — the proxy cannot tell the
  *  difference between "no such brand" and "not today". */
 export function sourceLogoUrl(displayName: string, domain?: string): string | null {
-  if (!displayName) return null;
-  const url = `${COMPANY_LOGO_BASE}/${encodeURIComponent(displayName)}`;
+  const base = logoBase();
+  if (!displayName || !base) return null;
+  const url = `${base}/${encodeURIComponent(displayName)}`;
   return domain ? `${url}?domain=${encodeURIComponent(domain)}` : url;
 }
 

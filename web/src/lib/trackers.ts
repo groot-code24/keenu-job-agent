@@ -3,7 +3,7 @@
 // imports and unit-testable; this file is client-only and verified via the banner
 // visual pass. Both the boot hook and the banner's Accept action route through here
 // so the PostHog config is assembled in exactly one place.
-import { PUBLIC_POSTHOG_HOST, PUBLIC_POSTHOG_KEY } from '$app/env/public';
+import { PUBLIC_GA_MEASUREMENT_ID, PUBLIC_POSTHOG_HOST, PUBLIC_POSTHOG_KEY } from '$app/env/public';
 import { type AnalyticsConfig, initTrackers } from './analytics';
 import { trackersAllowed } from './consent.svelte';
 
@@ -11,6 +11,7 @@ function config(): AnalyticsConfig {
   return {
     key: PUBLIC_POSTHOG_KEY ?? '',
     apiHost: PUBLIC_POSTHOG_HOST || '/ingest',
+    gaId: PUBLIC_GA_MEASUREMENT_ID ?? '',
   };
 }
 

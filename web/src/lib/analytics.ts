@@ -19,14 +19,17 @@ import { isBuddiesSpace } from './shellLayout.js';
 export interface AnalyticsConfig {
   /** PostHog project key; empty/absent leaves analytics inert. */
   key: string;
+  /** Google Analytics measurement ID; empty/absent means GA never loads. */
+  gaId?: string;
   /** Same-origin reverse-proxy path events are sent through (e.g. `/ingest`). */
   apiHost: string;
 }
 
-// Google Analytics measurement ID (public by design). Moved here from the inline
-// app.html bootstrap so GA can be gated on consent alongside PostHog; the CSP still
-// allow-lists the googletagmanager.com host it injects.
-const GA_MEASUREMENT_ID = 'G-6P1PZ719T0';
+// Google Analytics measurement ID (public by design), from PUBLIC_GA_MEASUREMENT_ID via
+// the config initTrackers receives. Empty means GA never loads: a self-hosted copy must
+// not report its users to anybody else's property, so there is no built-in default.
+// The CSP still allow-lists the googletagmanager.com host it injects when one is set.
+let gaMeasurementId = '';
 
 declare global {
   interface Window {
@@ -87,6 +90,7 @@ function drainPending(sdk: PostHog): void {
  *  Google Analytics. Idempotent, and the single entry point gated on consent by
  *  the caller — nothing here runs until consent allows it. */
 export function initTrackers(config: AnalyticsConfig): void {
+  gaMeasurementId = config.gaId ?? '';
   initPostHog(config);
   initGoogleAnalytics();
 }
@@ -160,16 +164,16 @@ export function isHandoffReferrer(referrer: string | undefined): boolean {
 /** Inject gtag.js and configure GA once. Skipped on localhost so dev traffic stays
  *  out of the property — matching the old app.html bootstrap. */
 function initGoogleAnalytics(): void {
-  if (gaLoaded) return;
+  if (gaLoaded || !gaMeasurementId) return;
   if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) return;
   gaLoaded = true;
   const script = document.createElement('script');
   script.async = true;
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`;
   document.head.appendChild(script);
   window.gtag = gtag;
   gtag('js', new Date());
-  gtag('config', GA_MEASUREMENT_ID, isHandoffReferrer(document.referrer) ? { ignore_referrer: true } : {});
+  gtag('config', gaMeasurementId, isHandoffReferrer(document.referrer) ? { ignore_referrer: true } : {});
 }
 
 /** Routes whose DOM must never be recorded (résumé, tracking, inbox all live
@@ -256,7 +260,7 @@ export function trackSignupIfNew(user: { id: number; created_at: string | null; 
   // account came from; only if the server could not (no secret configured, the call
   // failed) does the browser send it, so GA never counts one sign-up twice.
   withPostHog((sdk) => sdk.capture('signup', { method }));
-  void reportSignupAttribution(method, GA_MEASUREMENT_ID).then((serverSent) => {
+  void reportSignupAttribution(method, gaMeasurementId).then((serverSent) => {
     if (!serverSent && gaLoaded) gtag('event', 'sign_up', { method });
   });
 }

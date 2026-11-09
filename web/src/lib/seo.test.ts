@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import {
   articleJsonLd,
   collectionHeading,
@@ -19,6 +19,9 @@ import {
 import { companyLogoUrl } from './logo';
 import type { PostMeta } from './blog';
 import type { Company, Job, JobCard } from './types';
+
+// Logos are off unless a proxy is configured; these tests are about the URLs it gets.
+vi.mock('$app/env/public', () => ({ PUBLIC_LOGO_ORIGIN: 'https://logo.example' }));
 
 // collectionPageJsonLd reads only title + public_slug off each job.
 function job(title: string, slug: string): Job {

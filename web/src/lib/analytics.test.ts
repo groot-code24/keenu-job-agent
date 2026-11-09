@@ -153,7 +153,7 @@ describe('Google Analytics bootstrap', () => {
       document: { createElement: () => ({}), head: { appendChild: () => {} } },
     });
 
-    initTrackers({ key: '', apiHost: '/ingest' });
+    initTrackers({ key: '', apiHost: '/ingest', gaId: 'G-TEST' });
 
     const queued = (globalThis as { dataLayer?: unknown[] }).dataLayer ?? [];
     expect(queued).toHaveLength(2); // gtag('js', …) and gtag('config', …)
@@ -182,6 +182,13 @@ describe('track → Google Analytics', () => {
   const queued = () => (globalThis as { dataLayer?: unknown[] }).dataLayer ?? [];
   const lastCommand = () => Array.from(queued().at(-1) as ArrayLike<unknown>);
 
+  it('never loads GA without a measurement ID', async () => {
+    const analytics = await freshAnalytics();
+    analytics.initTrackers({ key: '', apiHost: '/ingest' });
+    analytics.track('job_apply', { slug: 'x' });
+    expect(queued()).toHaveLength(0);
+  });
+
   it('sends nothing to GA before the trackers are started', async () => {
     const analytics = await freshAnalytics();
     analytics.track('job_apply', { slug: 'x' });
@@ -190,7 +197,7 @@ describe('track → Google Analytics', () => {
 
   it('forwards an event under its own name once GA is running', async () => {
     const analytics = await freshAnalytics();
-    analytics.initTrackers({ key: '', apiHost: '/ingest' });
+    analytics.initTrackers({ key: '', apiHost: '/ingest', gaId: 'G-TEST' });
     analytics.track('job_apply', { slug: 'x', source: 'greenhouse' });
     expect(lastCommand()).toEqual(['event', 'job_apply', { slug: 'x', source: 'greenhouse' }]);
     expect(Object.prototype.toString.call(queued().at(-1))).toBe('[object Arguments]');
@@ -198,7 +205,7 @@ describe('track → Google Analytics', () => {
 
   it('renames the funnel steps to the events GA4 reports on', async () => {
     const analytics = await freshAnalytics();
-    analytics.initTrackers({ key: '', apiHost: '/ingest' });
+    analytics.initTrackers({ key: '', apiHost: '/ingest', gaId: 'G-TEST' });
     analytics.track('signup', { method: 'oauth' });
     expect(lastCommand()).toEqual(['event', 'sign_up', { method: 'oauth' }]);
     analytics.track('checkout_start', { price_id: 'default' });
@@ -209,7 +216,7 @@ describe('track → Google Analytics', () => {
 
   it('keeps the typed search text out of GA', async () => {
     const analytics = await freshAnalytics();
-    analytics.initTrackers({ key: '', apiHost: '/ingest' });
+    analytics.initTrackers({ key: '', apiHost: '/ingest', gaId: 'G-TEST' });
     analytics.track('search', { q: 'jane.doe@example.com', facets: 2 });
     expect(lastCommand()).toEqual(['event', 'search', { facets: 2 }]);
   });
@@ -255,7 +262,7 @@ describe('trackSignupIfNew → GA4 sign-up', () => {
       fetch: vi.fn(answer),
     });
     const analytics = await import('./analytics');
-    analytics.initTrackers({ key: '', apiHost: '/ingest' });
+    analytics.initTrackers({ key: '', apiHost: '/ingest', gaId: 'G-TEST' });
     Object.assign(globalThis, { dataLayer: [] });
     analytics.trackSignupIfNew({ id: 1, created_at: new Date().toISOString(), has_password: false });
     await new Promise((resolve) => setTimeout(resolve, 0));
