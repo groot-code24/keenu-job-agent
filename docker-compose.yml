@@ -22,11 +22,17 @@ services:
       - pgdata:/var/lib/postgresql
       # Migrations are applied automatically by Postgres on first volume init.
       - ./migrations:/docker-entrypoint-initdb.d:ro
+    # Over TCP (-h), not the socket: on a first start the image runs every migration on a
+    # temporary socket-only server, and a socket check calls that "ready" while `migrate`,
+    # which connects over TCP and does not retry, is refused. start_period covers that first
+    # init (failures inside it do not count); a 2s interval makes every later start report
+    # healthy within ~2s instead of 5s, and everything else waits on it.
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U hire -d hire"]
-      interval: 5s
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U hire -d hire"]
+      interval: 2s
       timeout: 5s
       retries: 5
+      start_period: 5m
 
   # Search backend for GET /api/v1/jobs/search and the reindex command. The
   # huggingFace embedder downloads and runs its model inside this container, so
@@ -48,7 +54,7 @@ services:
     image: redis:8-alpine
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
-      interval: 5s
+      interval: 2s
       timeout: 5s
       retries: 5
 

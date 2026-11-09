@@ -18,6 +18,22 @@ repository URL and ask it to follow [AGENT_SETUP.md](AGENT_SETUP.md).
 
 ## Start it
 
+One command fetches the code into `~/keenu-job-agent` and starts everything. It needs only
+Docker Desktop, which it starts for you if it is installed but not running:
+
+```sh
+# macOS / Linux
+curl -fsSL https://raw.githubusercontent.com/groot-code24/keenu-job-agent/main/scripts/install.sh | sh
+```
+
+```powershell
+# Windows (PowerShell)
+irm https://raw.githubusercontent.com/groot-code24/keenu-job-agent/main/scripts/install.ps1 | iex
+```
+
+Running it again updates the code and restarts, keeping your data. From a copy you already
+have, the start scripts do the same without fetching anything:
+
 ```sh
 ./scripts/local-up.sh                                        # macOS / Linux
 powershell -ExecutionPolicy Bypass -File scripts\local-up.ps1  # Windows
@@ -29,7 +45,9 @@ them on your machine instead: 20–50 minutes and about 4 GB of free memory. The
 **<http://localhost:8090>** and sign up.
 
 On first start the script writes this install's own secrets (`JWT_SECRET`, `MEILI_MASTER_KEY`)
-into `.env`. Every port listens on `127.0.0.1` only, so nobody else on your network can reach
+into `.env`. On Windows it also adds `deploy/local/compose.loopback6.yml` there, so the site
+answers on the IPv6 loopback too: Windows tries that first for `localhost` and otherwise waits
+about 200 ms on every new connection. Every port listens on `127.0.0.1` only, so nobody else on your network can reach
 it. Set `BIND_ADDRESS=0.0.0.0` in `.env` only if you mean to share it.
 
 `docker compose down` stops everything. Your data stays in Docker volumes; only

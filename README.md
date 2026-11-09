@@ -1,13 +1,28 @@
 > **Keenu Job Agent** is a local edition of freehire: it runs on your own computer, every feature
 > is free, and the AI runs through your own Claude Code or Codex subscription.
 >
-> **Quick start:** paste this into Claude Code or Codex:
+> **Quick start — one command.** You need [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+> installed; the command starts it if it is not running, fetches the code, starts everything and opens
+> <http://localhost:8090>.
+>
+> ```sh
+> # macOS / Linux
+> curl -fsSL https://raw.githubusercontent.com/groot-code24/keenu-job-agent/main/scripts/install.sh | sh
+> ```
+>
+> ```powershell
+> # Windows (PowerShell)
+> irm https://raw.githubusercontent.com/groot-code24/keenu-job-agent/main/scripts/install.ps1 | iex
+> ```
+>
+> Run it again to update. Or paste this into Claude Code or Codex and let it do the whole setup,
+> including connecting itself:
 >
 > ```text
 > Set up Keenu Job Agent for me from https://github.com/groot-code24/keenu-job-agent — follow its AGENT_SETUP.md.
 > ```
 >
-> Or by hand: [LOCAL_EDITION.md](LOCAL_EDITION.md). The rest of this README is the original project's.
+> More: [LOCAL_EDITION.md](LOCAL_EDITION.md). The rest of this README is the original project's.
 
 <div align="center">
 

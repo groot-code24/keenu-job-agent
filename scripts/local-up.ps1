@@ -7,14 +7,37 @@
 # KEENU_BUILD=1, or when WEB_ORIGIN is not the default (the web image bakes its origin in).
 # Data lives in Docker volumes and survives `docker compose down`; only `-v` erases it.
 $ErrorActionPreference = 'Stop'
+# Windows PowerShell redraws its progress bar for every chunk a web request reads, which
+# makes even small downloads crawl.
+$ProgressPreference = 'SilentlyContinue'
 
 Set-Location (Join-Path $PSScriptRoot '..')
 
 $defaultOrigin = 'http://localhost:8090'
 $origin = if ($env:WEB_ORIGIN) { $env:WEB_ORIGIN } else { $defaultOrigin }
 
-docker info *> $null
-if ($LASTEXITCODE -ne 0) { throw 'Docker is not running. Start Docker Desktop and run this again.' }
+if (-not (Get-Command docker -ErrorAction SilentlyContinue)) {
+  throw 'Docker is not installed. Install Docker Desktop (https://www.docker.com/products/docker-desktop/), start it once, and run this again.'
+}
+function Test-Docker {
+  docker info *> $null
+  return $LASTEXITCODE -eq 0
+}
+# Installed but not running is the most common first-run failure, so start it rather than
+# send the person off to do it.
+if (-not (Test-Docker)) {
+  $desktop = Join-Path $env:ProgramFiles 'Docker\Docker\Docker Desktop.exe'
+  if (Test-Path $desktop) {
+    Write-Host -NoNewline 'Starting Docker Desktop '
+    Start-Process $desktop
+    for ($i = 0; $i -lt 90 -and -not (Test-Docker); $i++) {
+      Write-Host -NoNewline '.'
+      Start-Sleep -Seconds 2
+    }
+    Write-Host ''
+  }
+  if (-not (Test-Docker)) { throw 'Docker is not running. Start Docker Desktop and run this again.' }
+}
 
 # Secrets of this install's own: docker-compose.yml falls back to well-known development
 # values, which would let anyone who knows them forge a session on this machine.
@@ -28,6 +51,12 @@ $envText = Get-Content .env -Raw
 if ($null -eq $envText) { $envText = '' }
 foreach ($name in 'JWT_SECRET', 'MEILI_MASTER_KEY') {
   if ($envText -notmatch "(?m)^$name=") { Add-Content .env "$name=$(New-Secret)" -Encoding ascii }
+}
+# Answer on ::1 too: Windows tries it first for "localhost" and waits ~200 ms on every new
+# connection when nothing does (deploy/local/compose.loopback6.yml). In .env, so a plain
+# `docker compose` later uses the same files.
+if ($envText -notmatch '(?m)^COMPOSE_FILE=') {
+  Add-Content .env 'COMPOSE_FILE=docker-compose.yml;deploy/local/compose.loopback6.yml' -Encoding ascii
 }
 
 $build = $false
@@ -85,4 +114,5 @@ if (-not $ready) { throw 'The site did not answer after three minutes; run: dock
 
 Write-Host "`nKeenu Job Agent is running at $origin"
 Write-Host "Connect your AI agent: $origin/my/integrations/agent"
+Write-Host "Stop it with 'docker compose down' in $PWD (your data is kept)."
 if (-not $env:KEENU_NO_BROWSER) { Start-Process $origin }

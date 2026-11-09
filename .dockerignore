@@ -7,3 +7,11 @@ design-system/dist
 .git
 openspec
 design-system/storybook-static/
+# Neither image builds from these: the root and extension installs (npm, ~280 MB on a
+# developer's machine) only slowed every local build's context upload.
+node_modules
+extension/node_modules
+extension/.output
+# This install's own secrets (scripts/local-up.*): the app stage's `COPY . .` would
+# otherwise carry them into a build layer.
+.env

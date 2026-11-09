@@ -23,26 +23,21 @@ docker compose version                      # must be v2
 - **Memory:** the published images just need pulling. Building them locally (the fallback) needs
   about 4 GB of free memory.
 
-## 2. Get the code
+## 2 and 3. Get the code and start it
 
-Clone into the person's home folder unless they name another place:
+One command clones (or updates) the code into `~/keenu-job-agent` and starts it:
 
-```sh
-git clone https://github.com/groot-code24/keenu-job-agent.git ~/keenu-job-agent
-cd ~/keenu-job-agent
-```
-
-If it is already cloned there, `git pull` instead.
-
-## 3. Start it
-
-| OS | Command (from the repository folder) |
+| OS | Command |
 |---|---|
-| macOS / Linux | `./scripts/local-up.sh` |
-| Windows | `powershell -ExecutionPolicy Bypass -File scripts\local-up.ps1` |
+| macOS / Linux | `curl -fsSL https://raw.githubusercontent.com/groot-code24/keenu-job-agent/main/scripts/install.sh \| sh` |
+| Windows (PowerShell) | `irm https://raw.githubusercontent.com/groot-code24/keenu-job-agent/main/scripts/install.ps1 \| iex` |
 
-The script generates this install's own secrets, pulls the images, starts everything and waits
-until <http://localhost:8090> answers. The first start takes a few minutes; if it has to build
+Set `KEENU_DIR` for another folder and `KEENU_NO_BROWSER=1` to keep it from opening a browser
+tab. From an existing copy, `./scripts/local-up.sh` (or `scripts\local-up.ps1` on Windows) does
+the starting part alone.
+
+It starts Docker Desktop if it is installed but not running, generates this install's own
+secrets, pulls the images, starts everything and waits until <http://localhost:8090> answers. The first start takes a few minutes; if it has to build
 the images instead, 20–50 minutes. Run it in the background if your tool would otherwise time
 out, then wait for it to print `Keenu Job Agent is running`. You can also poll
 `http://localhost:8090/health` until it answers 200.

@@ -16,6 +16,24 @@ cd "$(dirname "$0")/.."
 default_origin="http://localhost:8090"
 origin="${WEB_ORIGIN:-$default_origin}"
 
+if ! command -v docker >/dev/null 2>&1; then
+  echo "Docker is not installed. Install Docker Desktop (https://www.docker.com/products/docker-desktop/) and run this again." >&2
+  exit 1
+fi
+# Installed but not running is the most common first-run failure. On macOS start it rather
+# than send the person off to do it; a Linux daemon needs root, so that stays a message.
+if ! docker info >/dev/null 2>&1 && [ "$(uname -s)" = Darwin ] && [ -d /Applications/Docker.app ]; then
+  printf 'Starting Docker Desktop '
+  open -a Docker
+  i=0
+  until docker info >/dev/null 2>&1; do
+    i=$((i + 1))
+    [ "$i" -ge 90 ] && break
+    printf '.'
+    sleep 2
+  done
+  echo
+fi
 if ! docker info >/dev/null 2>&1; then
   echo "Docker is not running. Start Docker Desktop (or the Docker daemon) and run this again." >&2
   exit 1
@@ -71,3 +89,11 @@ done
 
 printf '\nKeenu Job Agent is running at %s\n' "$origin"
 printf 'Connect your AI agent: %s/my/integrations/agent\n' "$origin"
+printf "Stop it with 'docker compose down' in %s (your data is kept).\n" "$(pwd)"
+if [ -z "${KEENU_NO_BROWSER:-}" ]; then
+  case "$(uname -s)" in
+    Darwin) open "$origin" ;;
+    *) if command -v xdg-open >/dev/null 2>&1; then xdg-open "$origin" >/dev/null 2>&1 || true; fi ;;
+  esac
+fi
+

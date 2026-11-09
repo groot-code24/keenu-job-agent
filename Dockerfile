@@ -7,9 +7,13 @@ COPY go.mod go.sum* ./
 RUN go mod download
 
 COPY . .
-# One image carries every binary: the HTTP server (default entrypoint) plus the
-# run-once workers (ingest/enrich/reindex and the Telegram crawl/extract pair),
-# which prod invokes on a schedule via `docker compose run --rm app /app/<worker>`.
+# One image carries the HTTP server (default entrypoint), the workers the local
+# edition's docker-compose.yml runs beside it, and the two a person runs by hand
+# (reindex, add-board). Nothing else: every static binary carries the whole
+# dependency graph (~50 MB each), so a worker no service runs costs every install
+# that much download. The ones left out need what a local install has not got (an
+# LLM key for enrich, Telegram credentials, outbound mail for notify). Adding one
+# means adding it here and giving it a service in docker-compose.yml.
 #
 # Two invocations rather than one per binary: with `-o /out/` (a directory) Go
 # names each binary after its cmd dir — which is already how they're named — and
@@ -18,10 +22,8 @@ COPY . .
 # server needs an output name of its own.
 RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o /out/hire ./cmd/server \
  && CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o /out/ \
-      ./cmd/ingest ./cmd/enrich ./cmd/reindex ./cmd/tg-ingest ./cmd/tg-extract \
-      ./cmd/backfill-derive ./cmd/liveness ./cmd/notify ./cmd/import-collections \
-      ./cmd/recount-companies ./cmd/migrate \
-      ./cmd/ingest-scheduler ./cmd/search-drain ./cmd/add-board ./cmd/harvest-boards ./cmd/rollup-stats
+      ./cmd/migrate ./cmd/ingest ./cmd/ingest-scheduler ./cmd/search-drain \
+      ./cmd/rollup-stats ./cmd/harvest-boards ./cmd/add-board ./cmd/reindex
 
 # --- typst stage: fetch the pinned, statically-linked typst binary used to render CV
 # PDFs (internal/cv). The musl build is fully static, so it runs on distroless/static;
@@ -51,7 +53,8 @@ RUN apt-get update \
  && groupadd --system --gid 65532 nonroot \
  && useradd --system --uid 65532 --gid nonroot --home-dir /app nonroot \
  && pdftotext -v
-COPY --from=build /out/hire /out/ingest /out/enrich /out/reindex /out/tg-ingest /out/tg-extract /out/backfill-derive /out/liveness /out/notify /out/import-collections /out/recount-companies /out/migrate /out/ingest-scheduler /out/search-drain /out/add-board /out/harvest-boards /out/rollup-stats /app/
+# /out holds exactly the binaries built above, so their list lives in one place.
+COPY --from=build /out/ /app/
 # The migration runner reads its *.sql files from the image (WORKDIR /app, default
 # -dir migrations), so /app/migrate works the same as `go run ./cmd/migrate` on the host.
 COPY --from=build /src/migrations /app/migrations

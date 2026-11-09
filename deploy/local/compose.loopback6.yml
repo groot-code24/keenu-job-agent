@@ -1,0 +1,15 @@
+# Also publish the site on the IPv6 loopback, [::1]. Added on Windows by scripts/local-up.ps1
+# (through COMPOSE_FILE in .env, so a later plain `docker compose up` keeps it).
+#
+# Windows resolves "localhost" to ::1 first. With the port bound only to 127.0.0.1 that
+# attempt is refused, and Windows waits ~200 ms before falling back to IPv4 — on every new
+# connection, so every page load and every call the AI agent makes over MCP paid it.
+# Measured: 215 ms to connect via localhost, 2 ms once ::1 answers.
+#
+# Not on by default everywhere: macOS and Linux fall back instantly, and a Linux host with
+# IPv6 turned off cannot bind ::1, which would stop the web service from starting. Compose
+# appends these ports to the ones docker-compose.yml declares; it still answers loopback only.
+services:
+  web:
+    ports:
+      - "[::1]:${WEB_HOST_PORT:-8090}:8080"
